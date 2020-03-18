@@ -32,6 +32,13 @@ public class Check {
         return i;
     }
 
+    public static Integer ifNonNegative(Integer i, String paramName) {
+        if (i != null && i < 0) {
+            throwException(paramName, "negative");
+        }
+        return i;
+    }
+
     private static void throwException(String paramName, String violationType) {
         StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
         StackTraceElement callingMethod = null;
