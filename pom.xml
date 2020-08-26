@@ -34,14 +34,14 @@
 
     <distributionManagement>
         <repository>
-            <id>inaugural.soliloquy.tools</id>
-            <name>Inaugural Engine Common Tools</name>
+            <id>github</id>
+            <name>Soliloquy, Inaugural Engine, Common Tools</name>
             <uniqueVersion>false</uniqueVersion>
-            <url>file://${project.build.directory}/mvn-repo</url>
+            <url>https://maven.pkg.github.com/felix-t-morgenstern/inaugural.soliloquy.tools</url>
         </repository>
         <snapshotRepository>
-            <id>inaugural.soliloquy.tools</id>
-            <name>Inaugural Engine Common Tools</name>
+            <id>github</id>
+            <name>Soliloquy, Inaugural Engine, Common Tools</name>
             <uniqueVersion>false</uniqueVersion>
             <url>file://${project.build.directory}/mvn-repo</url>
         </snapshotRepository>
