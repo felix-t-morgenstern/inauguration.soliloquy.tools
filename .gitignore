@@ -1,9 +1,3 @@
 
-.idea/inaugural.soliloquy.tools.iml
-.idea/libraries
-.idea/tasks.xml
-.idea/uiDesigner.xml
-.idea/usage.statistics.xml
-.idea/workspace.xml
-.idea/shelf
+.idea/*
 target
