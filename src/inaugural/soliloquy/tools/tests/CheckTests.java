@@ -101,6 +101,61 @@ class CheckTests {
     }
 
     @Test
+    void testThrowOnLteZero() {
+        final String paramName = "paramName";
+
+        final int input = 123;
+        assertSame(input, Check.throwOnLteZero(input, paramName));
+
+        assertThrows(IllegalArgumentException.class, () -> Check.throwOnLteZero(0, paramName));
+        try {
+            Check.throwOnLteZero(0, paramName);
+        }
+        catch (IllegalArgumentException e) {
+            assertEquals("inaugural.soliloquy.tools.tests.CheckTests" +
+                            ".testThrowOnLteZero: " + paramName +
+                            " cannot be less than or equal to 0",
+                    e.getMessage());
+        }
+    }
+
+    @Test
+    void testThrowOnSecondLte() {
+        final int input1 = 123;
+        final int input2 = 123;
+
+        assertThrows(IllegalArgumentException.class, () ->
+                Check.throwOnSecondLte(input1, input2, "input1", "input2"));
+        try {
+            Check.throwOnSecondLte(input1, input2, "input1", "input2");
+        }
+        catch (IllegalArgumentException e) {
+            assertEquals("inaugural.soliloquy.tools.tests.CheckTests" +
+                            ".testThrowOnSecondLte: input2 (" + input2 + ") cannot be less than " +
+                            "or equal to input1 (" + input1 + ")",
+                    e.getMessage());
+        }
+    }
+
+    @Test
+    void testThrowOnSecondGt() {
+        final int input1 = 123;
+        final int input2 = input1 + 1;
+
+        assertThrows(IllegalArgumentException.class, () ->
+                Check.throwOnSecondGt(input1, input2, "input1", "input2"));
+        try {
+            Check.throwOnSecondGt(input1, input2, "input1", "input2");
+        }
+        catch (IllegalArgumentException e) {
+            assertEquals("inaugural.soliloquy.tools.tests.CheckTests" +
+                            ".testThrowOnSecondGt: input2 (" + input2 + ") cannot be greater " +
+                            "than input1 (" + input1 + ")",
+                    e.getMessage());
+        }
+    }
+
+    @Test
     void testCheckMethodsFromConstructor() {
         try {
             new ConstructorExceptionMessageTester();
