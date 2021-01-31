@@ -1,5 +1,8 @@
 package inaugural.soliloquy.tools;
 
+import soliloquy.specs.common.shared.HasOneGenericParam;
+import soliloquy.specs.common.shared.HasTwoGenericParams;
+
 // TODO: Consider breaking this out into multiple classes
 public class Check {
     public static <T> T ifNull(T obj, String paramName) {
@@ -60,6 +63,23 @@ public class Check {
         if (second > first) {
             throwException(secondParamName + " (" + second + ") cannot be greater than " +
                     firstParamName + " (" + first + ")");
+        }
+    }
+
+    @SuppressWarnings("rawtypes")
+    public static void archetypeAndArchetypesOfArchetypeAreNotNull(String paramName,
+                                                                   Object archetype) {
+        if (archetype == null) {
+            throwException(paramName, "null");
+        }
+        if (archetype instanceof HasOneGenericParam) {
+            archetypeAndArchetypesOfArchetypeAreNotNull(paramName,
+                    ((HasOneGenericParam) archetype).getArchetype());
+        } else if (archetype instanceof HasTwoGenericParams) {
+            archetypeAndArchetypesOfArchetypeAreNotNull(paramName,
+                    ((HasTwoGenericParams) archetype).getFirstArchetype());
+            archetypeAndArchetypesOfArchetypeAreNotNull(paramName,
+                    ((HasTwoGenericParams) archetype).getSecondArchetype());
         }
     }
 

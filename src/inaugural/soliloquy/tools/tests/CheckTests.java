@@ -1,7 +1,10 @@
 package inaugural.soliloquy.tools.tests;
 
 import inaugural.soliloquy.tools.Check;
+import inaugural.soliloquy.tools.tests.fakes.FakeHasOneGenericParam;
+import inaugural.soliloquy.tools.tests.fakes.FakeHasTwoGenericParams;
 import org.junit.jupiter.api.Test;
+import soliloquy.specs.common.shared.HasOneGenericParam;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -151,6 +154,37 @@ class CheckTests {
             assertEquals("inaugural.soliloquy.tools.tests.CheckTests" +
                             ".testThrowOnSecondGt: input2 (" + input2 + ") cannot be greater " +
                             "than input1 (" + input1 + ")",
+                    e.getMessage());
+        }
+    }
+
+    @Test
+    void testArchetypeAndArchetypesOfArchetypeAreNotNull() {
+        assertThrows(IllegalArgumentException.class,
+                () -> Check.archetypeAndArchetypesOfArchetypeAreNotNull("archetype",
+                        new FakeHasOneGenericParam<String>(null)));
+        try {
+            Check.archetypeAndArchetypesOfArchetypeAreNotNull("archetype",
+                    new FakeHasOneGenericParam<String>(null));
+        }
+        catch (IllegalArgumentException e) {
+            assertEquals("inaugural.soliloquy.tools.tests.CheckTests" +
+                    ".testArchetypeAndArchetypesOfArchetypeAreNotNull: archetype cannot be null",
+                    e.getMessage());
+        }
+
+        assertThrows(IllegalArgumentException.class,
+                () -> Check.archetypeAndArchetypesOfArchetypeAreNotNull("archetype",
+                        new FakeHasTwoGenericParams<String, HasOneGenericParam<String>>("string",
+                                new FakeHasOneGenericParam<>(null))));
+        try {
+            Check.archetypeAndArchetypesOfArchetypeAreNotNull("archetype",
+                    new FakeHasTwoGenericParams<String, HasOneGenericParam<String>>("string",
+                            new FakeHasOneGenericParam<>(null)));
+        }
+        catch (IllegalArgumentException e) {
+            assertEquals("inaugural.soliloquy.tools.tests.CheckTests" +
+                            ".testArchetypeAndArchetypesOfArchetypeAreNotNull: archetype cannot be null",
                     e.getMessage());
         }
     }
