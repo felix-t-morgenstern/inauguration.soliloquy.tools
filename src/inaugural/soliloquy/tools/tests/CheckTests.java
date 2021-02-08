@@ -104,11 +104,30 @@ class CheckTests {
     }
 
     @Test
-    void testThrowOnLteZero() {
+    void testThrowOnLteZeroForShort() {
+        final String paramName = "paramName";
+
+        final short input = 123;
+        assertEquals(input, Check.throwOnLteZero(input, paramName));
+
+        assertThrows(IllegalArgumentException.class, () -> Check.throwOnLteZero(0, paramName));
+        try {
+            Check.throwOnLteZero((short) 0, paramName);
+        }
+        catch (IllegalArgumentException e) {
+            assertEquals("inaugural.soliloquy.tools.tests.CheckTests" +
+                            ".testThrowOnLteZeroForShort: " + paramName +
+                            " cannot be less than or equal to 0",
+                    e.getMessage());
+        }
+    }
+
+    @Test
+    void testThrowOnLteZeroForInt() {
         final String paramName = "paramName";
 
         final int input = 123;
-        assertSame(input, Check.throwOnLteZero(input, paramName));
+        assertEquals(input, Check.throwOnLteZero(input, paramName));
 
         assertThrows(IllegalArgumentException.class, () -> Check.throwOnLteZero(0, paramName));
         try {
@@ -116,8 +135,129 @@ class CheckTests {
         }
         catch (IllegalArgumentException e) {
             assertEquals("inaugural.soliloquy.tools.tests.CheckTests" +
-                            ".testThrowOnLteZero: " + paramName +
+                            ".testThrowOnLteZeroForInt: " + paramName +
                             " cannot be less than or equal to 0",
+                    e.getMessage());
+        }
+    }
+
+    @Test
+    void testThrowOnLteZeroForFloat() {
+        final String paramName = "paramName";
+
+        final float input = 0.123f;
+        assertEquals(input, Check.throwOnLteZero(input, paramName));
+
+        assertThrows(IllegalArgumentException.class, () -> Check.throwOnLteZero(0, paramName));
+        try {
+            Check.throwOnLteZero(0f, paramName);
+        }
+        catch (IllegalArgumentException e) {
+            assertEquals("inaugural.soliloquy.tools.tests.CheckTests" +
+                            ".testThrowOnLteZeroForFloat: " + paramName +
+                            " cannot be less than or equal to 0",
+                    e.getMessage());
+        }
+    }
+
+    @Test
+    void testThrowOnLtValueForShort() {
+        final String paramName = "paramName";
+
+        final short input = 123;
+        assertEquals(input, Check.throwOnLtValue(input, input, paramName));
+
+        assertThrows(IllegalArgumentException.class,
+                () -> Check.throwOnLtValue(input, (short)(input + 1), paramName));
+        try {
+            Check.throwOnLtValue(input, (short)(input + 1), paramName);
+        }
+        catch (IllegalArgumentException e) {
+            assertEquals("inaugural.soliloquy.tools.tests.CheckTests" +
+                            ".testThrowOnLtValueForShort: " + paramName +
+                            " cannot be less than " + (input + 1),
+                    e.getMessage());
+        }
+    }
+
+    @Test
+    void testThrowOnLtValueForFloat() {
+        final String paramName = "paramName";
+
+        final float input = 0.122f;
+        final float value = 0.123f;
+        assertEquals(input, Check.throwOnLtValue(input, input, paramName));
+
+        assertThrows(IllegalArgumentException.class,
+                () -> Check.throwOnLtValue(input, value, paramName));
+        try {
+            Check.throwOnLtValue(input, value, paramName);
+        }
+        catch (IllegalArgumentException e) {
+            assertEquals("inaugural.soliloquy.tools.tests.CheckTests" +
+                            ".testThrowOnLtValueForFloat: " + paramName +
+                            " cannot be less than " + value,
+                    e.getMessage());
+        }
+    }
+
+    @Test
+    void testThrowOnGtValueForShort() {
+        final String paramName = "paramName";
+
+        final short input = 123;
+        assertEquals(input, Check.throwOnGtValue(input, input, paramName));
+
+        assertThrows(IllegalArgumentException.class,
+                () -> Check.throwOnGtValue(input, (short)(input - 1), paramName));
+        try {
+            Check.throwOnGtValue(input, (short)(input - 1), paramName);
+        }
+        catch (IllegalArgumentException e) {
+            assertEquals("inaugural.soliloquy.tools.tests.CheckTests" +
+                            ".testThrowOnGtValueForShort: " + paramName +
+                            " cannot be greater than " + (input - 1),
+                    e.getMessage());
+        }
+    }
+
+    @Test
+    void testThrowOnGtValueForFloat() {
+        final String paramName = "paramName";
+
+        final float input = 0.123f;
+        final float value = 0.122f;
+        assertEquals(input, Check.throwOnGtValue(input, input, paramName));
+
+        assertThrows(IllegalArgumentException.class,
+                () -> Check.throwOnGtValue(input, value, paramName));
+        try {
+            Check.throwOnGtValue(input, value, paramName);
+        }
+        catch (IllegalArgumentException e) {
+            assertEquals("inaugural.soliloquy.tools.tests.CheckTests" +
+                            ".testThrowOnGtValueForFloat: " + paramName +
+                            " cannot be greater than " + value,
+                    e.getMessage());
+        }
+    }
+
+    @Test
+    void testThrowOnEqualsValueForShort() {
+        final String paramName = "paramName";
+
+        final short input = 123;
+        assertEquals(input, Check.throwOnEqualsValue(input, (short)(input + 1), paramName));
+
+        assertThrows(IllegalArgumentException.class,
+                () -> Check.throwOnEqualsValue(input, input, paramName));
+        try {
+            Check.throwOnEqualsValue(input, input, paramName);
+        }
+        catch (IllegalArgumentException e) {
+            assertEquals("inaugural.soliloquy.tools.tests.CheckTests" +
+                            ".testThrowOnEqualsValueForShort: " + paramName +
+                            " cannot be equal to " + input,
                     e.getMessage());
         }
     }

@@ -43,9 +43,58 @@ public class Check {
         return i;
     }
 
+    public static short throwOnLteZero(short i, String paramName) {
+        if (i <= 0) {
+            throwException(paramName, "less than or equal to 0");
+        }
+        return i;
+    }
+
     public static int throwOnLteZero(int i, String paramName) {
         if (i <= 0) {
             throwException(paramName, "less than or equal to 0");
+        }
+        return i;
+    }
+
+    public static float throwOnLteZero(float i, String paramName) {
+        if (i <= 0) {
+            throwException(paramName, "less than or equal to 0");
+        }
+        return i;
+    }
+
+    public static short throwOnLtValue(short i, short value, String paramName) {
+        if (i < value) {
+            throwException(paramName, "less than " + value);
+        }
+        return i;
+    }
+
+    public static float throwOnLtValue(float i, float value, String paramName) {
+        if (i < value) {
+            throwException(paramName, "less than " + value);
+        }
+        return i;
+    }
+
+    public static short throwOnGtValue(short i, short value, String paramName) {
+        if (i > value) {
+            throwException(paramName, "greater than " + value);
+        }
+        return i;
+    }
+
+    public static float throwOnGtValue(float i, float value, String paramName) {
+        if (i > value) {
+            throwException(paramName, "greater than " + value);
+        }
+        return i;
+    }
+
+    public static short throwOnEqualsValue(short i, short value, String paramName) {
+        if (i == value) {
+            throwException(paramName, "equal to " + value);
         }
         return i;
     }
