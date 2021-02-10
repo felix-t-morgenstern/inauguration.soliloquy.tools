@@ -181,6 +181,26 @@ class CheckTests {
     }
 
     @Test
+    void testThrowOnLtValueForInt() {
+        final String paramName = "paramName";
+
+        final int input = 123;
+        assertEquals(input, Check.throwOnLtValue(input, input, paramName));
+
+        assertThrows(IllegalArgumentException.class,
+                () -> Check.throwOnLtValue(input, (input + 1), paramName));
+        try {
+            Check.throwOnLtValue(input, (input + 1), paramName);
+        }
+        catch (IllegalArgumentException e) {
+            assertEquals("inaugural.soliloquy.tools.tests.CheckTests" +
+                            ".testThrowOnLtValueForInt: " + paramName +
+                            " cannot be less than " + (input + 1),
+                    e.getMessage());
+        }
+    }
+
+    @Test
     void testThrowOnLtValueForFloat() {
         final String paramName = "paramName";
 

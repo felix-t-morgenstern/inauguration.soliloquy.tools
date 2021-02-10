@@ -71,6 +71,13 @@ public class Check {
         return i;
     }
 
+    public static int throwOnLtValue(int i, int value, String paramName) {
+        if (i < value) {
+            throwException(paramName, "less than " + value);
+        }
+        return i;
+    }
+
     public static float throwOnLtValue(float i, float value, String paramName) {
         if (i < value) {
             throwException(paramName, "less than " + value);
