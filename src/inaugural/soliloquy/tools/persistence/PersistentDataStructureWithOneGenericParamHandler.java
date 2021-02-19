@@ -1,4 +1,6 @@
-package inaugural.soliloquy.tools.persistentvaluetypehandlers;
+package inaugural.soliloquy.tools.persistence;
+
+import inaugural.soliloquy.tools.Check;
 
 public abstract class PersistentDataStructureWithOneGenericParamHandler<T>
         extends PersistentTypeHandler<T> {
@@ -15,15 +17,9 @@ public abstract class PersistentDataStructureWithOneGenericParamHandler<T>
         return null;
     }
 
-    protected String getInnerType(String valueType, Class<T> dataStructureClass, String className) {
-        if(valueType == null) {
-            throw new IllegalArgumentException(
-                    className + ".generateArchetype: valueType must be non-null");
-        }
-        if(valueType.equals("")) {
-            throw new IllegalArgumentException(
-                    className + ".generateArchetype: valueType must be non-empty");
-        }
+    protected String getInnerType(String valueType, Class<T> dataStructureClass,
+                                  String className) {
+        Check.ifNullOrEmpty(valueType, "valueType");
 
         int openingCaret = valueType.indexOf("<");
         int closingCaret = valueType.lastIndexOf(">");

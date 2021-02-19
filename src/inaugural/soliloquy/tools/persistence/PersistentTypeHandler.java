@@ -1,7 +1,7 @@
-package inaugural.soliloquy.tools.persistentvaluetypehandlers;
+package inaugural.soliloquy.tools.persistence;
 
 import inaugural.soliloquy.tools.generic.HasOneGenericParam;
-import soliloquy.specs.common.infrastructure.PersistentValueTypeHandler;
+import soliloquy.specs.common.persistence.PersistentValueTypeHandler;
 
 public abstract class PersistentTypeHandler<T> extends HasOneGenericParam<T>
         implements PersistentValueTypeHandler<T> {

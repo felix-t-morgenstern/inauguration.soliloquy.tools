@@ -1,11 +1,12 @@
-package inaugural.soliloquy.tools.persistentvaluetypehandlers;
+package inaugural.soliloquy.tools.persistence;
 
-import soliloquy.specs.common.infrastructure.PersistentValuesHandler;
+import soliloquy.specs.common.persistence.PersistentValuesHandler;
 
 public abstract class PersistentTypeHandlerWithTwoGenerics<T> extends PersistentTypeHandler<T> {
     protected final PersistentValuesHandler PERSISTENT_VALUES_HANDLER;
 
-    protected PersistentTypeHandlerWithTwoGenerics(PersistentValuesHandler persistentValuesHandler) {
+    protected PersistentTypeHandlerWithTwoGenerics(
+            PersistentValuesHandler persistentValuesHandler) {
         PERSISTENT_VALUES_HANDLER = persistentValuesHandler;
     }
 
@@ -43,21 +44,25 @@ public abstract class PersistentTypeHandlerWithTwoGenerics<T> extends Persistent
     public T generateArchetype(String valueType) throws IllegalArgumentException {
         if (valueType == null) {
             throw new IllegalArgumentException(
-                    "PersistentHandlerWithTwoGenerics.generateArchetype: valueType must be non-null");
+                    "PersistentHandlerWithTwoGenerics.generateArchetype: " +
+                            "valueType must be non-null");
         }
         if (valueType.equals("")) {
             throw new IllegalArgumentException(
-                    "PersistentHandlerWithTwoGenerics.generateArchetype: valueType must be non-empty");
+                    "PersistentHandlerWithTwoGenerics.generateArchetype: " +
+                            "valueType must be non-empty");
         }
         int openingCaret = valueType.indexOf("<");
         if (openingCaret < 0) {
             throw new IllegalArgumentException(
-                    "PersistentHandlerWithTwoGenerics.generateArchetype: valueType has no opening caret");
+                    "PersistentHandlerWithTwoGenerics.generateArchetype: " +
+                            "valueType has no opening caret");
         }
         int closingCaret = valueType.lastIndexOf(">");
         if (closingCaret < 0) {
             throw new IllegalArgumentException(
-                    "PersistentHandlerWithTwoGenerics.generateArchetype: valueType has no closing caret");
+                    "PersistentHandlerWithTwoGenerics.generateArchetype: " +
+                            "valueType has no closing caret");
         }
 
         return (T) generateTypeFromGenericParameterNames(valueType
