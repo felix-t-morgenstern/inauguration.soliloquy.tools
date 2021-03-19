@@ -1,16 +1,19 @@
 package inaugural.soliloquy.tools.persistence;
 
-import inaugural.soliloquy.tools.generic.HasOneGenericParam;
+import inaugural.soliloquy.tools.generic.CanGetInterfaceName;
 import soliloquy.specs.common.persistence.PersistentValueTypeHandler;
 
-public abstract class PersistentTypeHandler<T> extends HasOneGenericParam<T>
+// TODO: Consider having tools.PersistentTypeHandler extend tools.HasOneGenericParam
+public abstract class PersistentTypeHandler<T> extends CanGetInterfaceName
         implements PersistentValueTypeHandler<T> {
+    @Override
+    public String getInterfaceName() {
+        return PersistentValueTypeHandler.class.getCanonicalName() + "<" +
+                getProperTypeName(getArchetype()) + ">";
+    }
 
     @Override
-    public abstract T getArchetype();
-
-    @Override
-    public String getUnparameterizedInterfaceName() {
-        return PersistentValueTypeHandler.class.getCanonicalName();
+    public T getArchetype() {
+        throw new UnsupportedOperationException();
     }
 }

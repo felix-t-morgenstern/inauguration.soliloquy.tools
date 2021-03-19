@@ -2,7 +2,18 @@ package inaugural.soliloquy.tools.generic;
 
 public abstract class HasOneGenericParam<T> extends HasGenericParams
         implements soliloquy.specs.common.shared.HasOneGenericParam<T> {
+    protected final T ARCHETYPE;
+
     private String _parameterizedClassName;
+
+    protected HasOneGenericParam(T archetype) {
+        ARCHETYPE = archetypeCheck(archetype, "archetype");
+    }
+
+    @Override
+    public T getArchetype() {
+        return ARCHETYPE;
+    }
 
     @Override
     public String getInterfaceName() {

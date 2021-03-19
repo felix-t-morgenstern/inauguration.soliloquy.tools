@@ -122,9 +122,9 @@ public class Check {
         }
     }
 
-    @SuppressWarnings("rawtypes")
-    public static void archetypeAndArchetypesOfArchetypeAreNotNull(String paramName,
-                                                                   Object archetype) {
+    @SuppressWarnings({"rawtypes", "UnusedReturnValue"})
+    public static <T> T archetypeAndArchetypesOfArchetypeAreNotNull(String paramName,
+                                                                    T archetype) {
         if (archetype == null) {
             throwException(paramName, "null");
         }
@@ -137,6 +137,8 @@ public class Check {
             archetypeAndArchetypesOfArchetypeAreNotNull(paramName,
                     ((HasTwoGenericParams) archetype).getSecondArchetype());
         }
+
+        return archetype;
     }
 
     private static void throwException(String paramName, String violationType) {

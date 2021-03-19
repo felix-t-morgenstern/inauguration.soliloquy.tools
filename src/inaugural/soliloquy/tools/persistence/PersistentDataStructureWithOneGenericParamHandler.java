@@ -11,18 +11,29 @@ public abstract class PersistentDataStructureWithOneGenericParamHandler<T>
 
     @Override
     public T getArchetype() {
-        // NB: The PersistentTypeHandler for this data structure should be selected by the
-        // PersistentValuesHandler through specific, manually-defined String pattern recognition,
-        // rather than via getArchetype.
-        return null;
+        throw new UnsupportedOperationException();
     }
 
-    protected String getInnerType(String valueType, Class<T> dataStructureClass,
-                                  String className) {
+    // NB: dataStructureClass is passed in here, since getArchetype is an unsupported operation
+    // TODO: Consider refactoring PersistentTypeHandler to not contain getArchetype
+    @SuppressWarnings("ConstantConditions")
+    protected String getInnerType(String valueType, Class<T> dataStructureClass) {
         Check.ifNullOrEmpty(valueType, "valueType");
+        Check.ifNull(dataStructureClass, "dataStructureClass");
+
+        StackTraceElement callingMethod = Thread.currentThread().getStackTrace()[0];
+        String className = callingMethod.getClassName();
 
         int openingCaret = valueType.indexOf("<");
+        if (openingCaret < 0) {
+            throw new IllegalArgumentException(className +
+                    ".getInnerType: no opening caret found");
+        }
         int closingCaret = valueType.lastIndexOf(">");
+        if (closingCaret < 0) {
+            throw new IllegalArgumentException(className +
+                    ".getInnerType: no closing caret found");
+        }
         if (!valueType.substring(0, openingCaret).equals(dataStructureClass.getCanonicalName())) {
             throw new IllegalArgumentException(
                     className +
