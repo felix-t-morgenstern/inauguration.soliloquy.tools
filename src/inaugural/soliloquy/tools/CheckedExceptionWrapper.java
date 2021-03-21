@@ -3,7 +3,7 @@ package inaugural.soliloquy.tools;
 import java.util.concurrent.Callable;
 
 public class CheckedExceptionWrapper {
-    public static <T> T CallWrapped(Callable<T> callable) {
+    public static <T> T callWrapped(Callable<T> callable) {
         try {
             return Check.ifNull(callable, "callable").call();
         } catch (Exception e) {
@@ -11,7 +11,7 @@ public class CheckedExceptionWrapper {
         }
     }
 
-    public static void Sleep(long milliseconds) {
+    public static void sleep(long milliseconds) {
         try {
             Thread.sleep(milliseconds);
         } catch (InterruptedException e) {

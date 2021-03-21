@@ -17,7 +17,7 @@ class CheckedExceptionWrapperTests {
         };
 
         try {
-            CheckedExceptionWrapper.CallWrapped(throwingCallable);
+            CheckedExceptionWrapper.callWrapped(throwingCallable);
         }
         catch (RuntimeException e) {
             Throwable innerThrowable = e.getCause();
@@ -41,6 +41,6 @@ class CheckedExceptionWrapperTests {
         int valueToReturn = 123123;
         Callable<Integer> nonthrowingCallable = () -> valueToReturn;
 
-        assertEquals(valueToReturn, (int)CheckedExceptionWrapper.CallWrapped(nonthrowingCallable));
+        assertEquals(valueToReturn, (int)CheckedExceptionWrapper.callWrapped(nonthrowingCallable));
     }
 }

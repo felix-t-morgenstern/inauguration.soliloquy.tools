@@ -64,46 +64,53 @@ public class Check {
         return i;
     }
 
-    public static short throwOnLtValue(short i, short value, String paramName) {
-        if (i < value) {
+    public static short throwOnLtValue(short param, short value, String paramName) {
+        if (param < value) {
             throwException(paramName, "less than " + value);
         }
-        return i;
+        return param;
     }
 
-    public static int throwOnLtValue(int i, int value, String paramName) {
-        if (i < value) {
+    public static int throwOnLtValue(int param, int value, String paramName) {
+        if (param < value) {
             throwException(paramName, "less than " + value);
         }
-        return i;
+        return param;
     }
 
-    public static float throwOnLtValue(float i, float value, String paramName) {
-        if (i < value) {
+    public static float throwOnLtValue(float param, float value, String paramName) {
+        if (param < value) {
             throwException(paramName, "less than " + value);
         }
-        return i;
+        return param;
     }
 
-    public static short throwOnGtValue(short i, short value, String paramName) {
-        if (i > value) {
+    public static short throwOnGtValue(short param, short value, String paramName) {
+        if (param > value) {
             throwException(paramName, "greater than " + value);
         }
-        return i;
+        return param;
     }
 
-    public static float throwOnGtValue(float i, float value, String paramName) {
-        if (i > value) {
+    public static float throwOnGtValue(float param, float value, String paramName) {
+        if (param > value) {
             throwException(paramName, "greater than " + value);
         }
-        return i;
+        return param;
     }
 
-    public static short throwOnEqualsValue(short i, short value, String paramName) {
-        if (i == value) {
+    public static int throwOnGteValue(int param, int value, String paramName) {
+        if (param >= value) {
+            throwException(paramName, "greater than " + value);
+        }
+        return param;
+    }
+
+    public static short throwOnEqualsValue(short param, short value, String paramName) {
+        if (param == value) {
             throwException(paramName, "equal to " + value);
         }
-        return i;
+        return param;
     }
 
     public static void throwOnSecondLte(int first, int second,

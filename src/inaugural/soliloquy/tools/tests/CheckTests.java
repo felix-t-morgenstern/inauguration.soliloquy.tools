@@ -263,6 +263,28 @@ class CheckTests {
     }
 
     @Test
+    void testThrowOnGteValueForInt() {
+        final String paramName = "paramName";
+
+        final int input = 123;
+        assertEquals(input, Check.throwOnGtValue(input, input, paramName));
+
+        assertThrows(IllegalArgumentException.class,
+                () -> Check.throwOnGteValue(input, input, paramName));
+        assertThrows(IllegalArgumentException.class,
+                () -> Check.throwOnGteValue(input + 1, input, paramName));
+        try {
+            Check.throwOnGteValue(input, input - 1, paramName);
+        }
+        catch (IllegalArgumentException e) {
+            assertEquals("inaugural.soliloquy.tools.tests.CheckTests" +
+                            ".testThrowOnGteValueForInt: " + paramName +
+                            " cannot be greater than " + (input - 1),
+                    e.getMessage());
+        }
+    }
+
+    @Test
     void testThrowOnEqualsValueForShort() {
         final String paramName = "paramName";
 
