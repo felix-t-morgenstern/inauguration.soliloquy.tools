@@ -86,18 +86,115 @@ class CheckTests {
     }
 
     @Test
-    void testIfNonNegative() {
+    void testIfNonNegativeForShort() {
         final String paramName = "paramName";
 
-        final int input = 123;
-        assertSame(input, Check.ifNonNegative(input, paramName));
+        final short input = 123;
+        assertEquals(input, Check.ifNonNegative(input, paramName));
 
-        assertThrows(IllegalArgumentException.class, () -> Check.ifNonNegative(-1, paramName));
+        assertThrows(IllegalArgumentException.class,
+                () -> Check.ifNonNegative((short)-1, paramName));
         try {
             Check.ifNonNegative(-1, paramName);
         }
         catch (IllegalArgumentException e) {
-            assertEquals("inaugural.soliloquy.tools.tests.CheckTests.testIfNonNegative: " +
+            assertEquals(
+                    "inaugural.soliloquy.tools.tests.CheckTests.testIfNonNegativeForShort: " +
+                            paramName + " cannot be negative",
+                    e.getMessage());
+        }
+    }
+
+    @Test
+    void testIfNonNegativeForInt() {
+        final String paramName = "paramName";
+
+        final int input = 123;
+        assertEquals(input, Check.ifNonNegative(input, paramName));
+
+        assertThrows(IllegalArgumentException.class, () -> Check.ifNonNegative(-input, paramName));
+        try {
+            Check.ifNonNegative(-1, paramName);
+        }
+        catch (IllegalArgumentException e) {
+            assertEquals(
+                    "inaugural.soliloquy.tools.tests.CheckTests.testIfNonNegativeForInt: " +
+                            paramName + " cannot be negative",
+                    e.getMessage());
+        }
+    }
+
+    @Test
+    void testIfNonNegativeForIntClass() {
+        final String paramName = "paramName";
+
+        final Integer input = 123;
+        assertEquals(input, Check.ifNonNegative(input, paramName));
+
+        assertThrows(IllegalArgumentException.class, () -> Check.ifNonNegative(-input, paramName));
+        try {
+            Check.ifNonNegative(-1, paramName);
+        }
+        catch (IllegalArgumentException e) {
+            assertEquals(
+                    "inaugural.soliloquy.tools.tests.CheckTests.testIfNonNegativeForIntClass: " +
+                            paramName + " cannot be negative",
+                    e.getMessage());
+        }
+    }
+
+    @Test
+    void testIfNonNegativeForLong() {
+        final String paramName = "paramName";
+
+        final long input = 123;
+        assertEquals(input, Check.ifNonNegative(input, paramName));
+
+        assertThrows(IllegalArgumentException.class, () -> Check.ifNonNegative(-1L, paramName));
+        try {
+            Check.ifNonNegative(-1, paramName);
+        }
+        catch (IllegalArgumentException e) {
+            assertEquals(
+                    "inaugural.soliloquy.tools.tests.CheckTests.testIfNonNegativeForLong: " +
+                            paramName + " cannot be negative",
+                    e.getMessage());
+        }
+    }
+
+    @Test
+    void testIfNonNegativeForFloat() {
+        final String paramName = "paramName";
+
+        final float input = 0.123f;
+        assertEquals(input, Check.ifNonNegative(input, paramName));
+
+        assertThrows(IllegalArgumentException.class, () -> Check.ifNonNegative(-1f, paramName));
+        try {
+            Check.ifNonNegative(-1, paramName);
+        }
+        catch (IllegalArgumentException e) {
+            assertEquals(
+                    "inaugural.soliloquy.tools.tests.CheckTests.testIfNonNegativeForFloat: " +
+                            paramName + " cannot be negative",
+                    e.getMessage());
+        }
+    }
+
+    @Test
+    void testIfNonNegativeForDouble() {
+        final String paramName = "paramName";
+
+        final double input = 0.123d;
+        assertEquals(input, Check.ifNonNegative(input, paramName));
+
+        assertThrows(IllegalArgumentException.class, () -> Check.ifNonNegative(-1d, paramName));
+        try {
+            Check.ifNonNegative(-1, paramName);
+        }
+        catch (IllegalArgumentException e) {
+            assertEquals(
+                    "inaugural.soliloquy.tools.tests.CheckTests.testIfNonNegativeForDouble: " +
                             paramName + " cannot be negative",
                     e.getMessage());
         }
@@ -110,7 +207,8 @@ class CheckTests {
         final short input = 123;
         assertEquals(input, Check.throwOnLteZero(input, paramName));
 
-        assertThrows(IllegalArgumentException.class, () -> Check.throwOnLteZero(0, paramName));
+        assertThrows(IllegalArgumentException.class,
+                () -> Check.throwOnLteZero((short)0, paramName));
         try {
             Check.throwOnLteZero((short) 0, paramName);
         }
@@ -142,20 +240,58 @@ class CheckTests {
     }
 
     @Test
+    void testThrowOnLteZeroForLong() {
+        final String paramName = "paramName";
+
+        final long input = 123;
+        assertEquals(input, Check.throwOnLteZero(input, paramName));
+
+        assertThrows(IllegalArgumentException.class, () -> Check.throwOnLteZero(0L, paramName));
+        try {
+            Check.throwOnLteZero(0, paramName);
+        }
+        catch (IllegalArgumentException e) {
+            assertEquals("inaugural.soliloquy.tools.tests.CheckTests" +
+                            ".testThrowOnLteZeroForLong: " + paramName +
+                            " cannot be less than or equal to 0",
+                    e.getMessage());
+        }
+    }
+
+    @Test
     void testThrowOnLteZeroForFloat() {
         final String paramName = "paramName";
 
         final float input = 0.123f;
         assertEquals(input, Check.throwOnLteZero(input, paramName));
 
-        assertThrows(IllegalArgumentException.class, () -> Check.throwOnLteZero(0, paramName));
+        assertThrows(IllegalArgumentException.class, () -> Check.throwOnLteZero(0f, paramName));
         try {
             Check.throwOnLteZero(0f, paramName);
         }
         catch (IllegalArgumentException e) {
             assertEquals("inaugural.soliloquy.tools.tests.CheckTests" +
                             ".testThrowOnLteZeroForFloat: " + paramName +
-                            " cannot be less than or equal to 0",
+                            " cannot be less than or equal to 0.0",
+                    e.getMessage());
+        }
+    }
+
+    @Test
+    void testThrowOnLteZeroForDouble() {
+        final String paramName = "paramName";
+
+        final double input = 0.123d;
+        assertEquals(input, Check.throwOnLteZero(input, paramName));
+
+        assertThrows(IllegalArgumentException.class, () -> Check.throwOnLteZero(0d, paramName));
+        try {
+            Check.throwOnLteZero(0d, paramName);
+        }
+        catch (IllegalArgumentException e) {
+            assertEquals("inaugural.soliloquy.tools.tests.CheckTests" +
+                            ".testThrowOnLteZeroForDouble: " + paramName +
+                            " cannot be less than or equal to 0.0",
                     e.getMessage());
         }
     }
@@ -201,6 +337,26 @@ class CheckTests {
     }
 
     @Test
+    void testThrowOnLtValueForLong() {
+        final String paramName = "paramName";
+
+        final long input = 123L;
+        assertEquals(input, Check.throwOnLtValue(input, input, paramName));
+
+        assertThrows(IllegalArgumentException.class,
+                () -> Check.throwOnLtValue(input, (input + 1), paramName));
+        try {
+            Check.throwOnLtValue(input, (input + 1), paramName);
+        }
+        catch (IllegalArgumentException e) {
+            assertEquals("inaugural.soliloquy.tools.tests.CheckTests" +
+                            ".testThrowOnLtValueForLong: " + paramName +
+                            " cannot be less than " + (input + 1),
+                    e.getMessage());
+        }
+    }
+
+    @Test
     void testThrowOnLtValueForFloat() {
         final String paramName = "paramName";
 
@@ -222,6 +378,139 @@ class CheckTests {
     }
 
     @Test
+    void testThrowOnLtValueForDouble() {
+        final String paramName = "paramName";
+
+        final double input = 0.122d;
+        final double value = 0.123d;
+        assertEquals(input, Check.throwOnLtValue(input, input, paramName));
+
+        assertThrows(IllegalArgumentException.class,
+                () -> Check.throwOnLtValue(input, value, paramName));
+        try {
+            Check.throwOnLtValue(input, value, paramName);
+        }
+        catch (IllegalArgumentException e) {
+            assertEquals("inaugural.soliloquy.tools.tests.CheckTests" +
+                            ".testThrowOnLtValueForDouble: " + paramName +
+                            " cannot be less than " + value,
+                    e.getMessage());
+        }
+    }
+
+    @Test
+    void testThrowOnLteValueForShort() {
+        final String paramName = "paramName";
+
+        final short input = 123;
+        assertEquals(input, Check.throwOnLteValue(input, (short)(input - 1), paramName));
+
+        assertThrows(IllegalArgumentException.class,
+                () -> Check.throwOnLteValue(input, (short)(input + 1), paramName));
+        assertThrows(IllegalArgumentException.class,
+                () -> Check.throwOnLteValue(input, input, paramName));
+        try {
+            Check.throwOnLteValue(input, (short)(input + 1), paramName);
+        }
+        catch (IllegalArgumentException e) {
+            assertEquals("inaugural.soliloquy.tools.tests.CheckTests" +
+                            ".testThrowOnLteValueForShort: " + paramName +
+                            " cannot be less than or equal to " + (input + 1),
+                    e.getMessage());
+        }
+    }
+
+    @Test
+    void testThrowOnLteValueForInt() {
+        final String paramName = "paramName";
+
+        final int input = 123;
+        assertEquals(input, Check.throwOnLteValue(input, input - 1, paramName));
+
+        assertThrows(IllegalArgumentException.class,
+                () -> Check.throwOnLteValue(input, (input + 1), paramName));
+        assertThrows(IllegalArgumentException.class,
+                () -> Check.throwOnLteValue(input, input, paramName));
+        try {
+            Check.throwOnLteValue(input, (input + 1), paramName);
+        }
+        catch (IllegalArgumentException e) {
+            assertEquals("inaugural.soliloquy.tools.tests.CheckTests" +
+                            ".testThrowOnLteValueForInt: " + paramName +
+                            " cannot be less than or equal to " + (input + 1),
+                    e.getMessage());
+        }
+    }
+
+    @Test
+    void testThrowOnLteValueForLong() {
+        final String paramName = "paramName";
+
+        final long input = 123L;
+        assertEquals(input, Check.throwOnLteValue(input, input - 1, paramName));
+
+        assertThrows(IllegalArgumentException.class,
+                () -> Check.throwOnLteValue(input, (input + 1), paramName));
+        assertThrows(IllegalArgumentException.class,
+                () -> Check.throwOnLteValue(input, input, paramName));
+        try {
+            Check.throwOnLteValue(input, (input + 1), paramName);
+        }
+        catch (IllegalArgumentException e) {
+            assertEquals("inaugural.soliloquy.tools.tests.CheckTests" +
+                            ".testThrowOnLteValueForLong: " + paramName +
+                            " cannot be less than or equal to " + (input + 1),
+                    e.getMessage());
+        }
+    }
+
+    @Test
+    void testThrowOnLteValueForFloat() {
+        final String paramName = "paramName";
+
+        final float input = 0.122f;
+        final float value = 0.123f;
+        assertEquals(input, Check.throwOnLteValue(input, input - 0.001f, paramName));
+
+        assertThrows(IllegalArgumentException.class,
+                () -> Check.throwOnLteValue(input, value, paramName));
+        assertThrows(IllegalArgumentException.class,
+                () -> Check.throwOnLteValue(input, input, paramName));
+        try {
+            Check.throwOnLteValue(input, value, paramName);
+        }
+        catch (IllegalArgumentException e) {
+            assertEquals("inaugural.soliloquy.tools.tests.CheckTests" +
+                            ".testThrowOnLteValueForFloat: " + paramName +
+                            " cannot be less than or equal to " + value,
+                    e.getMessage());
+        }
+    }
+
+    @Test
+    void testThrowOnLteValueForDouble() {
+        final String paramName = "paramName";
+
+        final double input = 0.122d;
+        final double value = 0.123d;
+        assertEquals(input, Check.throwOnLteValue(input, input - 0.001d, paramName));
+
+        assertThrows(IllegalArgumentException.class,
+                () -> Check.throwOnLteValue(input, value, paramName));
+        assertThrows(IllegalArgumentException.class,
+                () -> Check.throwOnLteValue(input, input, paramName));
+        try {
+            Check.throwOnLteValue(input, value, paramName);
+        }
+        catch (IllegalArgumentException e) {
+            assertEquals("inaugural.soliloquy.tools.tests.CheckTests" +
+                            ".testThrowOnLteValueForDouble: " + paramName +
+                            " cannot be less than or equal to " + value,
+                    e.getMessage());
+        }
+    }
+
+    @Test
     void testThrowOnGtValueForShort() {
         final String paramName = "paramName";
 
@@ -236,6 +525,46 @@ class CheckTests {
         catch (IllegalArgumentException e) {
             assertEquals("inaugural.soliloquy.tools.tests.CheckTests" +
                             ".testThrowOnGtValueForShort: " + paramName +
+                            " cannot be greater than " + (input - 1),
+                    e.getMessage());
+        }
+    }
+
+    @Test
+    void testThrowOnGtValueForInt() {
+        final String paramName = "paramName";
+
+        final int input = 123;
+        assertEquals(input, Check.throwOnGtValue(input, input, paramName));
+
+        assertThrows(IllegalArgumentException.class,
+                () -> Check.throwOnGtValue(input, input - 1, paramName));
+        try {
+            Check.throwOnGtValue(input, input - 1, paramName);
+        }
+        catch (IllegalArgumentException e) {
+            assertEquals("inaugural.soliloquy.tools.tests.CheckTests" +
+                            ".testThrowOnGtValueForInt: " + paramName +
+                            " cannot be greater than " + (input - 1),
+                    e.getMessage());
+        }
+    }
+
+    @Test
+    void testThrowOnGtValueForLong() {
+        final String paramName = "paramName";
+
+        final long input = 123;
+        assertEquals(input, Check.throwOnGtValue(input, input, paramName));
+
+        assertThrows(IllegalArgumentException.class,
+                () -> Check.throwOnGtValue(input, input - 1, paramName));
+        try {
+            Check.throwOnGtValue(input, input - 1, paramName);
+        }
+        catch (IllegalArgumentException e) {
+            assertEquals("inaugural.soliloquy.tools.tests.CheckTests" +
+                            ".testThrowOnGtValueForLong: " + paramName +
                             " cannot be greater than " + (input - 1),
                     e.getMessage());
         }
@@ -263,22 +592,131 @@ class CheckTests {
     }
 
     @Test
-    void testThrowOnGteValueForInt() {
+    void testThrowOnGtValueForDouble() {
         final String paramName = "paramName";
 
-        final int input = 123;
+        final double input = 0.123f;
+        final double value = 0.122f;
         assertEquals(input, Check.throwOnGtValue(input, input, paramName));
+
+        assertThrows(IllegalArgumentException.class,
+                () -> Check.throwOnGtValue(input, value, paramName));
+        try {
+            Check.throwOnGtValue(input, value, paramName);
+        }
+        catch (IllegalArgumentException e) {
+            assertEquals("inaugural.soliloquy.tools.tests.CheckTests" +
+                            ".testThrowOnGtValueForDouble: " + paramName +
+                            " cannot be greater than " + value,
+                    e.getMessage());
+        }
+    }
+
+    @Test
+    void testThrowOnGteValueForShort() {
+        final String paramName = "paramName";
+
+        final short input = 123;
+        assertEquals(input, Check.throwOnGteValue(input, (short)(input + 1), paramName));
 
         assertThrows(IllegalArgumentException.class,
                 () -> Check.throwOnGteValue(input, input, paramName));
         assertThrows(IllegalArgumentException.class,
-                () -> Check.throwOnGteValue(input + 1, input, paramName));
+                () -> Check.throwOnGteValue(input, (short)(input - 1), paramName));
+        try {
+            Check.throwOnGteValue(input, (short)(input - 1), paramName);
+        }
+        catch (IllegalArgumentException e) {
+            assertEquals("inaugural.soliloquy.tools.tests.CheckTests" +
+                            ".testThrowOnGteValueForShort: " + paramName +
+                            " cannot be greater than " + (input - 1),
+                    e.getMessage());
+        }
+    }
+
+    @Test
+    void testThrowOnGteValueForInt() {
+        final String paramName = "paramName";
+
+        final int input = 123;
+        assertEquals(input, Check.throwOnGteValue(input, input + 1, paramName));
+
+        assertThrows(IllegalArgumentException.class,
+                () -> Check.throwOnGteValue(input, input, paramName));
+        assertThrows(IllegalArgumentException.class,
+                () -> Check.throwOnGteValue(input, input - 1, paramName));
         try {
             Check.throwOnGteValue(input, input - 1, paramName);
         }
         catch (IllegalArgumentException e) {
             assertEquals("inaugural.soliloquy.tools.tests.CheckTests" +
                             ".testThrowOnGteValueForInt: " + paramName +
+                            " cannot be greater than " + (input - 1),
+                    e.getMessage());
+        }
+    }
+
+    @Test
+    void testThrowOnGteValueForLong() {
+        final String paramName = "paramName";
+
+        final long input = 123;
+        assertEquals(input, Check.throwOnGteValue(input, input + 1, paramName));
+
+        assertThrows(IllegalArgumentException.class,
+                () -> Check.throwOnGteValue(input, input, paramName));
+        assertThrows(IllegalArgumentException.class,
+                () -> Check.throwOnGteValue(input, input - 1, paramName));
+        try {
+            Check.throwOnGteValue(input, input - 1, paramName);
+        }
+        catch (IllegalArgumentException e) {
+            assertEquals("inaugural.soliloquy.tools.tests.CheckTests" +
+                            ".testThrowOnGteValueForLong: " + paramName +
+                            " cannot be greater than " + (input - 1),
+                    e.getMessage());
+        }
+    }
+
+    @Test
+    void testThrowOnGteValueForFloat() {
+        final String paramName = "paramName";
+
+        final float input = 0.123f;
+        assertEquals(input, Check.throwOnGteValue(input, input + 1, paramName));
+
+        assertThrows(IllegalArgumentException.class,
+                () -> Check.throwOnGteValue(input, input, paramName));
+        assertThrows(IllegalArgumentException.class,
+                () -> Check.throwOnGteValue(input, input - 1, paramName));
+        try {
+            Check.throwOnGteValue(input, input - 1, paramName);
+        }
+        catch (IllegalArgumentException e) {
+            assertEquals("inaugural.soliloquy.tools.tests.CheckTests" +
+                            ".testThrowOnGteValueForFloat: " + paramName +
+                            " cannot be greater than " + (input - 1),
+                    e.getMessage());
+        }
+    }
+
+    @Test
+    void testThrowOnGteValueForDouble() {
+        final String paramName = "paramName";
+
+        final double input = 0.123f;
+        assertEquals(input, Check.throwOnGteValue(input, input + 1, paramName));
+
+        assertThrows(IllegalArgumentException.class,
+                () -> Check.throwOnGteValue(input, input, paramName));
+        assertThrows(IllegalArgumentException.class,
+                () -> Check.throwOnGteValue(input, input - 1, paramName));
+        try {
+            Check.throwOnGteValue(input, input - 1, paramName);
+        }
+        catch (IllegalArgumentException e) {
+            assertEquals("inaugural.soliloquy.tools.tests.CheckTests" +
+                            ".testThrowOnGteValueForDouble: " + paramName +
                             " cannot be greater than " + (input - 1),
                     e.getMessage());
         }
@@ -305,7 +743,105 @@ class CheckTests {
     }
 
     @Test
-    void testThrowOnSecondLte() {
+    void testThrowOnEqualsValueForInt() {
+        final String paramName = "paramName";
+
+        final int input = 123;
+        assertEquals(input, Check.throwOnEqualsValue(input, input + 1, paramName));
+
+        assertThrows(IllegalArgumentException.class,
+                () -> Check.throwOnEqualsValue(input, input, paramName));
+        try {
+            Check.throwOnEqualsValue(input, input, paramName);
+        }
+        catch (IllegalArgumentException e) {
+            assertEquals("inaugural.soliloquy.tools.tests.CheckTests" +
+                            ".testThrowOnEqualsValueForInt: " + paramName +
+                            " cannot be equal to " + input,
+                    e.getMessage());
+        }
+    }
+
+    @Test
+    void testThrowOnEqualsValueForLong() {
+        final String paramName = "paramName";
+
+        final long input = 123L;
+        assertEquals(input, Check.throwOnEqualsValue(input, input + 1, paramName));
+
+        assertThrows(IllegalArgumentException.class,
+                () -> Check.throwOnEqualsValue(input, input, paramName));
+        try {
+            Check.throwOnEqualsValue(input, input, paramName);
+        }
+        catch (IllegalArgumentException e) {
+            assertEquals("inaugural.soliloquy.tools.tests.CheckTests" +
+                            ".testThrowOnEqualsValueForLong: " + paramName +
+                            " cannot be equal to " + input,
+                    e.getMessage());
+        }
+    }
+
+    @Test
+    void testThrowOnEqualsValueForFloat() {
+        final String paramName = "paramName";
+
+        final float input = 0.123f;
+        assertEquals(input, Check.throwOnEqualsValue(input, input + 1, paramName));
+
+        assertThrows(IllegalArgumentException.class,
+                () -> Check.throwOnEqualsValue(input, input, paramName));
+        try {
+            Check.throwOnEqualsValue(input, input, paramName);
+        }
+        catch (IllegalArgumentException e) {
+            assertEquals("inaugural.soliloquy.tools.tests.CheckTests" +
+                            ".testThrowOnEqualsValueForFloat: " + paramName +
+                            " cannot be equal to " + input,
+                    e.getMessage());
+        }
+    }
+
+    @Test
+    void testThrowOnEqualsValueForDouble() {
+        final String paramName = "paramName";
+
+        final double input = 0.123d;
+        assertEquals(input, Check.throwOnEqualsValue(input, input + 1, paramName));
+
+        assertThrows(IllegalArgumentException.class,
+                () -> Check.throwOnEqualsValue(input, input, paramName));
+        try {
+            Check.throwOnEqualsValue(input, input, paramName);
+        }
+        catch (IllegalArgumentException e) {
+            assertEquals("inaugural.soliloquy.tools.tests.CheckTests" +
+                            ".testThrowOnEqualsValueForDouble: " + paramName +
+                            " cannot be equal to " + input,
+                    e.getMessage());
+        }
+    }
+
+    @Test
+    void testThrowOnSecondLteForShorts() {
+        final short input1 = 123;
+        final short input2 = 123;
+
+        assertThrows(IllegalArgumentException.class, () ->
+                Check.throwOnSecondLte(input1, input2, "input1", "input2"));
+        try {
+            Check.throwOnSecondLte(input1, input2, "input1", "input2");
+        }
+        catch (IllegalArgumentException e) {
+            assertEquals("inaugural.soliloquy.tools.tests.CheckTests" +
+                            ".testThrowOnSecondLteForShorts: input2 (" + input2 +
+                            ") cannot be less than or equal to input1 (" + input1 + ")",
+                    e.getMessage());
+        }
+    }
+
+    @Test
+    void testThrowOnSecondLteForInts() {
         final int input1 = 123;
         final int input2 = 123;
 
@@ -316,14 +852,86 @@ class CheckTests {
         }
         catch (IllegalArgumentException e) {
             assertEquals("inaugural.soliloquy.tools.tests.CheckTests" +
-                            ".testThrowOnSecondLte: input2 (" + input2 + ") cannot be less than " +
-                            "or equal to input1 (" + input1 + ")",
+                            ".testThrowOnSecondLteForInts: input2 (" + input2 +
+                            ") cannot be less than or equal to input1 (" + input1 + ")",
                     e.getMessage());
         }
     }
 
     @Test
-    void testThrowOnSecondGt() {
+    void testThrowOnSecondLteForLongs() {
+        final long input1 = 123;
+        final long input2 = 123;
+
+        assertThrows(IllegalArgumentException.class, () ->
+                Check.throwOnSecondLte(input1, input2, "input1", "input2"));
+        try {
+            Check.throwOnSecondLte(input1, input2, "input1", "input2");
+        }
+        catch (IllegalArgumentException e) {
+            assertEquals("inaugural.soliloquy.tools.tests.CheckTests" +
+                            ".testThrowOnSecondLteForLongs: input2 (" + input2 +
+                            ") cannot be less than or equal to input1 (" + input1 + ")",
+                    e.getMessage());
+        }
+    }
+
+    @Test
+    void testThrowOnSecondLteForFloats() {
+        final float input1 = 123;
+        final float input2 = 123;
+
+        assertThrows(IllegalArgumentException.class, () ->
+                Check.throwOnSecondLte(input1, input2, "input1", "input2"));
+        try {
+            Check.throwOnSecondLte(input1, input2, "input1", "input2");
+        }
+        catch (IllegalArgumentException e) {
+            assertEquals("inaugural.soliloquy.tools.tests.CheckTests" +
+                            ".testThrowOnSecondLteForFloats: input2 (" + input2 +
+                            ") cannot be less than or equal to input1 (" + input1 + ")",
+                    e.getMessage());
+        }
+    }
+
+    @Test
+    void testThrowOnSecondLteForDoubles() {
+        final double input1 = 123;
+        final double input2 = 123;
+
+        assertThrows(IllegalArgumentException.class, () ->
+                Check.throwOnSecondLte(input1, input2, "input1", "input2"));
+        try {
+            Check.throwOnSecondLte(input1, input2, "input1", "input2");
+        }
+        catch (IllegalArgumentException e) {
+            assertEquals("inaugural.soliloquy.tools.tests.CheckTests" +
+                            ".testThrowOnSecondLteForDoubles: input2 (" + input2 +
+                            ") cannot be less than or equal to input1 (" + input1 + ")",
+                    e.getMessage());
+        }
+    }
+
+    @Test
+    void testThrowOnSecondGtForShorts() {
+        final short input1 = 123;
+        final short input2 = input1 + 1;
+
+        assertThrows(IllegalArgumentException.class, () ->
+                Check.throwOnSecondGt(input1, input2, "input1", "input2"));
+        try {
+            Check.throwOnSecondGt(input1, input2, "input1", "input2");
+        }
+        catch (IllegalArgumentException e) {
+            assertEquals("inaugural.soliloquy.tools.tests.CheckTests" +
+                            ".testThrowOnSecondGtForShorts: input2 (" + input2 +
+                            ") cannot be greater than input1 (" + input1 + ")",
+                    e.getMessage());
+        }
+    }
+
+    @Test
+    void testThrowOnSecondGtForInts() {
         final int input1 = 123;
         final int input2 = input1 + 1;
 
@@ -334,8 +942,62 @@ class CheckTests {
         }
         catch (IllegalArgumentException e) {
             assertEquals("inaugural.soliloquy.tools.tests.CheckTests" +
-                            ".testThrowOnSecondGt: input2 (" + input2 + ") cannot be greater " +
-                            "than input1 (" + input1 + ")",
+                            ".testThrowOnSecondGtForInts: input2 (" + input2 +
+                            ") cannot be greater than input1 (" + input1 + ")",
+                    e.getMessage());
+        }
+    }
+
+    @Test
+    void testThrowOnSecondGtForLongs() {
+        final long input1 = 123;
+        final long input2 = input1 + 1;
+
+        assertThrows(IllegalArgumentException.class, () ->
+                Check.throwOnSecondGt(input1, input2, "input1", "input2"));
+        try {
+            Check.throwOnSecondGt(input1, input2, "input1", "input2");
+        }
+        catch (IllegalArgumentException e) {
+            assertEquals("inaugural.soliloquy.tools.tests.CheckTests" +
+                            ".testThrowOnSecondGtForLongs: input2 (" + input2 +
+                            ") cannot be greater than input1 (" + input1 + ")",
+                    e.getMessage());
+        }
+    }
+
+    @Test
+    void testThrowOnSecondGtForFloats() {
+        final float input1 = 123;
+        final float input2 = input1 + 1;
+
+        assertThrows(IllegalArgumentException.class, () ->
+                Check.throwOnSecondGt(input1, input2, "input1", "input2"));
+        try {
+            Check.throwOnSecondGt(input1, input2, "input1", "input2");
+        }
+        catch (IllegalArgumentException e) {
+            assertEquals("inaugural.soliloquy.tools.tests.CheckTests" +
+                            ".testThrowOnSecondGtForFloats: input2 (" + input2 +
+                            ") cannot be greater than input1 (" + input1 + ")",
+                    e.getMessage());
+        }
+    }
+
+    @Test
+    void testThrowOnSecondGtForDoubles() {
+        final double input1 = 123;
+        final double input2 = input1 + 1;
+
+        assertThrows(IllegalArgumentException.class, () ->
+                Check.throwOnSecondGt(input1, input2, "input1", "input2"));
+        try {
+            Check.throwOnSecondGt(input1, input2, "input1", "input2");
+        }
+        catch (IllegalArgumentException e) {
+            assertEquals("inaugural.soliloquy.tools.tests.CheckTests" +
+                            ".testThrowOnSecondGtForDoubles: input2 (" + input2 +
+                            ") cannot be greater than input1 (" + input1 + ")",
                     e.getMessage());
         }
     }
