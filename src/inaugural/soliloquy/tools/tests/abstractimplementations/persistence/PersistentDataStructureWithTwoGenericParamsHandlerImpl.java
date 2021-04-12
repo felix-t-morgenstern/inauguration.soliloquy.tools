@@ -25,4 +25,14 @@ public class PersistentDataStructureWithTwoGenericParamsHandlerImpl<T>
     public String write(T t) {
         throw new UnsupportedOperationException();
     }
+
+    @Override
+    protected String getUnparameterizedInterfaceName() {
+        return null;
+    }
+
+    @Override
+    public T getArchetype() {
+        throw new UnsupportedOperationException();
+    }
 }

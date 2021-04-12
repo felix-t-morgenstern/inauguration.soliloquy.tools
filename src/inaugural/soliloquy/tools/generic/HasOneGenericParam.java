@@ -6,6 +6,11 @@ public abstract class HasOneGenericParam<T> extends HasGenericParams
 
     private String _parameterizedClassName;
 
+    // Used for PersistentDataStructureWithTwoGenericParamsHandler and
+    protected HasOneGenericParam() {
+        ARCHETYPE = null;
+    }
+
     protected HasOneGenericParam(T archetype) {
         ARCHETYPE = archetypeCheck(archetype, "archetype");
     }

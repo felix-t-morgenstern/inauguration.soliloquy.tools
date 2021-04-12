@@ -4,6 +4,10 @@ import inaugural.soliloquy.tools.persistence.PersistentDataStructureWithOneGener
 
 public class PersistentDataStructureWithOneGenericParamHandlerImpl<T>
         extends PersistentDataStructureWithOneGenericParamHandler<T> {
+    public PersistentDataStructureWithOneGenericParamHandlerImpl() {
+        super();
+    }
+
     @Override
     public T read(String s) throws IllegalArgumentException {
         throw new UnsupportedOperationException();
@@ -16,5 +20,10 @@ public class PersistentDataStructureWithOneGenericParamHandlerImpl<T>
 
     public String getInnerType(String valueType, Class<T> dataStructureClass) {
         return super.getInnerType(valueType, dataStructureClass);
+    }
+
+    @Override
+    protected String getUnparameterizedInterfaceName() {
+        return null;
     }
 }

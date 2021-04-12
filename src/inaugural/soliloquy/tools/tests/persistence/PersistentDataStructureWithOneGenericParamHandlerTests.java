@@ -1,6 +1,7 @@
 package inaugural.soliloquy.tools.tests.persistence;
 
 import inaugural.soliloquy.tools.persistence.PersistentDataStructureWithOneGenericParamHandler;
+import inaugural.soliloquy.tools.tests.abstractimplementations.generic.HasOneGenericParamImpl;
 import inaugural.soliloquy.tools.tests.abstractimplementations.persistence.PersistentDataStructureWithOneGenericParamHandlerImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

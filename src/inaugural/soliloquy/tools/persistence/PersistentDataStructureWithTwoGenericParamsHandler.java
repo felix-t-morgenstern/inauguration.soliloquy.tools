@@ -1,21 +1,18 @@
 package inaugural.soliloquy.tools.persistence;
 
 import inaugural.soliloquy.tools.Check;
+import soliloquy.specs.common.persistence.PersistentValueTypeHandler;
 import soliloquy.specs.common.persistence.PersistentValuesHandler;
 
 public abstract class PersistentDataStructureWithTwoGenericParamsHandler<T>
-        extends PersistentTypeHandler<T> {
+        extends PersistentDataStructureWithGenericParams<T>
+        implements PersistentValueTypeHandler<T> {
     protected final PersistentValuesHandler PERSISTENT_VALUES_HANDLER;
 
     protected PersistentDataStructureWithTwoGenericParamsHandler(
             PersistentValuesHandler persistentValuesHandler) {
         PERSISTENT_VALUES_HANDLER = Check.ifNull(persistentValuesHandler,
                 "persistentValuesHandler");
-    }
-
-    @Override
-    public String getInterfaceName() {
-        throw new UnsupportedOperationException();
     }
 
     @SuppressWarnings({"unchecked", "ConstantConditions"})

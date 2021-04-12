@@ -1,17 +1,13 @@
 package inaugural.soliloquy.tools.persistence;
 
 import inaugural.soliloquy.tools.Check;
+import soliloquy.specs.common.persistence.PersistentValueTypeHandler;
 
 public abstract class PersistentDataStructureWithOneGenericParamHandler<T>
-        extends PersistentTypeHandler<T> {
-    @Override
-    public String getInterfaceName() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public T getArchetype() {
-        throw new UnsupportedOperationException();
+        extends PersistentDataStructureWithGenericParams<T>
+        implements PersistentValueTypeHandler<T> {
+    protected PersistentDataStructureWithOneGenericParamHandler() {
+        super();
     }
 
     // NB: dataStructureClass is passed in here, since getArchetype is an unsupported operation
