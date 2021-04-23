@@ -3,6 +3,9 @@ package inaugural.soliloquy.tools;
 import soliloquy.specs.common.shared.HasOneGenericParam;
 import soliloquy.specs.common.shared.HasTwoGenericParams;
 
+import java.util.ArrayList;
+import java.util.List;
+
 // TODO: Consider breaking this out into multiple classes
 public class Check {
     public static <T> T ifNull(T obj, String paramName) {
@@ -370,11 +373,28 @@ public class Check {
     }
 
     private static void throwException(String exceptionMessage) {
+        @SuppressWarnings("rawtypes") ArrayList<Class> classes = new ArrayList<>() {{
+            add(Check.class);
+            add(Thread.class);
+        }};
+        throw new IllegalArgumentException(
+                getFirstStackTraceElementNotInClasses(classes) + ": " + exceptionMessage);
+    }
+
+    @SuppressWarnings("rawtypes")
+    public static String getFirstStackTraceElementNotInClasses(List<Class> classes) {
         StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
         StackTraceElement callingMethod = null;
         for (StackTraceElement stackTraceElement : stackTrace) {
-            if (!stackTraceElement.getClassName().equals(Check.class.getName()) &&
-                    !stackTraceElement.getClassName().equals(Thread.class.getName())) {
+            String stackElementClassName = stackTraceElement.getClassName();
+            boolean stackElementInClasses = false;
+            for (Class clazz : classes) {
+                if (stackElementClassName.equals(clazz.getName())) {
+                    stackElementInClasses = true;
+                    break;
+                }
+            }
+            if (!stackElementInClasses) {
                 callingMethod = stackTraceElement;
                 break;
             }
@@ -382,7 +402,7 @@ public class Check {
         assert callingMethod != null;
         String className = callingMethod.getClassName();
         String methodName = callingMethod.getMethodName();
-        throw new IllegalArgumentException(className +
-                (!methodName.equals("<init>") ? "." + methodName : "") + ": " + exceptionMessage);
+
+        return className + (!methodName.equals("<init>") ? "." + methodName : "");
     }
 }
