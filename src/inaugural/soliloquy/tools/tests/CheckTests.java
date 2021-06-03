@@ -100,7 +100,7 @@ class CheckTests {
         catch (IllegalArgumentException e) {
             assertEquals(
                     "inaugural.soliloquy.tools.tests.CheckTests.testIfNonNegativeForShort: " +
-                            paramName + " cannot be negative",
+                            paramName + " (" + -1 + ")" + " cannot be negative",
                     e.getMessage());
         }
     }
@@ -119,7 +119,7 @@ class CheckTests {
         catch (IllegalArgumentException e) {
             assertEquals(
                     "inaugural.soliloquy.tools.tests.CheckTests.testIfNonNegativeForInt: " +
-                            paramName + " cannot be negative",
+                            paramName + " (" + -1 + ")" + " cannot be negative",
                     e.getMessage());
         }
     }
@@ -138,7 +138,7 @@ class CheckTests {
         catch (IllegalArgumentException e) {
             assertEquals(
                     "inaugural.soliloquy.tools.tests.CheckTests.testIfNonNegativeForIntClass: " +
-                            paramName + " cannot be negative",
+                            paramName + " (" + -1 + ")" + " cannot be negative",
                     e.getMessage());
         }
     }
@@ -157,7 +157,7 @@ class CheckTests {
         catch (IllegalArgumentException e) {
             assertEquals(
                     "inaugural.soliloquy.tools.tests.CheckTests.testIfNonNegativeForLong: " +
-                            paramName + " cannot be negative",
+                            paramName + " (" + -1 + ")" + " cannot be negative",
                     e.getMessage());
         }
     }
@@ -176,7 +176,7 @@ class CheckTests {
         catch (IllegalArgumentException e) {
             assertEquals(
                     "inaugural.soliloquy.tools.tests.CheckTests.testIfNonNegativeForFloat: " +
-                            paramName + " cannot be negative",
+                            paramName + " (" + -1 + ")" + " cannot be negative",
                     e.getMessage());
         }
     }
@@ -195,7 +195,7 @@ class CheckTests {
         catch (IllegalArgumentException e) {
             assertEquals(
                     "inaugural.soliloquy.tools.tests.CheckTests.testIfNonNegativeForDouble: " +
-                            paramName + " cannot be negative",
+                            paramName + " (" + -1 + ")" + " cannot be negative",
                     e.getMessage());
         }
     }
@@ -214,7 +214,7 @@ class CheckTests {
         }
         catch (IllegalArgumentException e) {
             assertEquals("inaugural.soliloquy.tools.tests.CheckTests" +
-                            ".testThrowOnLteZeroForShort: " + paramName +
+                            ".testThrowOnLteZeroForShort: " + paramName + " (" + 0 + ")" +
                             " cannot be less than or equal to 0",
                     e.getMessage());
         }
@@ -233,7 +233,7 @@ class CheckTests {
         }
         catch (IllegalArgumentException e) {
             assertEquals("inaugural.soliloquy.tools.tests.CheckTests" +
-                            ".testThrowOnLteZeroForInt: " + paramName +
+                            ".testThrowOnLteZeroForInt: " + paramName + " (" + 0 + ")" +
                             " cannot be less than or equal to 0",
                     e.getMessage());
         }
@@ -252,7 +252,7 @@ class CheckTests {
         }
         catch (IllegalArgumentException e) {
             assertEquals("inaugural.soliloquy.tools.tests.CheckTests" +
-                            ".testThrowOnLteZeroForLong: " + paramName +
+                            ".testThrowOnLteZeroForLong: " + paramName + " (" + 0 + ")" +
                             " cannot be less than or equal to 0",
                     e.getMessage());
         }
@@ -271,7 +271,7 @@ class CheckTests {
         }
         catch (IllegalArgumentException e) {
             assertEquals("inaugural.soliloquy.tools.tests.CheckTests" +
-                            ".testThrowOnLteZeroForFloat: " + paramName +
+                            ".testThrowOnLteZeroForFloat: " + paramName + " (" + 0.0 + ")" +
                             " cannot be less than or equal to 0.0",
                     e.getMessage());
         }
@@ -290,7 +290,7 @@ class CheckTests {
         }
         catch (IllegalArgumentException e) {
             assertEquals("inaugural.soliloquy.tools.tests.CheckTests" +
-                            ".testThrowOnLteZeroForDouble: " + paramName +
+                            ".testThrowOnLteZeroForDouble: " + paramName + " (" + 0.0 + ")" +
                             " cannot be less than or equal to 0.0",
                     e.getMessage());
         }
@@ -310,7 +310,7 @@ class CheckTests {
         }
         catch (IllegalArgumentException e) {
             assertEquals("inaugural.soliloquy.tools.tests.CheckTests" +
-                            ".testThrowOnLtValueForShort: " + paramName +
+                            ".testThrowOnLtValueForShort: " + paramName + " (" + input + ")" +
                             " cannot be less than " + (input + 1),
                     e.getMessage());
         }
@@ -330,7 +330,7 @@ class CheckTests {
         }
         catch (IllegalArgumentException e) {
             assertEquals("inaugural.soliloquy.tools.tests.CheckTests" +
-                            ".testThrowOnLtValueForInt: " + paramName +
+                            ".testThrowOnLtValueForInt: " + paramName + " (" + input + ")" +
                             " cannot be less than " + (input + 1),
                     e.getMessage());
         }
@@ -350,7 +350,7 @@ class CheckTests {
         }
         catch (IllegalArgumentException e) {
             assertEquals("inaugural.soliloquy.tools.tests.CheckTests" +
-                            ".testThrowOnLtValueForLong: " + paramName +
+                            ".testThrowOnLtValueForLong: " + paramName + " (" + input + ")" +
                             " cannot be less than " + (input + 1),
                     e.getMessage());
         }
@@ -371,7 +371,7 @@ class CheckTests {
         }
         catch (IllegalArgumentException e) {
             assertEquals("inaugural.soliloquy.tools.tests.CheckTests" +
-                            ".testThrowOnLtValueForFloat: " + paramName +
+                            ".testThrowOnLtValueForFloat: " + paramName + " (" + input + ")" +
                             " cannot be less than " + value,
                     e.getMessage());
         }
@@ -392,7 +392,7 @@ class CheckTests {
         }
         catch (IllegalArgumentException e) {
             assertEquals("inaugural.soliloquy.tools.tests.CheckTests" +
-                            ".testThrowOnLtValueForDouble: " + paramName +
+                            ".testThrowOnLtValueForDouble: " + paramName + " (" + input + ")" +
                             " cannot be less than " + value,
                     e.getMessage());
         }
@@ -414,7 +414,7 @@ class CheckTests {
         }
         catch (IllegalArgumentException e) {
             assertEquals("inaugural.soliloquy.tools.tests.CheckTests" +
-                            ".testThrowOnLteValueForShort: " + paramName +
+                            ".testThrowOnLteValueForShort: " + paramName + " (" + input + ")" +
                             " cannot be less than or equal to " + (input + 1),
                     e.getMessage());
         }
@@ -436,7 +436,7 @@ class CheckTests {
         }
         catch (IllegalArgumentException e) {
             assertEquals("inaugural.soliloquy.tools.tests.CheckTests" +
-                            ".testThrowOnLteValueForInt: " + paramName +
+                            ".testThrowOnLteValueForInt: " + paramName + " (" + input + ")" +
                             " cannot be less than or equal to " + (input + 1),
                     e.getMessage());
         }
@@ -458,7 +458,7 @@ class CheckTests {
         }
         catch (IllegalArgumentException e) {
             assertEquals("inaugural.soliloquy.tools.tests.CheckTests" +
-                            ".testThrowOnLteValueForLong: " + paramName +
+                            ".testThrowOnLteValueForLong: " + paramName + " (" + input + ")" +
                             " cannot be less than or equal to " + (input + 1),
                     e.getMessage());
         }
@@ -481,7 +481,7 @@ class CheckTests {
         }
         catch (IllegalArgumentException e) {
             assertEquals("inaugural.soliloquy.tools.tests.CheckTests" +
-                            ".testThrowOnLteValueForFloat: " + paramName +
+                            ".testThrowOnLteValueForFloat: " + paramName + " (" + input + ")" +
                             " cannot be less than or equal to " + value,
                     e.getMessage());
         }
@@ -504,7 +504,7 @@ class CheckTests {
         }
         catch (IllegalArgumentException e) {
             assertEquals("inaugural.soliloquy.tools.tests.CheckTests" +
-                            ".testThrowOnLteValueForDouble: " + paramName +
+                            ".testThrowOnLteValueForDouble: " + paramName + " (" + input + ")" +
                             " cannot be less than or equal to " + value,
                     e.getMessage());
         }
@@ -524,7 +524,7 @@ class CheckTests {
         }
         catch (IllegalArgumentException e) {
             assertEquals("inaugural.soliloquy.tools.tests.CheckTests" +
-                            ".testThrowOnGtValueForShort: " + paramName +
+                            ".testThrowOnGtValueForShort: " + paramName + " (" + input + ")" +
                             " cannot be greater than " + (input - 1),
                     e.getMessage());
         }
@@ -544,7 +544,7 @@ class CheckTests {
         }
         catch (IllegalArgumentException e) {
             assertEquals("inaugural.soliloquy.tools.tests.CheckTests" +
-                            ".testThrowOnGtValueForInt: " + paramName +
+                            ".testThrowOnGtValueForInt: " + paramName + " (" + input + ")" +
                             " cannot be greater than " + (input - 1),
                     e.getMessage());
         }
@@ -564,7 +564,7 @@ class CheckTests {
         }
         catch (IllegalArgumentException e) {
             assertEquals("inaugural.soliloquy.tools.tests.CheckTests" +
-                            ".testThrowOnGtValueForLong: " + paramName +
+                            ".testThrowOnGtValueForLong: " + paramName + " (" + input + ")" +
                             " cannot be greater than " + (input - 1),
                     e.getMessage());
         }
@@ -585,7 +585,7 @@ class CheckTests {
         }
         catch (IllegalArgumentException e) {
             assertEquals("inaugural.soliloquy.tools.tests.CheckTests" +
-                            ".testThrowOnGtValueForFloat: " + paramName +
+                            ".testThrowOnGtValueForFloat: " + paramName + " (" + input + ")" +
                             " cannot be greater than " + value,
                     e.getMessage());
         }
@@ -606,7 +606,7 @@ class CheckTests {
         }
         catch (IllegalArgumentException e) {
             assertEquals("inaugural.soliloquy.tools.tests.CheckTests" +
-                            ".testThrowOnGtValueForDouble: " + paramName +
+                            ".testThrowOnGtValueForDouble: " + paramName + " (" + input + ")" +
                             " cannot be greater than " + value,
                     e.getMessage());
         }
@@ -628,7 +628,7 @@ class CheckTests {
         }
         catch (IllegalArgumentException e) {
             assertEquals("inaugural.soliloquy.tools.tests.CheckTests" +
-                            ".testThrowOnGteValueForShort: " + paramName +
+                            ".testThrowOnGteValueForShort: " + paramName + " (" + input + ")" +
                             " cannot be greater than " + (input - 1),
                     e.getMessage());
         }
@@ -650,7 +650,7 @@ class CheckTests {
         }
         catch (IllegalArgumentException e) {
             assertEquals("inaugural.soliloquy.tools.tests.CheckTests" +
-                            ".testThrowOnGteValueForInt: " + paramName +
+                            ".testThrowOnGteValueForInt: " + paramName + " (" + input + ")" +
                             " cannot be greater than " + (input - 1),
                     e.getMessage());
         }
@@ -672,7 +672,7 @@ class CheckTests {
         }
         catch (IllegalArgumentException e) {
             assertEquals("inaugural.soliloquy.tools.tests.CheckTests" +
-                            ".testThrowOnGteValueForLong: " + paramName +
+                            ".testThrowOnGteValueForLong: " + paramName + " (" + input + ")" +
                             " cannot be greater than " + (input - 1),
                     e.getMessage());
         }
@@ -694,7 +694,7 @@ class CheckTests {
         }
         catch (IllegalArgumentException e) {
             assertEquals("inaugural.soliloquy.tools.tests.CheckTests" +
-                            ".testThrowOnGteValueForFloat: " + paramName +
+                            ".testThrowOnGteValueForFloat: " + paramName + " (" + input + ")" +
                             " cannot be greater than " + (input - 1),
                     e.getMessage());
         }
@@ -716,7 +716,7 @@ class CheckTests {
         }
         catch (IllegalArgumentException e) {
             assertEquals("inaugural.soliloquy.tools.tests.CheckTests" +
-                            ".testThrowOnGteValueForDouble: " + paramName +
+                            ".testThrowOnGteValueForDouble: " + paramName + " (" + input + ")" +
                             " cannot be greater than " + (input - 1),
                     e.getMessage());
         }
@@ -736,7 +736,7 @@ class CheckTests {
         }
         catch (IllegalArgumentException e) {
             assertEquals("inaugural.soliloquy.tools.tests.CheckTests" +
-                            ".testThrowOnEqualsValueForShort: " + paramName +
+                            ".testThrowOnEqualsValueForShort: " + paramName + " (" + input + ")" +
                             " cannot be equal to " + input,
                     e.getMessage());
         }
@@ -756,7 +756,7 @@ class CheckTests {
         }
         catch (IllegalArgumentException e) {
             assertEquals("inaugural.soliloquy.tools.tests.CheckTests" +
-                            ".testThrowOnEqualsValueForInt: " + paramName +
+                            ".testThrowOnEqualsValueForInt: " + paramName + " (" + input + ")" +
                             " cannot be equal to " + input,
                     e.getMessage());
         }
@@ -776,7 +776,7 @@ class CheckTests {
         }
         catch (IllegalArgumentException e) {
             assertEquals("inaugural.soliloquy.tools.tests.CheckTests" +
-                            ".testThrowOnEqualsValueForLong: " + paramName +
+                            ".testThrowOnEqualsValueForLong: " + paramName + " (" + input + ")" +
                             " cannot be equal to " + input,
                     e.getMessage());
         }
@@ -796,7 +796,7 @@ class CheckTests {
         }
         catch (IllegalArgumentException e) {
             assertEquals("inaugural.soliloquy.tools.tests.CheckTests" +
-                            ".testThrowOnEqualsValueForFloat: " + paramName +
+                            ".testThrowOnEqualsValueForFloat: " + paramName + " (" + input + ")" +
                             " cannot be equal to " + input,
                     e.getMessage());
         }
@@ -816,7 +816,7 @@ class CheckTests {
         }
         catch (IllegalArgumentException e) {
             assertEquals("inaugural.soliloquy.tools.tests.CheckTests" +
-                            ".testThrowOnEqualsValueForDouble: " + paramName +
+                            ".testThrowOnEqualsValueForDouble: " + paramName + " (" + input + ")" +
                             " cannot be equal to " + input,
                     e.getMessage());
         }

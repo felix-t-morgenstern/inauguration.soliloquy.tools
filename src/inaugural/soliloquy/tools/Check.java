@@ -34,42 +34,42 @@ public class Check {
 
     public static short ifNonNegative(short i, String paramName) {
         if (i < 0) {
-            throwException(paramName, "negative");
+            throwException(paramName, i, "negative");
         }
         return i;
     }
 
     public static int ifNonNegative(int i, String paramName) {
         if (i < 0) {
-            throwException(paramName, "negative");
+            throwException(paramName, i, "negative");
         }
         return i;
     }
 
     public static Integer ifNonNegative(Integer i, String paramName) {
         if (i != null && i < 0) {
-            throwException(paramName, "negative");
+            throwException(paramName, i, "negative");
         }
         return i;
     }
 
     public static long ifNonNegative(long i, String paramName) {
         if (i < 0) {
-            throwException(paramName, "negative");
+            throwException(paramName, i, "negative");
         }
         return i;
     }
 
     public static float ifNonNegative(float i, String paramName) {
         if (i < 0) {
-            throwException(paramName, "negative");
+            throwException(paramName, i, "negative");
         }
         return i;
     }
 
     public static double ifNonNegative(double i, String paramName) {
         if (i < 0) {
-            throwException(paramName, "negative");
+            throwException(paramName, i, "negative");
         }
         return i;
     }
@@ -96,175 +96,175 @@ public class Check {
 
     public static short throwOnLtValue(short param, short value, String paramName) {
         if (param < value) {
-            throwException(paramName, "less than " + value);
+            throwException(paramName, param, "less than " + value);
         }
         return param;
     }
 
     public static int throwOnLtValue(int param, int value, String paramName) {
         if (param < value) {
-            throwException(paramName, "less than " + value);
+            throwException(paramName, param, "less than " + value);
         }
         return param;
     }
 
     public static long throwOnLtValue(long param, long value, String paramName) {
         if (param < value) {
-            throwException(paramName, "less than " + value);
+            throwException(paramName, param, "less than " + value);
         }
         return param;
     }
 
     public static float throwOnLtValue(float param, float value, String paramName) {
         if (param < value) {
-            throwException(paramName, "less than " + value);
+            throwException(paramName, param, "less than " + value);
         }
         return param;
     }
 
     public static double throwOnLtValue(double param, double value, String paramName) {
         if (param < value) {
-            throwException(paramName, "less than " + value);
+            throwException(paramName, param, "less than " + value);
         }
         return param;
     }
 
     public static short throwOnLteValue(short param, short value, String paramName) {
         if (param <= value) {
-            throwException(paramName, "less than or equal to " + value);
+            throwException(paramName, param, "less than or equal to " + value);
         }
         return param;
     }
 
     public static int throwOnLteValue(int param, int value, String paramName) {
         if (param <= value) {
-            throwException(paramName, "less than or equal to " + value);
+            throwException(paramName, param, "less than or equal to " + value);
         }
         return param;
     }
 
     public static long throwOnLteValue(long param, long value, String paramName) {
         if (param <= value) {
-            throwException(paramName, "less than or equal to " + value);
+            throwException(paramName, param, "less than or equal to " + value);
         }
         return param;
     }
 
     public static float throwOnLteValue(float param, float value, String paramName) {
         if (param <= value) {
-            throwException(paramName, "less than or equal to " + value);
+            throwException(paramName, param, "less than or equal to " + value);
         }
         return param;
     }
 
     public static double throwOnLteValue(double param, double value, String paramName) {
         if (param <= value) {
-            throwException(paramName, "less than or equal to " + value);
+            throwException(paramName, param, "less than or equal to " + value);
         }
         return param;
     }
 
     public static short throwOnGtValue(short param, short value, String paramName) {
         if (param > value) {
-            throwException(paramName, "greater than " + value);
+            throwException(paramName, param, "greater than " + value);
         }
         return param;
     }
 
     public static int throwOnGtValue(int param, int value, String paramName) {
         if (param > value) {
-            throwException(paramName, "greater than " + value);
+            throwException(paramName, param, "greater than " + value);
         }
         return param;
     }
 
     public static long throwOnGtValue(long param, long value, String paramName) {
         if (param > value) {
-            throwException(paramName, "greater than " + value);
+            throwException(paramName, param, "greater than " + value);
         }
         return param;
     }
 
     public static float throwOnGtValue(float param, float value, String paramName) {
         if (param > value) {
-            throwException(paramName, "greater than " + value);
+            throwException(paramName, param, "greater than " + value);
         }
         return param;
     }
 
     public static double throwOnGtValue(double param, double value, String paramName) {
         if (param > value) {
-            throwException(paramName, "greater than " + value);
+            throwException(paramName, param, "greater than " + value);
         }
         return param;
     }
 
     public static short throwOnGteValue(short param, short value, String paramName) {
         if (param >= value) {
-            throwException(paramName, "greater than " + value);
+            throwException(paramName, param, "greater than " + value);
         }
         return param;
     }
 
     public static int throwOnGteValue(int param, int value, String paramName) {
         if (param >= value) {
-            throwException(paramName, "greater than " + value);
+            throwException(paramName, param, "greater than " + value);
         }
         return param;
     }
 
     public static long throwOnGteValue(long param, long value, String paramName) {
         if (param >= value) {
-            throwException(paramName, "greater than " + value);
+            throwException(paramName, param, "greater than " + value);
         }
         return param;
     }
 
     public static float throwOnGteValue(float param, float value, String paramName) {
         if (param >= value) {
-            throwException(paramName, "greater than " + value);
+            throwException(paramName, param, "greater than " + value);
         }
         return param;
     }
 
     public static double throwOnGteValue(double param, double value, String paramName) {
         if (param >= value) {
-            throwException(paramName, "greater than " + value);
+            throwException(paramName, param, "greater than " + value);
         }
         return param;
     }
 
     public static short throwOnEqualsValue(short param, short value, String paramName) {
         if (param == value) {
-            throwException(paramName, "equal to " + value);
+            throwException(paramName, param, "equal to " + value);
         }
         return param;
     }
 
     public static int throwOnEqualsValue(int param, int value, String paramName) {
         if (param == value) {
-            throwException(paramName, "equal to " + value);
+            throwException(paramName, param, "equal to " + value);
         }
         return param;
     }
 
     public static long throwOnEqualsValue(long param, long value, String paramName) {
         if (param == value) {
-            throwException(paramName, "equal to " + value);
+            throwException(paramName, param, "equal to " + value);
         }
         return param;
     }
 
     public static float throwOnEqualsValue(float param, float value, String paramName) {
         if (param == value) {
-            throwException(paramName, "equal to " + value);
+            throwException(paramName, param, "equal to " + value);
         }
         return param;
     }
 
     public static double throwOnEqualsValue(double param, double value, String paramName) {
         if (param == value) {
-            throwException(paramName, "equal to " + value);
+            throwException(paramName, param, "equal to " + value);
         }
         return param;
     }
@@ -370,6 +370,10 @@ public class Check {
 
     private static void throwException(String paramName, String violationType) {
         throwException(paramName + " cannot be " + violationType);
+    }
+
+    private static void throwException(String paramName, Object value, String violationType) {
+        throwException(paramName + " (" + value + ") cannot be " + violationType);
     }
 
     private static void throwException(String exceptionMessage) {
