@@ -3,8 +3,7 @@ package inaugural.soliloquy.tools.tests;
 import inaugural.soliloquy.tools.Tools;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 class ToolsTests {
     @Test
@@ -19,8 +18,20 @@ class ToolsTests {
     void testNullIfEmpty() {
         String input = "input";
 
-        assertEquals(input, Tools.emptyIfNull(input));
+        assertEquals(input, Tools.nullIfEmpty(input));
 
-        assertNull(Tools.emptyIfNull(""));
+        //noinspection ConstantConditions
+        assertNull(Tools.nullIfEmpty(""));
+    }
+
+    @Test
+    void testRound() {
+        float value = 1.23456f;
+        int places = 3;
+
+        assertEquals(1.235f, Tools.round(value, places));
+        assertEquals(-1.235f, Tools.round(-value, places));
+
+        assertThrows(IllegalArgumentException.class, () -> Tools.round(value, -1));
     }
 }
