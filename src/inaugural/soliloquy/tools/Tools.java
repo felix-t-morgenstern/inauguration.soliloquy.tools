@@ -28,4 +28,15 @@ public class Tools {
 
         return Math.round(value * multiplicand) / multiplicand;
     }
+
+    // TODO: Test this method
+    public static String callingClassName() {
+        return callingClassName(1);
+    }
+
+    // TODO: Test this method
+    public static String callingClassName(int stepsToMoveUp) {
+        StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
+        return stackTrace[stepsToMoveUp - 1].getClassName();
+    }
 }
