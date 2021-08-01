@@ -12,8 +12,8 @@ public abstract class LoopingPausableAtTimeAbstract
 
     // TODO: Add constructor containing both paused timestamp and most recent reported timestamp
     public LoopingPausableAtTimeAbstract(int periodDuration, int periodModuloOffset,
-                                         Long pausedTimestamp) {
-        super(pausedTimestamp);
+                                         Long pausedTimestamp, Long mostRecentTimestamp) {
+        super(pausedTimestamp, mostRecentTimestamp);
         if (periodModuloOffset >= periodDuration) {
             throw new IllegalArgumentException("GlobalLoopingAnimationImpl: periodModuloOffset (" +
                     periodModuloOffset + ") cannot be greater than period duration (" +

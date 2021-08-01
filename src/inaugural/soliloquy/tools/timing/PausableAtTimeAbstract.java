@@ -10,8 +10,8 @@ public abstract class PausableAtTimeAbstract implements PausableAtTime {
     protected Long _pausedTimestamp;
     protected Long _mostRecentReportedTimestamp;
 
-    public PausableAtTimeAbstract(Long pausedTimestamp) {
-        TIMESTAMP_VALIDATOR = new TimestampValidator();
+    public PausableAtTimeAbstract(Long pausedTimestamp, Long mostRecentTimestamp) {
+        TIMESTAMP_VALIDATOR = new TimestampValidator(mostRecentTimestamp);
         _pausedTimestamp = pausedTimestamp;
     }
 

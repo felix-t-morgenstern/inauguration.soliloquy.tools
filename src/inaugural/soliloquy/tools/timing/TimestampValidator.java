@@ -4,7 +4,8 @@ package inaugural.soliloquy.tools.timing;
 public class TimestampValidator {
     private Long _mostRecentTimestamp;
 
-    public TimestampValidator() {
+    public TimestampValidator(Long mostRecentTimestamp) {
+        _mostRecentTimestamp = mostRecentTimestamp;
     }
 
     public void validateTimestamp(long timestamp) {
@@ -37,5 +38,9 @@ public class TimestampValidator {
                     ": provided outdated timestamp (" + timestamp + ")");
         }
         _mostRecentTimestamp = timestamp;
+    }
+
+    public Long mostRecentTimestamp() {
+        return _mostRecentTimestamp;
     }
 }

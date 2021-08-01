@@ -11,8 +11,9 @@ public abstract class FinitePausableAtTimeAbstract
     protected long _anchorTime;
 
     // TODO: Add constructor containing both paused timestamp and most recent reported timestamp
-    protected FinitePausableAtTimeAbstract(long anchorTime, Long pausedTimestamp) {
-        super(pausedTimestamp);
+    protected FinitePausableAtTimeAbstract(long anchorTime, Long pausedTimestamp,
+                                           Long mostRecentTimestamp) {
+        super(pausedTimestamp, mostRecentTimestamp);
         _anchorTime = anchorTime;
     }
 
