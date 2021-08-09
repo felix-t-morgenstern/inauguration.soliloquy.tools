@@ -11,6 +11,17 @@ public abstract class PausableAtTimeAbstract implements PausableAtTime {
     protected Long _mostRecentReportedTimestamp;
 
     public PausableAtTimeAbstract(Long pausedTimestamp, Long mostRecentTimestamp) {
+        if (pausedTimestamp != null) {
+            if (mostRecentTimestamp == null) {
+                throw new IllegalArgumentException("AbstractPausableAtTime: cannot have null " +
+                        "mostRecentTimestamp and non-null pausedTimestamp");
+            }
+            else if (pausedTimestamp > mostRecentTimestamp) {
+                throw new IllegalArgumentException("AbstractPausableAtTime: pausedTimestamp (" +
+                        pausedTimestamp + ") cannot be greater than mostRecentTimestamp (" +
+                        mostRecentTimestamp + ")");
+            }
+        }
         TIMESTAMP_VALIDATOR = new TimestampValidator(mostRecentTimestamp);
         _pausedTimestamp = pausedTimestamp;
     }
@@ -36,6 +47,7 @@ public abstract class PausableAtTimeAbstract implements PausableAtTime {
 
     @Override
     public void reportUnpause(long timestamp) throws IllegalArgumentException {
+        TIMESTAMP_VALIDATOR.validateTimestamp(timestamp);
         if (_pausedTimestamp == null) {
             throw new IllegalArgumentException(Tools.callingClassName(2) + ".reportUnpause: " +
                     "cannot unpause if already unpaused");

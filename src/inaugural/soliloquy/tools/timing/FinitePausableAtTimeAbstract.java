@@ -11,6 +11,12 @@ public abstract class FinitePausableAtTimeAbstract
     protected long _anchorTime;
 
     // TODO: Add constructor containing both paused timestamp and most recent reported timestamp
+    // NB: This constructor is used for FiniteLinearMovingProvider, which doesn't care about anchor
+    // times
+    protected FinitePausableAtTimeAbstract(Long pausedTimestamp, Long mostRecentTimestamp) {
+        super(pausedTimestamp, mostRecentTimestamp);
+    }
+
     protected FinitePausableAtTimeAbstract(long anchorTime, Long pausedTimestamp,
                                            Long mostRecentTimestamp) {
         super(pausedTimestamp, mostRecentTimestamp);
