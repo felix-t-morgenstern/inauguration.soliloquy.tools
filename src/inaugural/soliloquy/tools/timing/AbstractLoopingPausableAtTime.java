@@ -5,13 +5,13 @@ import soliloquy.specs.common.shared.HasPeriodModuloOffset;
 import soliloquy.specs.common.shared.PausableAtTime;
 
 // TODO: Test this as a stub implementation, and not merely when extended in other modules
-public abstract class LoopingPausableAtTimeAbstract
-        extends PausableAtTimeAbstract
+public abstract class AbstractLoopingPausableAtTime
+        extends AbstractPausableAtTime
         implements PausableAtTime, HasPeriodModuloOffset {
     protected final int PERIOD_DURATION;
 
     // TODO: Add constructor containing both paused timestamp and most recent reported timestamp
-    public LoopingPausableAtTimeAbstract(int periodDuration, int periodModuloOffset,
+    public AbstractLoopingPausableAtTime(int periodDuration, int periodModuloOffset,
                                          Long pausedTimestamp, Long mostRecentTimestamp) {
         super(pausedTimestamp, mostRecentTimestamp);
         if (periodModuloOffset >= periodDuration) {

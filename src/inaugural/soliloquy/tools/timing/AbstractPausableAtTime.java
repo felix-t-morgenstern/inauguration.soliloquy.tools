@@ -3,14 +3,14 @@ package inaugural.soliloquy.tools.timing;
 import inaugural.soliloquy.tools.Tools;
 import soliloquy.specs.common.shared.PausableAtTime;
 
-public abstract class PausableAtTimeAbstract implements PausableAtTime {
+public abstract class AbstractPausableAtTime implements PausableAtTime {
     protected final TimestampValidator TIMESTAMP_VALIDATOR;
 
     protected int _periodModuloOffset;
     protected Long _pausedTimestamp;
     protected Long _mostRecentReportedTimestamp;
 
-    public PausableAtTimeAbstract(Long pausedTimestamp, Long mostRecentTimestamp) {
+    public AbstractPausableAtTime(Long pausedTimestamp, Long mostRecentTimestamp) {
         if (pausedTimestamp != null) {
             if (mostRecentTimestamp == null) {
                 throw new IllegalArgumentException("AbstractPausableAtTime: cannot have null " +

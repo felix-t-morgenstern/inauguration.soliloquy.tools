@@ -3,8 +3,8 @@ package inaugural.soliloquy.tools.timing;
 import soliloquy.specs.common.shared.PausableAtTime;
 
 // TODO: Test this as a stub implementation, and not merely when extended in other modules
-public abstract class FinitePausableAtTimeAbstract
-        extends PausableAtTimeAbstract
+public abstract class AbstractFinitePausableAtTime
+        extends AbstractPausableAtTime
         implements PausableAtTime {
     // NB: This time is either the starting time, e.g. FiniteAnimationRenderable, or the ending
     //     time, e.g. OneTimeClockBasedTimer
@@ -13,11 +13,11 @@ public abstract class FinitePausableAtTimeAbstract
     // TODO: Add constructor containing both paused timestamp and most recent reported timestamp
     // NB: This constructor is used for FiniteLinearMovingProvider, which doesn't care about anchor
     // times
-    protected FinitePausableAtTimeAbstract(Long pausedTimestamp, Long mostRecentTimestamp) {
+    protected AbstractFinitePausableAtTime(Long pausedTimestamp, Long mostRecentTimestamp) {
         super(pausedTimestamp, mostRecentTimestamp);
     }
 
-    protected FinitePausableAtTimeAbstract(long anchorTime, Long pausedTimestamp,
+    protected AbstractFinitePausableAtTime(long anchorTime, Long pausedTimestamp,
                                            Long mostRecentTimestamp) {
         super(pausedTimestamp, mostRecentTimestamp);
         _anchorTime = anchorTime;
