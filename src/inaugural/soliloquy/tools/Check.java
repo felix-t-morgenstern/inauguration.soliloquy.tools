@@ -8,6 +8,13 @@ import java.util.List;
 
 // TODO: Consider breaking this out into multiple classes
 public class Check {
+
+    // ===============================================
+    // ===============================================
+    // ============ Null and empty checks ============
+    // ===============================================
+    // ===============================================
+
     public static <T> T ifNull(T obj, String paramName) {
         if (obj == null) {
             throwException(paramName, "null");
@@ -31,6 +38,16 @@ public class Check {
             return ifNull(obj, paramName);
         }
     }
+
+    // ================================================
+    // ================================================
+    // ============ Numerical value checks ============
+    // ================================================
+    // ================================================
+
+    // =======================
+    // ==== ifNonNegative ====
+    // =======================
 
     public static short ifNonNegative(short i, String paramName) {
         if (i < 0) {
@@ -74,6 +91,10 @@ public class Check {
         return i;
     }
 
+    // ========================
+    // ==== throwOnLteZero ====
+    // ========================
+
     public static short throwOnLteZero(short i, String paramName) {
         return throwOnLteValue(i, (short)0, paramName);
     }
@@ -93,6 +114,10 @@ public class Check {
     public static double throwOnLteZero(double i, String paramName) {
         return throwOnLteValue(i, 0d, paramName);
     }
+
+    // ========================
+    // ==== throwOnLtValue ====
+    // ========================
 
     public static short throwOnLtValue(short param, short value, String paramName) {
         if (param < value) {
@@ -129,6 +154,10 @@ public class Check {
         return param;
     }
 
+    // =========================
+    // ==== throwOnLteValue ====
+    // =========================
+
     public static short throwOnLteValue(short param, short value, String paramName) {
         if (param <= value) {
             throwException(paramName, param, "less than or equal to " + value);
@@ -163,6 +192,10 @@ public class Check {
         }
         return param;
     }
+
+    // ========================
+    // ==== throwOnGtValue ====
+    // ========================
 
     public static short throwOnGtValue(short param, short value, String paramName) {
         if (param > value) {
@@ -199,6 +232,10 @@ public class Check {
         return param;
     }
 
+    // =========================
+    // ==== throwOnGteValue ====
+    // =========================
+
     public static short throwOnGteValue(short param, short value, String paramName) {
         if (param >= value) {
             throwException(paramName, param, "greater than " + value);
@@ -234,6 +271,10 @@ public class Check {
         return param;
     }
 
+    // ============================
+    // ==== throwOnEqualsValue ====
+    // ============================
+
     public static short throwOnEqualsValue(short param, short value, String paramName) {
         if (param == value) {
             throwException(paramName, param, "equal to " + value);
@@ -268,6 +309,10 @@ public class Check {
         }
         return param;
     }
+
+    // ==========================
+    // ==== throwOnSecondLte ====
+    // ==========================
 
     public static void throwOnSecondLte(short first, short second,
                                         String firstParamName, String secondParamName) {
@@ -309,6 +354,10 @@ public class Check {
         }
     }
 
+    // =========================
+    // ==== throwOnSecondGt ====
+    // =========================
+
     public static void throwOnSecondGt(short first, short second,
                                        String firstParamName, String secondParamName) {
         if (second > first) {
@@ -349,6 +398,16 @@ public class Check {
         }
     }
 
+    // =======================================
+    // =======================================
+    // ============ Other methods ============
+    // =======================================
+    // =======================================
+
+    // ====================================
+    // ==== Archetype checking methods ====
+    // ====================================
+
     @SuppressWarnings({"rawtypes", "UnusedReturnValue"})
     public static <T> T archetypeAndArchetypesOfArchetypeAreNotNull(String paramName,
                                                                     T archetype) {
@@ -367,6 +426,10 @@ public class Check {
 
         return archetype;
     }
+
+    // ========================
+    // ==== Helper Methods ====
+    // ========================
 
     private static void throwException(String paramName, String violationType) {
         throwException(paramName + " cannot be " + violationType);
