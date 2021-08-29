@@ -2,7 +2,6 @@ package inaugural.soliloquy.tools.timing;
 
 import soliloquy.specs.common.shared.PausableAtTime;
 
-// TODO: Test this as a stub implementation, and not merely when extended in other modules
 public abstract class AbstractFinitePausableAtTime
         extends AbstractPausableAtTime
         implements PausableAtTime {
@@ -10,7 +9,6 @@ public abstract class AbstractFinitePausableAtTime
     //     time, e.g. OneTimeClockBasedTimer
     protected long _anchorTime;
 
-    // TODO: Add constructor containing both paused timestamp and most recent reported timestamp
     // NB: This constructor is used for FiniteLinearMovingProvider, which doesn't care about anchor
     // times
     protected AbstractFinitePausableAtTime(Long pausedTimestamp, Long mostRecentTimestamp) {
