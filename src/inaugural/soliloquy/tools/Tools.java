@@ -31,12 +31,12 @@ public class Tools {
 
     // TODO: Test this method
     public static String callingClassName() {
-        return callingClassName(1);
+        return callingClassName(3);
     }
 
     // TODO: Test this method
     public static String callingClassName(int stepsToMoveUp) {
         StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
-        return stackTrace[stepsToMoveUp - 1].getClassName();
+        return stackTrace[stepsToMoveUp].getClassName();
     }
 }
