@@ -15,9 +15,9 @@ public abstract class AbstractLoopingPausableAtTime
                                          Long pausedTimestamp, Long mostRecentTimestamp) {
         super(pausedTimestamp, mostRecentTimestamp);
         if (periodModuloOffset >= periodDuration) {
-            throw new IllegalArgumentException("GlobalLoopingAnimationImpl: periodModuloOffset (" +
-                    periodModuloOffset + ") cannot be greater than period duration (" +
-                    periodDuration + ")");
+            throw new IllegalArgumentException("AbstractLoopingPausableAtTime: " +
+                    "periodModuloOffset (" + periodModuloOffset + ") cannot be greater than " +
+                    "period duration (" + periodDuration + ")");
         }
         PERIOD_DURATION = periodDuration;
         _periodModuloOffset = Check.throwOnLtValue(periodModuloOffset, 0, "periodModuloOffset");
