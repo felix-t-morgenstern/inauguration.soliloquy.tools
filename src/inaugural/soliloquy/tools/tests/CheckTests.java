@@ -6,6 +6,8 @@ import inaugural.soliloquy.tools.tests.fakes.FakeHasTwoGenericParams;
 import org.junit.jupiter.api.Test;
 import soliloquy.specs.common.shared.HasOneGenericParam;
 
+import java.util.HashMap;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class CheckTests {
@@ -83,6 +85,150 @@ class CheckTests {
                             paramName + " cannot be null",
                     e.getMessage());
         }
+    }
+
+    @Test
+    void testIfMapIsNonEmptyWithRealKeysAndValuesForValidMap() {
+        HashMap<String, String> map = new HashMap<>(){{
+            put("k", "v");
+        }};
+
+        assertSame(map, Check.ifMapIsNonEmptyWithRealKeysAndValues(map, "map"));
+    }
+
+    @Test
+    void testIfMapIsNonEmptyWithRealKeysAndValuesForNullMap() {
+        assertThrows(IllegalArgumentException.class, () ->
+                Check.ifMapIsNonEmptyWithRealKeysAndValues(null, "map"));
+
+        String paramName = "map";
+        try {
+            Check.ifMapIsNonEmptyWithRealKeysAndValues(null, paramName);
+        }
+        catch (IllegalArgumentException e) {
+            assertEquals("inaugural.soliloquy.tools.tests.CheckTests." +
+                            "testIfMapIsNonEmptyWithRealKeysAndValuesForNullMap: " + paramName +
+                            " cannot be null",
+                    e.getMessage());
+        }
+    }
+
+    @Test
+    void testIfMapIsNonEmptyWithRealKeysAndValuesForEmptyMap() {
+        HashMap<String, String> map = new HashMap<>();
+
+        assertThrows(IllegalArgumentException.class, () ->
+                Check.ifMapIsNonEmptyWithRealKeysAndValues(map, "map"));
+
+        String paramName = "map";
+        try {
+            Check.ifMapIsNonEmptyWithRealKeysAndValues(map, paramName);
+        }
+        catch (IllegalArgumentException e) {
+            assertEquals("inaugural.soliloquy.tools.tests.CheckTests." +
+                            "testIfMapIsNonEmptyWithRealKeysAndValuesForEmptyMap: " + paramName +
+                            " cannot be empty",
+                    e.getMessage());
+        }
+    }
+
+    @Test
+    void testIfMapIsNonEmptyWithRealKeysAndValuesWithNullKey() {
+        HashMap<String, String> map = new HashMap<>(){{
+            put(null, "v");
+        }};
+
+        assertThrows(IllegalArgumentException.class, () ->
+                Check.ifMapIsNonEmptyWithRealKeysAndValues(map, "map"));
+
+        String paramName = "map";
+        try {
+            Check.ifMapIsNonEmptyWithRealKeysAndValues(map, paramName);
+        }
+        catch (IllegalArgumentException e) {
+            assertEquals("inaugural.soliloquy.tools.tests.CheckTests" +
+                            ".testIfMapIsNonEmptyWithRealKeysAndValuesWithNullKey: key in " +
+                            paramName + " cannot be null",
+                    e.getMessage());
+        }
+    }
+
+    @Test
+    void testIfMapIsNonEmptyWithRealKeysAndValuesWithEmptyKey() {
+        HashMap<String, String> map = new HashMap<>(){{
+            put("", "v");
+        }};
+
+        assertThrows(IllegalArgumentException.class, () ->
+                Check.ifMapIsNonEmptyWithRealKeysAndValues(map, "map"));
+
+        String paramName = "map";
+        try {
+            Check.ifMapIsNonEmptyWithRealKeysAndValues(map, paramName);
+        }
+        catch (IllegalArgumentException e) {
+            assertEquals("inaugural.soliloquy.tools.tests.CheckTests" +
+                            ".testIfMapIsNonEmptyWithRealKeysAndValuesWithEmptyKey: key in " +
+                            paramName + " cannot be empty",
+                    e.getMessage());
+        }
+    }
+
+    @Test
+    void testIfMapIsNonEmptyWithRealKeysAndValuesWithNullValue() {
+        HashMap<String, String> map = new HashMap<>(){{
+            put("k", null);
+        }};
+
+        assertThrows(IllegalArgumentException.class, () ->
+                Check.ifMapIsNonEmptyWithRealKeysAndValues(map, "map"));
+
+        String paramName = "map";
+        try {
+            Check.ifMapIsNonEmptyWithRealKeysAndValues(map, paramName);
+        }
+        catch (IllegalArgumentException e) {
+            assertEquals("inaugural.soliloquy.tools.tests.CheckTests" +
+                            ".testIfMapIsNonEmptyWithRealKeysAndValuesWithNullValue: value in " +
+                            paramName + " cannot be null",
+                    e.getMessage());
+        }
+    }
+
+    @Test
+    void testIfMapIsNonEmptyWithRealKeysAndValuesWithEmptyValue() {
+        HashMap<String, String> map = new HashMap<>(){{
+            put("k", "");
+        }};
+
+        assertThrows(IllegalArgumentException.class, () ->
+                Check.ifMapIsNonEmptyWithRealKeysAndValues(map, "map"));
+
+        String paramName = "map";
+        try {
+            Check.ifMapIsNonEmptyWithRealKeysAndValues(map, paramName);
+        }
+        catch (IllegalArgumentException e) {
+            assertEquals("inaugural.soliloquy.tools.tests.CheckTests" +
+                            ".testIfMapIsNonEmptyWithRealKeysAndValuesWithEmptyValue: value in " +
+                            paramName + " cannot be empty",
+                    e.getMessage());
+        }
+    }
+
+    @Test
+    void testIfMapIsNonEmptyWithRealKeysAndValuesWithItemCheck() {
+        HashMap<String, String> itemCheckInputs = new HashMap<>();
+        HashMap<String, String> map = new HashMap<>(){{
+            put("k", "v");
+        }};
+
+        Check.ifMapIsNonEmptyWithRealKeysAndValues(map, "map",
+                k -> v -> itemCheckInputs.put(k, v));
+
+        assertEquals(1, itemCheckInputs.size());
+        assertTrue(itemCheckInputs.containsKey("k"));
+        assertEquals("v", itemCheckInputs.get("k"));
     }
 
     @Test

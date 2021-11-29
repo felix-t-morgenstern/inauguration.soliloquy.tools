@@ -5,6 +5,9 @@ import soliloquy.specs.common.shared.HasTwoGenericParams;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 // TODO: Consider breaking this out into multiple classes
 public class Check {
@@ -37,6 +40,28 @@ public class Check {
         else {
             return ifNull(obj, paramName);
         }
+    }
+
+    @SuppressWarnings("ConstantConditions")
+    public static <K,V> Map<K,V> ifMapIsNonEmptyWithRealKeysAndValues(Map<K,V> map,
+                                                                      String paramName) {
+        return ifMapIsNonEmptyWithRealKeysAndValues(map, paramName, k -> v -> {});
+    }
+
+    public static <K,V> Map<K,V> ifMapIsNonEmptyWithRealKeysAndValues(Map<K,V> map,
+                                                                      String paramName,
+                                                                      Function<K,Consumer<V>>
+                                                                        itemCheck) {
+        Check.ifNull(map, paramName);
+        if (map.isEmpty()) {
+            throwException(paramName, "empty");
+        }
+        for (Map.Entry<K,V> entry : map.entrySet()) {
+            Check.ifNullOrEmptyIfString(entry.getKey(), "key in " + paramName);
+            Check.ifNullOrEmptyIfString(entry.getValue(), "value in " + paramName);
+            itemCheck.apply(entry.getKey()).accept(entry.getValue());
+        }
+        return map;
     }
 
     // ================================================
