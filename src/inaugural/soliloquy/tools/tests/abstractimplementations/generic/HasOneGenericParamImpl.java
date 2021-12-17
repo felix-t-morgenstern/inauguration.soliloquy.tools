@@ -1,14 +1,16 @@
 package inaugural.soliloquy.tools.tests.abstractimplementations.generic;
 
-import inaugural.soliloquy.tools.generic.HasOneGenericParam;
+import inaugural.soliloquy.tools.generic.AbstractHasOneGenericParam;
 
-public class HasOneGenericParamImpl<T> extends HasOneGenericParam<T> {
+public class HasOneGenericParamImpl<T> extends AbstractHasOneGenericParam<T> {
+    public static final String UNPARAMETERIZED_INTERFACE_NAME = "unparameterizedInterfaceName";
+
     public HasOneGenericParamImpl(T archetype) {
         super(archetype);
     }
 
     @Override
-    public String getUnparameterizedInterfaceName() {
-        return soliloquy.specs.common.shared.HasOneGenericParam.class.getCanonicalName();
+    protected String getUnparameterizedInterfaceName() {
+        return UNPARAMETERIZED_INTERFACE_NAME;
     }
 }

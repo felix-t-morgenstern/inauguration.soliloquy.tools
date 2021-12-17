@@ -8,7 +8,7 @@ import soliloquy.specs.common.shared.HasTwoGenericParams;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class HasTwoGenericParamsTests {
+class AbstractHasTwoGenericParamsTests {
     private HasTwoGenericParams<HasTwoGenericParams<Integer,Integer>,
             HasTwoGenericParams<Boolean,Boolean>> _level1Archetype1;
     private HasTwoGenericParams<Integer,Integer> _level2Archetype1;
@@ -74,16 +74,16 @@ class HasTwoGenericParamsTests {
 
     @Test
     void testGetInterfaceName() {
-        assertEquals(HasTwoGenericParams.class.getCanonicalName() + "<" +
-                HasTwoGenericParams.class.getCanonicalName() + "<" +
-                HasTwoGenericParams.class.getCanonicalName() + "<" +
+        assertEquals(HasTwoGenericParamsImpl.UNPARAMETERIZED_INTERFACE_NAME + "<" +
+                HasTwoGenericParamsImpl.UNPARAMETERIZED_INTERFACE_NAME + "<" +
+                HasTwoGenericParamsImpl.UNPARAMETERIZED_INTERFACE_NAME + "<" +
                 Integer.class.getCanonicalName() + "," + Integer.class.getCanonicalName() + ">," +
-                HasTwoGenericParams.class.getCanonicalName() + "<" +
+                HasTwoGenericParamsImpl.UNPARAMETERIZED_INTERFACE_NAME + "<" +
                 Boolean.class.getCanonicalName() + "," + Boolean.class.getCanonicalName() + ">>," +
-                HasTwoGenericParams.class.getCanonicalName() + "<" +
-                HasTwoGenericParams.class.getCanonicalName() + "<" +
+                HasTwoGenericParamsImpl.UNPARAMETERIZED_INTERFACE_NAME + "<" +
+                HasTwoGenericParamsImpl.UNPARAMETERIZED_INTERFACE_NAME + "<" +
                 String.class.getCanonicalName() + "," + String.class.getCanonicalName() + ">," +
-                HasTwoGenericParams.class.getCanonicalName() + "<" +
+                HasTwoGenericParamsImpl.UNPARAMETERIZED_INTERFACE_NAME + "<" +
                 Float.class.getCanonicalName() + "," + Float.class.getCanonicalName() + ">>>",
                 _hasTwoGenericParams.getInterfaceName());
     }

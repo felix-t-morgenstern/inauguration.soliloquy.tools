@@ -1,5 +1,6 @@
 package inaugural.soliloquy.tools.tests.generic;
 
+import inaugural.soliloquy.tools.generic.AbstractHasOneGenericParam;
 import inaugural.soliloquy.tools.tests.abstractimplementations.generic.HasOneGenericParamImpl;
 import inaugural.soliloquy.tools.tests.fakes.FakeHasOneGenericParam;
 import org.junit.jupiter.api.BeforeEach;
@@ -8,13 +9,13 @@ import soliloquy.specs.common.shared.HasOneGenericParam;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class HasOneGenericParamTests {
+public class AbstractHasOneGenericParamTests {
     private HasOneGenericParam<HasOneGenericParam<Integer>> _level1Archetype;
     @SuppressWarnings("FieldCanBeLocal")
     private HasOneGenericParam<Integer> _level2Archetype;
 
-    private inaugural.soliloquy.tools.generic.HasOneGenericParam<
-            HasOneGenericParam<HasOneGenericParam<Integer>>> _hasOneGenericParam;
+    private AbstractHasOneGenericParam<
+                HasOneGenericParam<HasOneGenericParam<Integer>>> _hasOneGenericParam;
 
     @BeforeEach
     void setUp() {
@@ -42,10 +43,10 @@ public class HasOneGenericParamTests {
 
     @Test
     void testGetInterfaceName() {
-        assertEquals(HasOneGenericParam.class.getCanonicalName() + "<" +
-                HasOneGenericParam.class.getCanonicalName() + "<" +
-                HasOneGenericParam.class.getCanonicalName() + "<" +
-                Integer.class.getCanonicalName() + ">>>",
+        assertEquals(HasOneGenericParamImpl.UNPARAMETERIZED_INTERFACE_NAME + "<" +
+                        HasOneGenericParamImpl.UNPARAMETERIZED_INTERFACE_NAME + "<" +
+                        HasOneGenericParamImpl.UNPARAMETERIZED_INTERFACE_NAME + "<" +
+                        Integer.class.getCanonicalName() + ">>>",
                 _hasOneGenericParam.getInterfaceName());
     }
 }

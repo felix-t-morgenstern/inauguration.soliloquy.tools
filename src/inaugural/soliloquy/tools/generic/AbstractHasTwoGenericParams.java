@@ -1,13 +1,11 @@
 package inaugural.soliloquy.tools.generic;
 
-public abstract class HasTwoGenericParams<T1, T2> extends HasGenericParams
+public abstract class AbstractHasTwoGenericParams<T1, T2> extends AbstractHasGenericParams
         implements soliloquy.specs.common.shared.HasTwoGenericParams<T1, T2> {
     private final T1 ARCHETYPE_1;
     private final T2 ARCHETYPE_2;
 
-    private String _parameterizedClassName;
-
-    protected HasTwoGenericParams(T1 archetype1, T2 archetype2) {
+    protected AbstractHasTwoGenericParams(T1 archetype1, T2 archetype2) {
         ARCHETYPE_1 = archetypeCheck(archetype1, "archetype1");
         ARCHETYPE_2 = archetypeCheck(archetype2, "archetype2");
     }
@@ -24,11 +22,7 @@ public abstract class HasTwoGenericParams<T1, T2> extends HasGenericParams
 
     @Override
     public String getInterfaceName() {
-        if (_parameterizedClassName == null) {
-            _parameterizedClassName = getUnparameterizedInterfaceName() +
-                    "<" + getProperTypeName(getFirstArchetype()) + "," +
-                    getProperTypeName(getSecondArchetype()) + ">";
-        }
-        return _parameterizedClassName;
+        return getUnparameterizedInterfaceName() + "<" + getProperTypeName(ARCHETYPE_1) + "," +
+                getProperTypeName(ARCHETYPE_2) + ">";
     }
 }

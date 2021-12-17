@@ -1,6 +1,7 @@
 package inaugural.soliloquy.tools.tests.generic;
 
 import inaugural.soliloquy.tools.generic.CanGetInterfaceName;
+import inaugural.soliloquy.tools.tests.fakes.FakeHasOneGenericParam;
 import inaugural.soliloquy.tools.tests.fakes.FakeSoliloquyClass;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,5 +26,11 @@ class CanGetInterfaceNameTests {
     void testGetSoliloquyClassInterfaceName() {
         assertEquals(SoliloquyClass.class.getCanonicalName(),
                 _canGetInterfaceName.getProperTypeName(new FakeSoliloquyClass()));
+    }
+
+    @Test
+    void testIgnoresTypeParameters() {
+        assertEquals(FakeHasOneGenericParam.INTERFACE_NAME,
+                _canGetInterfaceName.getProperTypeName(new FakeHasOneGenericParam<>(0)));
     }
 }
