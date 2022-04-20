@@ -13,6 +13,11 @@ class RandomTests {
         runRandomizationTest(Random::randomLong);
     }
 
+    @Test
+    void testRandomString() {
+        runRandomizationTest(Random::randomString);
+    }
+
     // NB: This is technically indeterminate, but the odds of duplicate random results should be
     //     within the same realm of possibility as a duplicate UUID
     private void runRandomizationTest(Supplier<Object> randomMethod) {
