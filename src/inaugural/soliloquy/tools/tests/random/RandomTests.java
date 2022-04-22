@@ -9,6 +9,11 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class RandomTests {
     @Test
+    void testRandomInt() {
+        runRandomizationTest(Random::randomInt);
+    }
+
+    @Test
     void testRandomLong() {
         runRandomizationTest(Random::randomLong);
     }
