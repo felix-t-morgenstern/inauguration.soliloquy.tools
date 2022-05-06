@@ -7,6 +7,10 @@ public class Random {
         return RANDOM.nextInt();
     }
 
+    public static int randomIntWithInclusiveFloor(int floor) {
+        return RANDOM.nextInt(Integer.MAX_VALUE - floor) + floor;
+    }
+
     public static long randomLong() {
         return RANDOM.nextLong();
     }
