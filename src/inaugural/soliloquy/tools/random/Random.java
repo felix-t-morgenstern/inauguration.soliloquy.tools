@@ -11,6 +11,10 @@ public class Random {
         return RANDOM.nextInt(Integer.MAX_VALUE - floor) + floor;
     }
 
+    public static int randomIntInRange(int min, int max) {
+        return RANDOM.nextInt(max - min) + min;
+    }
+
     public static long randomLong() {
         return RANDOM.nextLong();
     }

@@ -23,6 +23,16 @@ class RandomTests {
     }
 
     @Test
+    void testRandomIntInRange() {
+        int min = -999999999;
+        int max = 999999999;
+        runRandomizationTest(() -> Random.randomIntInRange(min, max), i -> {
+            assertTrue(i >= min);
+            assertTrue(i <= max);
+        });
+    }
+
+    @Test
     void testRandomLong() {
         runRandomizationTest(Random::randomLong);
     }
