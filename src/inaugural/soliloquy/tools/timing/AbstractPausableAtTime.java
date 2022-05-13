@@ -8,7 +8,6 @@ public abstract class AbstractPausableAtTime implements PausableAtTime {
 
     protected int _periodModuloOffset;
     protected Long _pausedTimestamp;
-    protected Long _mostRecentReportedTimestamp;
 
     public AbstractPausableAtTime(Long pausedTimestamp, Long mostRecentTimestamp) {
         if (pausedTimestamp != null) {
@@ -33,33 +32,34 @@ public abstract class AbstractPausableAtTime implements PausableAtTime {
 
     @Override
     public void reportPause(long timestamp) throws IllegalArgumentException {
+        Long priorMostRecentTimestamp = TIMESTAMP_VALIDATOR.mostRecentTimestamp();
         TIMESTAMP_VALIDATOR.validateTimestamp(timestamp);
         if (_pausedTimestamp != null) {
             throw new IllegalArgumentException(Tools.callingClassName(2) + ".reportPause: " +
                     "cannot pause if already paused");
         }
-        if (_mostRecentReportedTimestamp != null && timestamp < _mostRecentReportedTimestamp) {
+        if (priorMostRecentTimestamp != null && timestamp < priorMostRecentTimestamp) {
             throw new IllegalArgumentException(Tools.callingClassName(2) + ".reportPause: " +
                     "cannot pause at timestamp prior to most recent unpausing");
         }
-        _mostRecentReportedTimestamp = _pausedTimestamp = timestamp;
+        _pausedTimestamp = timestamp;
     }
 
     @Override
     public void reportUnpause(long timestamp) throws IllegalArgumentException {
+        Long priorMostRecentTimestamp = TIMESTAMP_VALIDATOR.mostRecentTimestamp();
         TIMESTAMP_VALIDATOR.validateTimestamp(timestamp);
         if (_pausedTimestamp == null) {
             throw new IllegalArgumentException(Tools.callingClassName(2) + ".reportUnpause: " +
                     "cannot unpause if already unpaused");
         }
-        if (_mostRecentReportedTimestamp != null && timestamp < _mostRecentReportedTimestamp) {
+        if (priorMostRecentTimestamp != null && timestamp < priorMostRecentTimestamp) {
             throw new IllegalArgumentException(Tools.callingClassName(2) + ".reportUnpause: " +
                     "cannot unpause at timestamp prior to most recent pausing");
         }
 
         updateInternalValuesOnUnpause(timestamp);
 
-        _mostRecentReportedTimestamp = timestamp;
         _pausedTimestamp = null;
     }
 

@@ -8,15 +8,31 @@ public class Random {
     }
 
     public static int randomIntWithInclusiveFloor(int floor) {
-        return RANDOM.nextInt(Integer.MAX_VALUE - floor) + floor;
+        return randomIntInRange(floor, Integer.MAX_VALUE);
+    }
+
+    public static int randomIntWithInclusiveCeiling(int ceiling) {
+        return randomIntInRange(Integer.MIN_VALUE, ceiling);
     }
 
     public static int randomIntInRange(int min, int max) {
-        return RANDOM.nextInt(max - min) + min;
+        return RANDOM.ints(min, max).findFirst().getAsInt();
     }
 
     public static long randomLong() {
         return RANDOM.nextLong();
+    }
+
+    public static long randomLongWithInclusiveFloor(long floor) {
+        return randomLongInRange(floor, Long.MAX_VALUE);
+    }
+
+    public static long randomLongWithInclusiveCeiling(long ceiling) {
+        return randomLongInRange(Long.MIN_VALUE, ceiling);
+    }
+
+    public static long randomLongInRange(long min, long max) {
+        return RANDOM.longs(min, max).findFirst().getAsLong();
     }
 
     // NB: Taken from Baeldung, at https://www.baeldung.com/java-random-string, accessed on 2022/04/19
