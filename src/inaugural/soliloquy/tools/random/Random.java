@@ -1,7 +1,7 @@
 package inaugural.soliloquy.tools.random;
 
 public class Random {
-    private static java.util.Random RANDOM = new java.util.Random();
+    public static java.util.Random RANDOM = new java.util.Random();
 
     public static int randomInt() {
         return RANDOM.nextInt();
