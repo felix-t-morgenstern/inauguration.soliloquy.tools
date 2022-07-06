@@ -3,6 +3,8 @@ package inaugural.soliloquy.tools.tests.persistence;
 import inaugural.soliloquy.tools.tests.abstractimplementations.generic.HasOneGenericParamImpl;
 import inaugural.soliloquy.tools.tests.abstractimplementations.generic.HasTwoGenericParamsImpl;
 import inaugural.soliloquy.tools.tests.abstractimplementations.persistence.TypeWithOneGenericParamHandlerImpl;
+import inaugural.soliloquy.tools.tests.fakes.FakeAbstractTypeHandler;
+import inaugural.soliloquy.tools.tests.fakes.FakeObjectWithArbitraryHashCode;
 import inaugural.soliloquy.tools.tests.fakes.FakePersistentValuesHandler;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,6 +22,9 @@ class AbstractTypeWithOneGenericParamHandlerTests {
     @SuppressWarnings("rawtypes")
     private final Function<Object, HasOneGenericParam> TYPE_FACTORY =
             HasOneGenericParamImpl::new;
+    private final int HASH_CODE = (TypeHandler.class.getCanonicalName() + "<" +
+            HasTwoGenericParamsImpl.UNPARAMETERIZED_INTERFACE_NAME + "<" +
+            Integer.class.getCanonicalName() + ">>").hashCode();
 
     @SuppressWarnings("rawtypes")
     private TypeWithOneGenericParamHandlerImpl<HasOneGenericParam>
@@ -92,8 +97,39 @@ class AbstractTypeWithOneGenericParamHandlerTests {
     @Test
     void testGetInterfaceName() {
         assertEquals(TypeHandler.class.getCanonicalName() + "<" +
-                HasTwoGenericParamsImpl.UNPARAMETERIZED_INTERFACE_NAME + "<" +
-                Integer.class.getCanonicalName() + ">>",
+                        HasTwoGenericParamsImpl.UNPARAMETERIZED_INTERFACE_NAME + "<" +
+                        Integer.class.getCanonicalName() + ">>",
                 _typeWithOneGenericParameterHandler.getInterfaceName());
+    }
+
+    @Test
+    void testToString() {
+        assertEquals(TypeHandler.class.getCanonicalName() + "<" +
+                        HasTwoGenericParamsImpl.UNPARAMETERIZED_INTERFACE_NAME + "<" +
+                        Integer.class.getCanonicalName() + ">>",
+                _typeWithOneGenericParameterHandler.toString());
+    }
+
+    @Test
+    void testHashCode() {
+        assertEquals(HASH_CODE, _typeWithOneGenericParameterHandler.hashCode());
+    }
+
+    @Test
+    void testEquals() {
+        FakeAbstractTypeHandler<HasOneGenericParam<Integer>> equalHandler =
+                new FakeAbstractTypeHandler<>(ARCHETYPE);
+        equalHandler.HashCode = HASH_CODE;
+
+        FakeObjectWithArbitraryHashCode unequalHandler1 = new FakeObjectWithArbitraryHashCode();
+        unequalHandler1.HashCode = HASH_CODE;
+
+        FakeAbstractTypeHandler<HasOneGenericParam<Integer>> unequalHandler2 =
+                new FakeAbstractTypeHandler<>(ARCHETYPE);
+        unequalHandler2.HashCode = HASH_CODE + 1;
+
+        assertEquals(_typeWithOneGenericParameterHandler, equalHandler);
+        assertNotEquals(_typeWithOneGenericParameterHandler, unequalHandler1);
+        assertNotEquals(_typeWithOneGenericParameterHandler, unequalHandler2);
     }
 }

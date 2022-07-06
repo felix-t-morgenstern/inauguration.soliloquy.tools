@@ -16,4 +16,19 @@ public abstract class AbstractTypeHandler<T> extends AbstractHasOneGenericParam<
     protected String getUnparameterizedInterfaceName() {
         return TypeHandler.class.getCanonicalName();
     }
+
+    @Override
+    public String toString() {
+        return getInterfaceName();
+    }
+
+    @Override
+    public int hashCode() {
+        return toString().hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof AbstractTypeHandler && obj.hashCode() == hashCode();
+    }
 }

@@ -2,10 +2,13 @@ package inaugural.soliloquy.tools.tests.persistence;
 
 import inaugural.soliloquy.tools.tests.abstractimplementations.generic.HasTwoGenericParamsImpl;
 import inaugural.soliloquy.tools.tests.abstractimplementations.persistence.TypeWithTwoGenericParamsHandlerImpl;
+import inaugural.soliloquy.tools.tests.fakes.FakeAbstractTypeHandler;
+import inaugural.soliloquy.tools.tests.fakes.FakeObjectWithArbitraryHashCode;
 import inaugural.soliloquy.tools.tests.fakes.FakePersistentValuesHandler;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import soliloquy.specs.common.persistence.TypeHandler;
+import soliloquy.specs.common.shared.HasOneGenericParam;
 import soliloquy.specs.common.shared.HasTwoGenericParams;
 
 import java.util.function.Function;
@@ -20,6 +23,10 @@ class AbstractTypeWithTwoGenericParamsHandlerTests {
     @SuppressWarnings({"rawtypes", "unchecked"})
     private final Function<Object, Function<Object, HasTwoGenericParams>> TYPE_FACTORY =
             archetype1 -> archetype2 -> new HasTwoGenericParamsImpl(archetype1, archetype2);
+    private final int HASH_CODE = (TypeHandler.class.getCanonicalName() + "<" +
+            HasTwoGenericParamsImpl.UNPARAMETERIZED_INTERFACE_NAME + "<" +
+            Integer.class.getCanonicalName() + "," +
+            String.class.getCanonicalName() + ">>").hashCode();
 
     @SuppressWarnings("rawtypes")
     private TypeWithTwoGenericParamsHandlerImpl<HasTwoGenericParams>
@@ -109,8 +116,41 @@ class AbstractTypeWithTwoGenericParamsHandlerTests {
     @Test
     void testGetInterfaceName() {
         assertEquals(TypeHandler.class.getCanonicalName() + "<" +
-                HasTwoGenericParamsImpl.UNPARAMETERIZED_INTERFACE_NAME + "<" +
-                Integer.class.getCanonicalName() + "," + String.class.getCanonicalName() + ">>",
+                        HasTwoGenericParamsImpl.UNPARAMETERIZED_INTERFACE_NAME + "<" +
+                        Integer.class.getCanonicalName() + "," +
+                        String.class.getCanonicalName() + ">>",
                 _typeWithTwoGenericParamsHandler.getInterfaceName());
+    }
+
+    @Test
+    void testToString() {
+        assertEquals(TypeHandler.class.getCanonicalName() + "<" +
+                        HasTwoGenericParamsImpl.UNPARAMETERIZED_INTERFACE_NAME + "<" +
+                        Integer.class.getCanonicalName() + "," +
+                        String.class.getCanonicalName() + ">>",
+                _typeWithTwoGenericParamsHandler.toString());
+    }
+
+    @Test
+    void testHashCode() {
+        assertEquals(HASH_CODE, _typeWithTwoGenericParamsHandler.hashCode());
+    }
+
+    @Test
+    void testEquals() {
+        FakeAbstractTypeHandler<HasTwoGenericParams<Integer, String>> equalHandler =
+                new FakeAbstractTypeHandler<>(ARCHETYPE);
+        equalHandler.HashCode = HASH_CODE;
+
+        FakeObjectWithArbitraryHashCode unequalHandler1 = new FakeObjectWithArbitraryHashCode();
+        unequalHandler1.HashCode = HASH_CODE;
+
+        FakeAbstractTypeHandler<HasTwoGenericParams<Integer, String>> unequalHandler2 =
+                new FakeAbstractTypeHandler<>(ARCHETYPE);
+        unequalHandler2.HashCode = HASH_CODE + 1;
+
+        assertEquals(_typeWithTwoGenericParamsHandler, equalHandler);
+        assertNotEquals(_typeWithTwoGenericParamsHandler, unequalHandler1);
+        assertNotEquals(_typeWithTwoGenericParamsHandler, unequalHandler2);
     }
 }
