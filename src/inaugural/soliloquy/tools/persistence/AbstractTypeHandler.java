@@ -6,7 +6,8 @@ import soliloquy.specs.common.persistence.TypeHandler;
 
 public abstract class AbstractTypeHandler<T> extends AbstractHasOneGenericParam<T>
         implements TypeHandler<T> {
-    protected static final Gson GSON = new Gson();
+    @SuppressWarnings("unused")
+    protected static final Gson JSON = new Gson();
 
     protected AbstractTypeHandler(T archetype) {
         super(archetype);
