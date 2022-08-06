@@ -6,10 +6,19 @@ import org.junit.jupiter.api.Test;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 class RandomTests {
+    @Test
+    void testRandomBoolean() {
+        for (int i = 0; i < 1000; i++) {
+            if (Random.randomBoolean()) {
+                return;
+            }
+        }
+        fail("randomBoolean() did not return a true after 1000 trials");
+    }
+
     @Test
     void testRandomInt() {
         runRandomizationTest(Random::randomInt);
@@ -69,23 +78,54 @@ class RandomTests {
     }
 
     @Test
+    void testRandomFloat() {
+        runRandomizationTest(Random::randomFloat);
+    }
+
+    @Test
+    void testRandomFloatInRange() {
+        float min = -999f;
+        float max = -min;
+        runRandomizationTest(() -> Random.randomFloatInRange(min, max), f -> {
+            assertTrue(f >= min);
+            assertTrue(f <= max);
+        });
+    }
+
+    @Test
     void testRandomString() {
-        runRandomizationTest(Random::randomString);
+        runRandomizationTest(Random::randomString, s -> assertEquals(20, s.length()));
+    }
+
+    @Test
+    void testRandomChar() {
+        runRandomizationTest(Random::randomChar, c -> {
+            assertTrue((int) c >= (int) ' ');
+            assertTrue((int) c <= (int) '~');
+        }, false);
     }
 
     // NB: This is technically indeterminate, but the odds of duplicate random results should be
     //     practically within the same realm of possibility as a duplicate UUID
     private <T> void runRandomizationTest(Supplier<T> randomMethod,
-                                          Consumer<T> additionalAssertions) {
+                                          Consumer<T> additionalAssertions,
+                                          boolean failOnEquals) {
         for (int i = 0; i < 1000; i++) {
             T val1 = randomMethod.get();
             T val2 = randomMethod.get();
-            assertNotEquals(val1, val2);
+            if (failOnEquals) {
+                assertNotEquals(val1, val2);
+            }
             if (additionalAssertions != null) {
                 additionalAssertions.accept(val1);
                 additionalAssertions.accept(val2);
             }
         }
+    }
+
+    private <T> void runRandomizationTest(Supplier<T> randomMethod,
+                                          Consumer<T> additionalAssertions) {
+        runRandomizationTest(randomMethod, additionalAssertions, true);
     }
 
     private void runRandomizationTest(Supplier<Object> randomMethod) {

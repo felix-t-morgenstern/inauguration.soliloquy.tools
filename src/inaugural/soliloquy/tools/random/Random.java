@@ -3,6 +3,10 @@ package inaugural.soliloquy.tools.random;
 public class Random {
     public static java.util.Random RANDOM = new java.util.Random();
 
+    public static boolean randomBoolean() {
+        return RANDOM.nextBoolean();
+    }
+
     public static int randomInt() {
         return RANDOM.nextInt();
     }
@@ -15,6 +19,7 @@ public class Random {
         return randomIntInRange(Integer.MIN_VALUE, ceiling);
     }
 
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
     public static int randomIntInRange(int min, int max) {
         return RANDOM.ints(min, max).findFirst().getAsInt();
     }
@@ -31,8 +36,17 @@ public class Random {
         return randomLongInRange(Long.MIN_VALUE, ceiling);
     }
 
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
     public static long randomLongInRange(long min, long max) {
         return RANDOM.longs(min, max).findFirst().getAsLong();
+    }
+
+    public static float randomFloat() {
+        return RANDOM.nextFloat();
+    }
+
+    public static float randomFloatInRange(float min, float max) {
+        return min + ((max - min) * RANDOM.nextFloat());
     }
 
     // NB: Taken from Baeldung, at https://www.baeldung.com/java-random-string, accessed on 2022/04/19
@@ -46,5 +60,10 @@ public class Random {
                 .limit(targetStringLength)
                 .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
                 .toString();
+    }
+
+    // NB: Taken from Delftstack, at https://www.delftstack.com/howto/java/java-random-character/, accessed on 2022/07/26
+    public static char randomChar() {
+        return (char) (RANDOM.nextInt(95) + ' ');
     }
 }
