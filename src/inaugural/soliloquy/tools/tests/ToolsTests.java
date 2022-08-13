@@ -17,6 +17,7 @@ class ToolsTests {
 
         assertEquals("", Tools.emptyIfNull(null));
     }
+
     @Test
     void testNullIfEmpty() {
         String input = "input";

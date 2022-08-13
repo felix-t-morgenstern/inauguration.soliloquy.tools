@@ -37,10 +37,10 @@ public class NearestFloorAndCeilingTree {
     }
 
     public static NearestFloorAndCeilingTree FromIntegers(Collection<Integer> unsorted) {
-        return FromCollection(unsorted, i -> (long)i);
+        return FromCollection(unsorted, i -> (long) i);
     }
 
-    public static NearestFloorAndCeilingTree FromLongs (Collection<Long> unsorted) {
+    public static NearestFloorAndCeilingTree FromLongs(Collection<Long> unsorted) {
         return FromCollection(unsorted, i -> i);
     }
 
@@ -52,7 +52,7 @@ public class NearestFloorAndCeilingTree {
         }
         long[] toSort = new long[collection.size()];
         int index = 0;
-        for(T i : collection) {
+        for (T i : collection) {
             toSort[index++] = castToLong.apply(i);
         }
         Arrays.sort(toSort);

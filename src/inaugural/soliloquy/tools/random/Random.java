@@ -49,7 +49,8 @@ public class Random {
         return min + ((max - min) * RANDOM.nextFloat());
     }
 
-    // NB: Taken from Baeldung, at https://www.baeldung.com/java-random-string, accessed on 2022/04/19
+    // NB: Taken from Baeldung, at https://www.baeldung.com/java-random-string, accessed on
+    // 2022/04/19
     public static String randomString() {
         int leftLimit = 48; // numeral '0'
         int rightLimit = 122; // letter 'z'
@@ -62,7 +63,8 @@ public class Random {
                 .toString();
     }
 
-    // NB: Taken from Delftstack, at https://www.delftstack.com/howto/java/java-random-character/, accessed on 2022/07/26
+    // NB: Taken from Delftstack, at
+    // https://www.delftstack.com/howto/java/java-random-character/, accessed on 2022/07/26
     public static char randomChar() {
         return (char) (RANDOM.nextInt(95) + ' ');
     }

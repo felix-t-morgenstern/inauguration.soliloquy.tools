@@ -23,7 +23,7 @@ public class Tools {
             multiplicand = EXPONENTS_OF_TEN.get(value);
         }
         else {
-            EXPONENTS_OF_TEN.put(places, multiplicand = (float)Math.pow(10, places));
+            EXPONENTS_OF_TEN.put(places, multiplicand = (float) Math.pow(10, places));
         }
 
         return Math.round(value * multiplicand) / multiplicand;

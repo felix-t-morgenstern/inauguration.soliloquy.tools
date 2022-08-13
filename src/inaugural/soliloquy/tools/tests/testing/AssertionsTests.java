@@ -11,7 +11,11 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class AssertionsTests {
     @Test
     void testAssertEqualsAndNotSame() {
-        ArrayList<Integer> list1 = new ArrayList<>() {{ add(1); add(2); add(3); }};
+        ArrayList<Integer> list1 = new ArrayList<>() {{
+            add(1);
+            add(2);
+            add(3);
+        }};
         ArrayList<Integer> list2 = new ArrayList<>(list1);
 
         assertEqualsAndNotSame(list1, list2);

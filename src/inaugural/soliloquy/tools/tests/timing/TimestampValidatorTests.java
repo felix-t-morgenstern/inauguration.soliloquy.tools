@@ -22,7 +22,7 @@ class TimestampValidatorTests {
 
         _timestampValidator.validateTimestamp(MOST_RECENT_TIMESTAMP);
 
-        assertEquals(MOST_RECENT_TIMESTAMP, (long)_timestampValidator.mostRecentTimestamp());
+        assertEquals(MOST_RECENT_TIMESTAMP, (long) _timestampValidator.mostRecentTimestamp());
     }
 
     @Test

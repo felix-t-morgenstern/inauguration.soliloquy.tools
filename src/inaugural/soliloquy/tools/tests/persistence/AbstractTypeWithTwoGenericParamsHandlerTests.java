@@ -8,7 +8,6 @@ import inaugural.soliloquy.tools.tests.fakes.FakePersistentValuesHandler;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import soliloquy.specs.common.persistence.TypeHandler;
-import soliloquy.specs.common.shared.HasOneGenericParam;
 import soliloquy.specs.common.shared.HasTwoGenericParams;
 
 import java.util.function.Function;

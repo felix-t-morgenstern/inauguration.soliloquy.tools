@@ -34,8 +34,8 @@ class AbstractFinitePausableAtTimeTests {
 
     @Test
     void testPausedTimestamp() {
-        assertEquals(PAUSED_TIMESTAMP, (long)_finitePausableAtTime.pausedTimestamp());
-        assertEquals(PAUSED_TIMESTAMP, (long)_finitePausableAtTimeWithAnchor.pausedTimestamp());
+        assertEquals(PAUSED_TIMESTAMP, (long) _finitePausableAtTime.pausedTimestamp());
+        assertEquals(PAUSED_TIMESTAMP, (long) _finitePausableAtTimeWithAnchor.pausedTimestamp());
     }
 
     @Test
@@ -54,7 +54,7 @@ class AbstractFinitePausableAtTimeTests {
         assertNull(_finitePausableAtTime.pausedTimestamp());
         assertNull(_finitePausableAtTimeWithAnchor.pausedTimestamp());
         assertEquals(ANCHOR_TIME + (unpauseTimestamp - PAUSED_TIMESTAMP),
-                ((FinitePausableAtTimeImpl)_finitePausableAtTimeWithAnchor).getAnchorTime());
+                ((FinitePausableAtTimeImpl) _finitePausableAtTimeWithAnchor).getAnchorTime());
 
         assertThrows(IllegalArgumentException.class, () ->
                 _finitePausableAtTime.reportUnpause(secondPauseTimestamp));
@@ -64,8 +64,8 @@ class AbstractFinitePausableAtTimeTests {
         _finitePausableAtTime.reportPause(secondPauseTimestamp);
         _finitePausableAtTimeWithAnchor.reportPause(secondPauseTimestamp);
 
-        assertEquals(secondPauseTimestamp, (long)_finitePausableAtTime.pausedTimestamp());
+        assertEquals(secondPauseTimestamp, (long) _finitePausableAtTime.pausedTimestamp());
         assertEquals(secondPauseTimestamp,
-                (long)_finitePausableAtTimeWithAnchor.pausedTimestamp());
+                (long) _finitePausableAtTimeWithAnchor.pausedTimestamp());
     }
 }

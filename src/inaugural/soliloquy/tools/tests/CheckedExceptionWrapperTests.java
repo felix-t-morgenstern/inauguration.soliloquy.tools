@@ -23,7 +23,7 @@ class CheckedExceptionWrapperTests {
             Throwable innerThrowable = e.getCause();
             if (innerThrowable instanceof UnsupportedOperationException) {
                 UnsupportedOperationException innerException =
-                        (UnsupportedOperationException)innerThrowable;
+                        (UnsupportedOperationException) innerThrowable;
 
                 assertEquals(exceptionString, innerException.getMessage());
             }
@@ -41,6 +41,6 @@ class CheckedExceptionWrapperTests {
         int valueToReturn = 123123;
         Callable<Integer> nonthrowingCallable = () -> valueToReturn;
 
-        assertEquals(valueToReturn, (int)CheckedExceptionWrapper.callWrapped(nonthrowingCallable));
+        assertEquals(valueToReturn, (int) CheckedExceptionWrapper.callWrapped(nonthrowingCallable));
     }
 }

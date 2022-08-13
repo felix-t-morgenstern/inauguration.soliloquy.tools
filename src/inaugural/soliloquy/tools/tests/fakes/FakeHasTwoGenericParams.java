@@ -2,7 +2,7 @@ package inaugural.soliloquy.tools.tests.fakes;
 
 import soliloquy.specs.common.shared.HasTwoGenericParams;
 
-public class FakeHasTwoGenericParams<P1,P2> implements HasTwoGenericParams<P1,P2> {
+public class FakeHasTwoGenericParams<P1, P2> implements HasTwoGenericParams<P1, P2> {
     public P1 _archetype1;
     public P2 _archetype2;
 

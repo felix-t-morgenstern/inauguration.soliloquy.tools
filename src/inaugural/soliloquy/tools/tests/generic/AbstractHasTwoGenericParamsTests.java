@@ -9,27 +9,27 @@ import soliloquy.specs.common.shared.HasTwoGenericParams;
 import static org.junit.jupiter.api.Assertions.*;
 
 class AbstractHasTwoGenericParamsTests {
-    private HasTwoGenericParams<HasTwoGenericParams<Integer,Integer>,
-            HasTwoGenericParams<Boolean,Boolean>> _level1Archetype1;
-    private HasTwoGenericParams<Integer,Integer> _level2Archetype1;
+    private HasTwoGenericParams<HasTwoGenericParams<Integer, Integer>,
+            HasTwoGenericParams<Boolean, Boolean>> _level1Archetype1;
+    private HasTwoGenericParams<Integer, Integer> _level2Archetype1;
     @SuppressWarnings("FieldCanBeLocal")
-    private HasTwoGenericParams<Boolean,Boolean> _level2Archetype2;
+    private HasTwoGenericParams<Boolean, Boolean> _level2Archetype2;
 
-    private HasTwoGenericParams<HasTwoGenericParams<String,String>,
-            HasTwoGenericParams<Float,Float>> _level1Archetype2;
-    private HasTwoGenericParams<String,String> _level2Archetype3;
+    private HasTwoGenericParams<HasTwoGenericParams<String, String>,
+            HasTwoGenericParams<Float, Float>> _level1Archetype2;
+    private HasTwoGenericParams<String, String> _level2Archetype3;
     @SuppressWarnings("FieldCanBeLocal")
-    private HasTwoGenericParams<Float,Float> _level2Archetype4;
+    private HasTwoGenericParams<Float, Float> _level2Archetype4;
 
     private HasTwoGenericParams<
-            HasTwoGenericParams<HasTwoGenericParams<Integer,Integer>,
-                    HasTwoGenericParams<Boolean,Boolean>>,
-            HasTwoGenericParams<HasTwoGenericParams<String,String>,
-                    HasTwoGenericParams<Float,Float>>> _hasTwoGenericParams;
+            HasTwoGenericParams<HasTwoGenericParams<Integer, Integer>,
+                    HasTwoGenericParams<Boolean, Boolean>>,
+            HasTwoGenericParams<HasTwoGenericParams<String, String>,
+                    HasTwoGenericParams<Float, Float>>> _hasTwoGenericParams;
 
     @BeforeEach
     void setUp() {
-        _level2Archetype1 = new HasTwoGenericParamsImpl<>(0,0);
+        _level2Archetype1 = new HasTwoGenericParamsImpl<>(0, 0);
         _level2Archetype2 = new HasTwoGenericParamsImpl<>(true, true);
         _level2Archetype3 = new HasTwoGenericParamsImpl<>("", "");
         _level2Archetype4 = new HasTwoGenericParamsImpl<>(0f, 0f);
@@ -42,13 +42,13 @@ class AbstractHasTwoGenericParamsTests {
 
     @Test
     void testConstructorWithInvalidParams() {
-        HasTwoGenericParams<HasTwoGenericParams<Integer,Integer>,
-                HasTwoGenericParams<Boolean,Boolean>> archetype1WithNullChildArchetype =
+        HasTwoGenericParams<HasTwoGenericParams<Integer, Integer>,
+                HasTwoGenericParams<Boolean, Boolean>> archetype1WithNullChildArchetype =
                 new FakeHasTwoGenericParams<>(_level2Archetype1,
                         new FakeHasTwoGenericParams<>(true, null));
 
-        HasTwoGenericParams<HasTwoGenericParams<String,String>,
-                HasTwoGenericParams<Float,Float>> archetype2WithNullChildArchetype =
+        HasTwoGenericParams<HasTwoGenericParams<String, String>,
+                HasTwoGenericParams<Float, Float>> archetype2WithNullChildArchetype =
                 new FakeHasTwoGenericParams<>(_level2Archetype3,
                         new FakeHasTwoGenericParams<>(0f, null));
 
@@ -75,16 +75,16 @@ class AbstractHasTwoGenericParamsTests {
     @Test
     void testGetInterfaceName() {
         assertEquals(HasTwoGenericParamsImpl.UNPARAMETERIZED_INTERFACE_NAME + "<" +
-                HasTwoGenericParamsImpl.UNPARAMETERIZED_INTERFACE_NAME + "<" +
-                HasTwoGenericParamsImpl.UNPARAMETERIZED_INTERFACE_NAME + "<" +
-                Integer.class.getCanonicalName() + "," + Integer.class.getCanonicalName() + ">," +
-                HasTwoGenericParamsImpl.UNPARAMETERIZED_INTERFACE_NAME + "<" +
-                Boolean.class.getCanonicalName() + "," + Boolean.class.getCanonicalName() + ">>," +
-                HasTwoGenericParamsImpl.UNPARAMETERIZED_INTERFACE_NAME + "<" +
-                HasTwoGenericParamsImpl.UNPARAMETERIZED_INTERFACE_NAME + "<" +
-                String.class.getCanonicalName() + "," + String.class.getCanonicalName() + ">," +
-                HasTwoGenericParamsImpl.UNPARAMETERIZED_INTERFACE_NAME + "<" +
-                Float.class.getCanonicalName() + "," + Float.class.getCanonicalName() + ">>>",
+                        HasTwoGenericParamsImpl.UNPARAMETERIZED_INTERFACE_NAME + "<" +
+                        HasTwoGenericParamsImpl.UNPARAMETERIZED_INTERFACE_NAME + "<" +
+                        Integer.class.getCanonicalName() + "," + Integer.class.getCanonicalName() + ">," +
+                        HasTwoGenericParamsImpl.UNPARAMETERIZED_INTERFACE_NAME + "<" +
+                        Boolean.class.getCanonicalName() + "," + Boolean.class.getCanonicalName() + ">>," +
+                        HasTwoGenericParamsImpl.UNPARAMETERIZED_INTERFACE_NAME + "<" +
+                        HasTwoGenericParamsImpl.UNPARAMETERIZED_INTERFACE_NAME + "<" +
+                        String.class.getCanonicalName() + "," + String.class.getCanonicalName() + ">," +
+                        HasTwoGenericParamsImpl.UNPARAMETERIZED_INTERFACE_NAME + "<" +
+                        Float.class.getCanonicalName() + "," + Float.class.getCanonicalName() + ">>>",
                 _hasTwoGenericParams.getInterfaceName());
     }
 }

@@ -16,7 +16,7 @@ public class FakePersistentValuesHandler implements PersistentValuesHandler {
     public <T> T generateArchetype(String s) throws IllegalArgumentException {
         Inputs.add(s);
         //noinspection unchecked
-        return (T)Outputs.poll();
+        return (T) Outputs.poll();
     }
 
     @Override

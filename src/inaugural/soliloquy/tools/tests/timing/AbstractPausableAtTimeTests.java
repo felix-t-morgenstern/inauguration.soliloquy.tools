@@ -30,7 +30,7 @@ class AbstractPausableAtTimeTests {
 
     @Test
     void testPausedTimestamp() {
-        assertEquals(PAUSED_TIMESTAMP, (long)_abstractPausableAtTime.pausedTimestamp());
+        assertEquals(PAUSED_TIMESTAMP, (long) _abstractPausableAtTime.pausedTimestamp());
     }
 
     @Test
@@ -59,6 +59,6 @@ class AbstractPausableAtTimeTests {
         _abstractPausableAtTime.reportUnpause(unpauseTimestamp);
 
         assertEquals(unpauseTimestamp,
-                (long)_abstractPausableAtTime._updateInternalValuesOnUnpauseInput);
+                (long) _abstractPausableAtTime._updateInternalValuesOnUnpauseInput);
     }
 }

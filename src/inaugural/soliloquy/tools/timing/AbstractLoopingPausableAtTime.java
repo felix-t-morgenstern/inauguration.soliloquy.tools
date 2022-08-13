@@ -30,7 +30,7 @@ public abstract class AbstractLoopingPausableAtTime
 
     @Override
     protected void updateInternalValuesOnUnpause(long timestamp) {
-        _periodModuloOffset = (int)((_periodModuloOffset - (timestamp - _pausedTimestamp)
+        _periodModuloOffset = (int) ((_periodModuloOffset - (timestamp - _pausedTimestamp)
                 + PERIOD_DURATION) % PERIOD_DURATION);
         while (_periodModuloOffset < 0) {
             _periodModuloOffset += PERIOD_DURATION;

@@ -89,7 +89,7 @@ class CheckTests {
 
     @Test
     void testIfMapIsNonEmptyWithRealKeysAndValuesForValidMap() {
-        HashMap<String, String> map = new HashMap<>(){{
+        HashMap<String, String> map = new HashMap<>() {{
             put("k", "v");
         }};
 
@@ -134,7 +134,7 @@ class CheckTests {
 
     @Test
     void testIfMapIsNonEmptyWithRealKeysAndValuesWithNullKey() {
-        HashMap<String, String> map = new HashMap<>(){{
+        HashMap<String, String> map = new HashMap<>() {{
             put(null, "v");
         }};
 
@@ -155,7 +155,7 @@ class CheckTests {
 
     @Test
     void testIfMapIsNonEmptyWithRealKeysAndValuesWithEmptyKey() {
-        HashMap<String, String> map = new HashMap<>(){{
+        HashMap<String, String> map = new HashMap<>() {{
             put("", "v");
         }};
 
@@ -176,7 +176,7 @@ class CheckTests {
 
     @Test
     void testIfMapIsNonEmptyWithRealKeysAndValuesWithNullValue() {
-        HashMap<String, String> map = new HashMap<>(){{
+        HashMap<String, String> map = new HashMap<>() {{
             put("k", null);
         }};
 
@@ -197,7 +197,7 @@ class CheckTests {
 
     @Test
     void testIfMapIsNonEmptyWithRealKeysAndValuesWithEmptyValue() {
-        HashMap<String, String> map = new HashMap<>(){{
+        HashMap<String, String> map = new HashMap<>() {{
             put("k", "");
         }};
 
@@ -219,7 +219,7 @@ class CheckTests {
     @Test
     void testIfMapIsNonEmptyWithRealKeysAndValuesWithItemCheck() {
         HashMap<String, String> itemCheckInputs = new HashMap<>();
-        HashMap<String, String> map = new HashMap<>(){{
+        HashMap<String, String> map = new HashMap<>() {{
             put("k", "v");
         }};
 
@@ -239,7 +239,7 @@ class CheckTests {
         assertEquals(input, Check.ifNonNegative(input, paramName));
 
         assertThrows(IllegalArgumentException.class,
-                () -> Check.ifNonNegative((short)-1, paramName));
+                () -> Check.ifNonNegative((short) -1, paramName));
         try {
             Check.ifNonNegative(-1, paramName);
         }
@@ -354,7 +354,7 @@ class CheckTests {
         assertEquals(input, Check.throwOnLteZero(input, paramName));
 
         assertThrows(IllegalArgumentException.class,
-                () -> Check.throwOnLteZero((short)0, paramName));
+                () -> Check.throwOnLteZero((short) 0, paramName));
         try {
             Check.throwOnLteZero((short) 0, paramName);
         }
@@ -450,9 +450,9 @@ class CheckTests {
         assertEquals(input, Check.throwOnLtValue(input, input, paramName));
 
         assertThrows(IllegalArgumentException.class,
-                () -> Check.throwOnLtValue(input, (short)(input + 1), paramName));
+                () -> Check.throwOnLtValue(input, (short) (input + 1), paramName));
         try {
-            Check.throwOnLtValue(input, (short)(input + 1), paramName);
+            Check.throwOnLtValue(input, (short) (input + 1), paramName);
         }
         catch (IllegalArgumentException e) {
             assertEquals("inaugural.soliloquy.tools.tests.CheckTests" +
@@ -549,14 +549,14 @@ class CheckTests {
         final String paramName = "paramName";
 
         final short input = 123;
-        assertEquals(input, Check.throwOnLteValue(input, (short)(input - 1), paramName));
+        assertEquals(input, Check.throwOnLteValue(input, (short) (input - 1), paramName));
 
         assertThrows(IllegalArgumentException.class,
-                () -> Check.throwOnLteValue(input, (short)(input + 1), paramName));
+                () -> Check.throwOnLteValue(input, (short) (input + 1), paramName));
         assertThrows(IllegalArgumentException.class,
                 () -> Check.throwOnLteValue(input, input, paramName));
         try {
-            Check.throwOnLteValue(input, (short)(input + 1), paramName);
+            Check.throwOnLteValue(input, (short) (input + 1), paramName);
         }
         catch (IllegalArgumentException e) {
             assertEquals("inaugural.soliloquy.tools.tests.CheckTests" +
@@ -664,9 +664,9 @@ class CheckTests {
         assertEquals(input, Check.throwOnGtValue(input, input, paramName));
 
         assertThrows(IllegalArgumentException.class,
-                () -> Check.throwOnGtValue(input, (short)(input - 1), paramName));
+                () -> Check.throwOnGtValue(input, (short) (input - 1), paramName));
         try {
-            Check.throwOnGtValue(input, (short)(input - 1), paramName);
+            Check.throwOnGtValue(input, (short) (input - 1), paramName);
         }
         catch (IllegalArgumentException e) {
             assertEquals("inaugural.soliloquy.tools.tests.CheckTests" +
@@ -763,14 +763,14 @@ class CheckTests {
         final String paramName = "paramName";
 
         final short input = 123;
-        assertEquals(input, Check.throwOnGteValue(input, (short)(input + 1), paramName));
+        assertEquals(input, Check.throwOnGteValue(input, (short) (input + 1), paramName));
 
         assertThrows(IllegalArgumentException.class,
                 () -> Check.throwOnGteValue(input, input, paramName));
         assertThrows(IllegalArgumentException.class,
-                () -> Check.throwOnGteValue(input, (short)(input - 1), paramName));
+                () -> Check.throwOnGteValue(input, (short) (input - 1), paramName));
         try {
-            Check.throwOnGteValue(input, (short)(input - 1), paramName);
+            Check.throwOnGteValue(input, (short) (input - 1), paramName);
         }
         catch (IllegalArgumentException e) {
             assertEquals("inaugural.soliloquy.tools.tests.CheckTests" +
@@ -873,7 +873,7 @@ class CheckTests {
         final String paramName = "paramName";
 
         final short input = 123;
-        assertEquals(input, Check.throwOnEqualsValue(input, (short)(input + 1), paramName));
+        assertEquals(input, Check.throwOnEqualsValue(input, (short) (input + 1), paramName));
 
         assertThrows(IllegalArgumentException.class,
                 () -> Check.throwOnEqualsValue(input, input, paramName));
@@ -1159,7 +1159,8 @@ class CheckTests {
         }
         catch (IllegalArgumentException e) {
             assertEquals("inaugural.soliloquy.tools.tests.CheckTests" +
-                    ".testArchetypeAndArchetypesOfArchetypeAreNotNull: archetype cannot be null",
+                            ".testArchetypeAndArchetypesOfArchetypeAreNotNull: archetype cannot " +
+                            "be null",
                     e.getMessage());
         }
 
@@ -1174,7 +1175,8 @@ class CheckTests {
         }
         catch (IllegalArgumentException e) {
             assertEquals("inaugural.soliloquy.tools.tests.CheckTests" +
-                            ".testArchetypeAndArchetypesOfArchetypeAreNotNull: archetype cannot be null",
+                            ".testArchetypeAndArchetypesOfArchetypeAreNotNull: archetype cannot " +
+                            "be null",
                     e.getMessage());
         }
     }
@@ -1185,7 +1187,9 @@ class CheckTests {
             new ConstructorExceptionMessageTester();
         }
         catch (IllegalArgumentException e) {
-            assertEquals("inaugural.soliloquy.tools.tests.CheckTests$ConstructorExceptionMessageTester: " +
+            assertEquals(
+                    "inaugural.soliloquy.tools.tests" +
+                            ".CheckTests$ConstructorExceptionMessageTester: " +
                             ConstructorExceptionMessageTester.ParamName + " cannot be null",
                     e.getMessage());
         }

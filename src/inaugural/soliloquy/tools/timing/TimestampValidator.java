@@ -25,7 +25,7 @@ public class TimestampValidator {
             String invokingMethod = "undiscoveredMethod";
 
             StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
-            for(StackTraceElement element : stackTrace) {
+            for (StackTraceElement element : stackTrace) {
                 if (element.getClassName().equals(className)) {
                     invokingClass = element.getClassName();
                     invokingMethod = element.getMethodName();
@@ -34,7 +34,7 @@ public class TimestampValidator {
                 }
             }
 
-            throw new IllegalArgumentException(invokingClass + "." +invokingMethod +
+            throw new IllegalArgumentException(invokingClass + "." + invokingMethod +
                     ": provided outdated timestamp (" + timestamp + ")");
         }
         _mostRecentTimestamp = timestamp;

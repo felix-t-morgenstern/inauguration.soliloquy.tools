@@ -43,20 +43,20 @@ public class Check {
     }
 
     @SuppressWarnings("ConstantConditions")
-    public static <K,V> Map<K,V> ifMapIsNonEmptyWithRealKeysAndValues(Map<K,V> map,
-                                                                      String paramName) {
+    public static <K, V> Map<K, V> ifMapIsNonEmptyWithRealKeysAndValues(Map<K, V> map,
+                                                                        String paramName) {
         return ifMapIsNonEmptyWithRealKeysAndValues(map, paramName, k -> v -> {});
     }
 
-    public static <K,V> Map<K,V> ifMapIsNonEmptyWithRealKeysAndValues(Map<K,V> map,
-                                                                      String paramName,
-                                                                      Function<K,Consumer<V>>
-                                                                        itemCheck) {
+    public static <K, V> Map<K, V> ifMapIsNonEmptyWithRealKeysAndValues(Map<K, V> map,
+                                                                        String paramName,
+                                                                        Function<K, Consumer<V>>
+                                                                                itemCheck) {
         Check.ifNull(map, paramName);
         if (map.isEmpty()) {
             throwException(paramName, "empty");
         }
-        for (Map.Entry<K,V> entry : map.entrySet()) {
+        for (Map.Entry<K, V> entry : map.entrySet()) {
             Check.ifNullOrEmptyIfString(entry.getKey(), "key in " + paramName);
             Check.ifNullOrEmptyIfString(entry.getValue(), "value in " + paramName);
             itemCheck.apply(entry.getKey()).accept(entry.getValue());
@@ -121,7 +121,7 @@ public class Check {
     // ========================
 
     public static short throwOnLteZero(short i, String paramName) {
-        return throwOnLteValue(i, (short)0, paramName);
+        return throwOnLteValue(i, (short) 0, paramName);
     }
 
     public static int throwOnLteZero(int i, String paramName) {
@@ -442,7 +442,8 @@ public class Check {
         if (archetype instanceof HasOneGenericParam) {
             archetypeAndArchetypesOfArchetypeAreNotNull(paramName,
                     ((HasOneGenericParam) archetype).getArchetype());
-        } else if (archetype instanceof HasTwoGenericParams) {
+        }
+        else if (archetype instanceof HasTwoGenericParams) {
             archetypeAndArchetypesOfArchetypeAreNotNull(paramName,
                     ((HasTwoGenericParams) archetype).getFirstArchetype());
             archetypeAndArchetypesOfArchetypeAreNotNull(paramName,

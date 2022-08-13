@@ -15,7 +15,7 @@ public class AbstractHasOneGenericParamTests {
     private HasOneGenericParam<Integer> _level2Archetype;
 
     private AbstractHasOneGenericParam<
-                HasOneGenericParam<HasOneGenericParam<Integer>>> _hasOneGenericParam;
+            HasOneGenericParam<HasOneGenericParam<Integer>>> _hasOneGenericParam;
 
     @BeforeEach
     void setUp() {

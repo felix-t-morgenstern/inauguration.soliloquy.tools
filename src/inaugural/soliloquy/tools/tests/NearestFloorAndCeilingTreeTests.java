@@ -80,10 +80,10 @@ public class NearestFloorAndCeilingTreeTests {
     @Test
     void testValueIndices() {
         assertEquals(4, _nearestFloorAndCeilingTree.ValueIndices.size());
-        assertEquals(0, (int)_nearestFloorAndCeilingTree.ValueIndices.get(5L));
-        assertEquals(1, (int)_nearestFloorAndCeilingTree.ValueIndices.get(10L));
-        assertEquals(2, (int)_nearestFloorAndCeilingTree.ValueIndices.get(15L));
-        assertEquals(3, (int)_nearestFloorAndCeilingTree.ValueIndices.get(20L));
+        assertEquals(0, (int) _nearestFloorAndCeilingTree.ValueIndices.get(5L));
+        assertEquals(1, (int) _nearestFloorAndCeilingTree.ValueIndices.get(10L));
+        assertEquals(2, (int) _nearestFloorAndCeilingTree.ValueIndices.get(15L));
+        assertEquals(3, (int) _nearestFloorAndCeilingTree.ValueIndices.get(20L));
     }
 
     @Test
@@ -142,9 +142,9 @@ public class NearestFloorAndCeilingTreeTests {
         assertEquals(20 + increment, _nearestFloorAndCeilingTree.OrderedValues[3]);
 
         assertEquals(4, _nearestFloorAndCeilingTree.ValueIndices.size());
-        assertEquals(0, (int)_nearestFloorAndCeilingTree.ValueIndices.get(5L + increment));
-        assertEquals(1, (int)_nearestFloorAndCeilingTree.ValueIndices.get(10L + increment));
-        assertEquals(2, (int)_nearestFloorAndCeilingTree.ValueIndices.get(15L + increment));
-        assertEquals(3, (int)_nearestFloorAndCeilingTree.ValueIndices.get(20L + increment));
+        assertEquals(0, (int) _nearestFloorAndCeilingTree.ValueIndices.get(5L + increment));
+        assertEquals(1, (int) _nearestFloorAndCeilingTree.ValueIndices.get(10L + increment));
+        assertEquals(2, (int) _nearestFloorAndCeilingTree.ValueIndices.get(15L + increment));
+        assertEquals(3, (int) _nearestFloorAndCeilingTree.ValueIndices.get(20L + increment));
     }
 }

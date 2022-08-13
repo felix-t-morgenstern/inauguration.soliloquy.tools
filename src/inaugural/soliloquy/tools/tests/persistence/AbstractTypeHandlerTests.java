@@ -53,9 +53,9 @@ class AbstractTypeHandlerTests {
     @Test
     void testGetInterfaceName() {
         assertEquals(TypeHandler.class.getCanonicalName() + "<" +
-                HasTwoGenericParamsImpl.UNPARAMETERIZED_INTERFACE_NAME + "<" +
-                HasTwoGenericParamsImpl.UNPARAMETERIZED_INTERFACE_NAME + "<" +
-                Integer.class.getCanonicalName() + ">>>",
+                        HasTwoGenericParamsImpl.UNPARAMETERIZED_INTERFACE_NAME + "<" +
+                        HasTwoGenericParamsImpl.UNPARAMETERIZED_INTERFACE_NAME + "<" +
+                        Integer.class.getCanonicalName() + ">>>",
                 _typeHandler.getInterfaceName());
     }
 
