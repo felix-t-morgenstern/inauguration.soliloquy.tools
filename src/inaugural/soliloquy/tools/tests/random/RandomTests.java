@@ -93,6 +93,32 @@ class RandomTests {
     }
 
     @Test
+    void testRandomFloatWithInclusiveFloor() {
+        float floor = new java.util.Random().nextFloat();
+
+        runRandomizationTest(() -> Random.randomFloatWithInclusiveFloor(floor),
+                f -> assertTrue(f >= floor));
+    }
+
+    @Test
+    void testRandomFloatWithInclusiveCeiling() {
+        float ceiling = new java.util.Random().nextFloat();
+
+        runRandomizationTest(() -> Random.randomFloatWithInclusiveCeiling(ceiling),
+                f -> assertTrue(f <= ceiling));
+    }
+
+    @Test
+    void testRandomColor() {
+        runRandomizationTest(Random::randomColor);
+    }
+
+    @Test
+    void testRandomOpaqueColor() {
+        runRandomizationTest(Random::randomOpaqueColor, c -> assertEquals(255, c.getAlpha()));
+    }
+
+    @Test
     void testRandomString() {
         runRandomizationTest(Random::randomString, s -> assertEquals(20, s.length()));
     }

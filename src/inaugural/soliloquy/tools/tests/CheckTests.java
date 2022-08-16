@@ -1149,6 +1149,31 @@ class CheckTests {
     }
 
     @Test
+    void testIsBetweenZeroAndOne() {
+        float input1 = -0.001f;
+        float input2 = 1.001f;
+
+        try {
+            Check.isBetweenZeroAndOne(input1, "input1");
+        }
+        catch (IllegalArgumentException e) {
+            assertEquals("inaugural.soliloquy.tools.tests.CheckTests" +
+                            ".testIsBetweenZeroAndOne: input1 (" + input1 +
+                            ") cannot be outside of the range of [0.0, 1.0]",
+                    e.getMessage());
+        }
+        try {
+            Check.isBetweenZeroAndOne(input2, "input2");
+        }
+        catch (IllegalArgumentException e) {
+            assertEquals("inaugural.soliloquy.tools.tests.CheckTests" +
+                            ".testIsBetweenZeroAndOne: input2 (" + input2 +
+                            ") cannot be outside of the range of [0.0, 1.0]",
+                    e.getMessage());
+        }
+    }
+
+    @Test
     void testArchetypeAndArchetypesOfArchetypeAreNotNull() {
         assertThrows(IllegalArgumentException.class,
                 () -> Check.archetypeAndArchetypesOfArchetypeAreNotNull("archetype",

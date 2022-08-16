@@ -423,6 +423,16 @@ public class Check {
         }
     }
 
+    // =============================
+    // ==== Between 0.0 and 1.0 ====
+    // =============================
+
+    public static void isBetweenZeroAndOne(float value, String paramName) {
+        if (value < 0.0f || value > 1.0f) {
+            throwException(paramName, value, "outside of the range of [0.0, 1.0]");
+        }
+    }
+
     // =======================================
     // =======================================
     // ============ Other methods ============

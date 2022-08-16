@@ -1,5 +1,7 @@
 package inaugural.soliloquy.tools.random;
 
+import java.awt.*;
+
 public class Random {
     public static java.util.Random RANDOM = new java.util.Random();
 
@@ -47,6 +49,24 @@ public class Random {
 
     public static float randomFloatInRange(float min, float max) {
         return min + ((max - min) * RANDOM.nextFloat());
+    }
+
+    public static float randomFloatWithInclusiveFloor(float floor) {
+        return randomFloatInRange(floor, Float.MAX_VALUE);
+    }
+
+    public static float randomFloatWithInclusiveCeiling(float ceiling) {
+        return randomFloatInRange(Float.MIN_VALUE, ceiling);
+    }
+
+    public static Color randomColor() {
+        return new Color(randomIntInRange(0, 255), randomIntInRange(0, 255),
+                randomIntInRange(0, 255), randomIntInRange(0, 255));
+    }
+
+    public static Color randomOpaqueColor() {
+        return new Color(randomIntInRange(0, 255), randomIntInRange(0, 255),
+                randomIntInRange(0, 255), 255);
     }
 
     // NB: Taken from Baeldung, at https://www.baeldung.com/java-random-string, accessed on
