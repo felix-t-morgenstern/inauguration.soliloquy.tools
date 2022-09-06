@@ -1,37 +1,31 @@
 package inaugural.soliloquy.tools.tests.persistence;
 
-import inaugural.soliloquy.tools.persistence.AbstractTypeHandler;
+import inaugural.soliloquy.tools.persistence.AbstractSoliloquyTypeHandler;
 import inaugural.soliloquy.tools.tests.abstractimplementations.generic.HasOneGenericParamImpl;
-import inaugural.soliloquy.tools.tests.abstractimplementations.generic.HasTwoGenericParamsImpl;
-import inaugural.soliloquy.tools.tests.abstractimplementations.persistence.TypeHandlerImpl;
-import inaugural.soliloquy.tools.tests.fakes.FakeAbstractTypeHandler;
+import inaugural.soliloquy.tools.tests.abstractimplementations.persistence.SoliloquyTypeHandlerImpl;
 import inaugural.soliloquy.tools.tests.fakes.FakeHasOneGenericParam;
-import inaugural.soliloquy.tools.tests.fakes.FakeObjectWithArbitraryHashCode;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import soliloquy.specs.common.persistence.TypeHandler;
 import soliloquy.specs.common.shared.HasOneGenericParam;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-class AbstractTypeHandlerTests {
+public class AbstractSoliloquyTypeHandlerTests {
     private HasOneGenericParam<HasOneGenericParam<Integer>> _level1Archetype;
     @SuppressWarnings("FieldCanBeLocal")
     private HasOneGenericParam<Integer> _level2Archetype;
 
-    private final int HASH_CODE = (TypeHandler.class.getCanonicalName() + "<" +
-            HasTwoGenericParamsImpl.UNPARAMETERIZED_INTERFACE_NAME + "<" +
-            HasTwoGenericParamsImpl.UNPARAMETERIZED_INTERFACE_NAME + "<" +
-            Integer.class.getCanonicalName() + ">>>").hashCode();
-
-    private AbstractTypeHandler<HasOneGenericParam<HasOneGenericParam<Integer>>> _typeHandler;
+    private AbstractSoliloquyTypeHandler<HasOneGenericParam>
+            _soliloquyTypeHandler;
 
     @BeforeEach
     void setUp() {
         _level2Archetype = new HasOneGenericParamImpl<>(0);
         _level1Archetype = new HasOneGenericParamImpl<>(_level2Archetype);
 
-        _typeHandler = new TypeHandlerImpl<>(_level1Archetype);
+        _soliloquyTypeHandler = new SoliloquyTypeHandlerImpl<>(HasOneGenericParam.class);
     }
 
     @Test
@@ -47,15 +41,13 @@ class AbstractTypeHandlerTests {
 
     @Test
     void testGetArchetype() {
-        assertSame(_level1Archetype, _typeHandler.getArchetype());
+        assertEquals(HasOneGenericParam.class.getCanonicalName(), _soliloquyTypeHandler.getArchetype().getInterfaceName());
     }
 
     @Test
     void testGetInterfaceName() {
         assertEquals(TypeHandler.class.getCanonicalName() + "<" +
-                        HasTwoGenericParamsImpl.UNPARAMETERIZED_INTERFACE_NAME + "<" +
-                        HasTwoGenericParamsImpl.UNPARAMETERIZED_INTERFACE_NAME + "<" +
-                        Integer.class.getCanonicalName() + ">>>",
-                _typeHandler.getInterfaceName());
+                        HasOneGenericParam.class.getCanonicalName() + ">",
+                _soliloquyTypeHandler.getInterfaceName());
     }
 }
