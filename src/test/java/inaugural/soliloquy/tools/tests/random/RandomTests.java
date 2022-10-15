@@ -109,6 +109,37 @@ class RandomTests {
     }
 
     @Test
+    void testRandomDouble() {
+        runRandomizationTest(Random::randomDouble);
+    }
+
+    @Test
+    void testRandomDoubleInRange() {
+        double min = -999d;
+        double max = -min;
+        runRandomizationTest(() -> Random.randomDoubleInRange(min, max), d -> {
+            assertTrue(d >= min);
+            assertTrue(d <= max);
+        });
+    }
+
+    @Test
+    void testRandomDoubleWithInclusiveFloor() {
+        double floor = new java.util.Random().nextDouble();
+
+        runRandomizationTest(() -> Random.randomDoubleWithInclusiveFloor(floor),
+                d -> assertTrue(d >= floor));
+    }
+
+    @Test
+    void testRandomDoubleWithInclusiveCeiling() {
+        double ceiling = new java.util.Random().nextDouble();
+
+        runRandomizationTest(() -> Random.randomDoubleWithInclusiveCeiling(ceiling),
+                d -> assertTrue(d <= ceiling));
+    }
+
+    @Test
     void testRandomColor() {
         runRandomizationTest(Random::randomColor);
     }

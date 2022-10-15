@@ -59,6 +59,22 @@ public class Random {
         return randomFloatInRange(Float.MIN_VALUE, ceiling);
     }
 
+    public static double randomDouble() {
+        return RANDOM.nextDouble();
+    }
+
+    public static double randomDoubleInRange(double min, double max) {
+        return min + ((max - min) * RANDOM.nextDouble());
+    }
+
+    public static double randomDoubleWithInclusiveFloor(double floor) {
+        return randomDoubleInRange(floor, Double.MAX_VALUE);
+    }
+
+    public static double randomDoubleWithInclusiveCeiling(double ceiling) {
+        return randomDoubleInRange(Double.MIN_VALUE, ceiling);
+    }
+
     public static Color randomColor() {
         return new Color(randomIntInRange(0, 255), randomIntInRange(0, 255),
                 randomIntInRange(0, 255), randomIntInRange(0, 255));
