@@ -13,7 +13,7 @@ public class FinitePausableAtTimeImpl extends AbstractFinitePausableAtTime {
     }
 
     public long getAnchorTime() {
-        return _anchorTime;
+        return anchorTime;
     }
 
     @Override

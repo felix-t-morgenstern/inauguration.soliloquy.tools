@@ -4,22 +4,23 @@ import inaugural.soliloquy.tools.tests.abstractimplementations.timing.AbstractPa
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static inaugural.soliloquy.tools.random.Random.randomLong;
+import static inaugural.soliloquy.tools.random.Random.randomLongWithInclusiveFloor;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class AbstractPausableAtTimeTests {
-    private long PAUSED_TIMESTAMP = 123123L;
-    private long MOST_RECENT_TIMESTAMP = 456456L;
+    private final long PAUSED_TIMESTAMP = randomLong();
+    private final long MOST_RECENT_TIMESTAMP = randomLongWithInclusiveFloor(PAUSED_TIMESTAMP + 1);
 
-    private AbstractPausableAtTimeImpl _abstractPausableAtTime;
+    private AbstractPausableAtTimeImpl abstractPausableAtTime;
 
     @BeforeEach
     void setUp() {
-        _abstractPausableAtTime =
+        abstractPausableAtTime =
                 new AbstractPausableAtTimeImpl(PAUSED_TIMESTAMP, MOST_RECENT_TIMESTAMP);
     }
 
-    @SuppressWarnings("ConstantConditions")
     @Test
     void testConstructorWithInvalidParams() {
         assertThrows(IllegalArgumentException.class, () ->
@@ -30,35 +31,35 @@ class AbstractPausableAtTimeTests {
 
     @Test
     void testPausedTimestamp() {
-        assertEquals(PAUSED_TIMESTAMP, (long) _abstractPausableAtTime.pausedTimestamp());
+        assertEquals(PAUSED_TIMESTAMP, (long) abstractPausableAtTime.pausedTimestamp());
     }
 
     @Test
     void testReportPauseOrUnpauseWithOutdatedTimestamp() {
         assertThrows(IllegalArgumentException.class, () ->
-                _abstractPausableAtTime.reportPause(MOST_RECENT_TIMESTAMP - 1));
+                abstractPausableAtTime.reportPause(MOST_RECENT_TIMESTAMP - 1));
         assertThrows(IllegalArgumentException.class, () ->
-                _abstractPausableAtTime.reportUnpause(MOST_RECENT_TIMESTAMP - 1));
+                abstractPausableAtTime.reportUnpause(MOST_RECENT_TIMESTAMP - 1));
     }
 
     @Test
     void testReportPauseWhilePausedAndUnpausedWhileUnpaused() {
-        assertThrows(IllegalArgumentException.class, () ->
-                _abstractPausableAtTime.reportPause(MOST_RECENT_TIMESTAMP));
+        assertThrows(UnsupportedOperationException.class, () ->
+                abstractPausableAtTime.reportPause(MOST_RECENT_TIMESTAMP));
 
-        _abstractPausableAtTime.reportUnpause(MOST_RECENT_TIMESTAMP);
+        abstractPausableAtTime.reportUnpause(MOST_RECENT_TIMESTAMP);
 
-        assertThrows(IllegalArgumentException.class, () ->
-                _abstractPausableAtTime.reportUnpause(MOST_RECENT_TIMESTAMP));
+        assertThrows(UnsupportedOperationException.class, () ->
+                abstractPausableAtTime.reportUnpause(MOST_RECENT_TIMESTAMP));
     }
 
     @Test
     void testReportUnpauseCallsUpdateInternalValuesOnUnpause() {
-        long unpauseTimestamp = 789789L;
+        long unpauseTimestamp = randomLongWithInclusiveFloor(MOST_RECENT_TIMESTAMP + 1);
 
-        _abstractPausableAtTime.reportUnpause(unpauseTimestamp);
+        abstractPausableAtTime.reportUnpause(unpauseTimestamp);
 
         assertEquals(unpauseTimestamp,
-                (long) _abstractPausableAtTime._updateInternalValuesOnUnpauseInput);
+                (long) abstractPausableAtTime.updateInternalValuesOnUnpauseInput);
     }
 }

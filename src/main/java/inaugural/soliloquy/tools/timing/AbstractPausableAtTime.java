@@ -6,8 +6,8 @@ import soliloquy.specs.common.shared.PausableAtTime;
 public abstract class AbstractPausableAtTime implements PausableAtTime {
     protected final TimestampValidator TIMESTAMP_VALIDATOR;
 
-    protected int _periodModuloOffset;
-    protected Long _pausedTimestamp;
+    protected int periodModuloOffset;
+    protected Long pausedTimestamp;
 
     public AbstractPausableAtTime(Long pausedTimestamp, Long mostRecentTimestamp) {
         if (pausedTimestamp != null) {
@@ -22,36 +22,36 @@ public abstract class AbstractPausableAtTime implements PausableAtTime {
             }
         }
         TIMESTAMP_VALIDATOR = new TimestampValidator(mostRecentTimestamp);
-        _pausedTimestamp = pausedTimestamp;
+        this.pausedTimestamp = pausedTimestamp;
     }
 
     @Override
     public Long pausedTimestamp() {
-        return _pausedTimestamp;
+        return pausedTimestamp;
     }
 
     @Override
     public void reportPause(long timestamp) throws IllegalArgumentException {
         Long priorMostRecentTimestamp = TIMESTAMP_VALIDATOR.mostRecentTimestamp();
         TIMESTAMP_VALIDATOR.validateTimestamp(timestamp);
-        if (_pausedTimestamp != null) {
-            throw new IllegalArgumentException(Tools.callingClassName(2) + ".reportPause: " +
+        if (pausedTimestamp != null) {
+            throw new UnsupportedOperationException(Tools.callingClassName(2) + ".reportPause: " +
                     "cannot pause if already paused");
         }
         if (priorMostRecentTimestamp != null && timestamp < priorMostRecentTimestamp) {
-            throw new IllegalArgumentException(Tools.callingClassName(2) + ".reportPause: " +
-                    "cannot pause at timestamp prior to most recent unpausing");
+            throw new IllegalArgumentException(Tools.callingClassName(2) +
+                    ".reportPause: cannot pause at timestamp prior to most recent unpausing");
         }
-        _pausedTimestamp = timestamp;
+        pausedTimestamp = timestamp;
     }
 
     @Override
     public void reportUnpause(long timestamp) throws IllegalArgumentException {
         Long priorMostRecentTimestamp = TIMESTAMP_VALIDATOR.mostRecentTimestamp();
         TIMESTAMP_VALIDATOR.validateTimestamp(timestamp);
-        if (_pausedTimestamp == null) {
-            throw new IllegalArgumentException(Tools.callingClassName(2) + ".reportUnpause: " +
-                    "cannot unpause if already unpaused");
+        if (pausedTimestamp == null) {
+            throw new UnsupportedOperationException(Tools.callingClassName(2) +
+                    ".reportUnpause: cannot unpause if already unpaused");
         }
         if (priorMostRecentTimestamp != null && timestamp < priorMostRecentTimestamp) {
             throw new IllegalArgumentException(Tools.callingClassName(2) + ".reportUnpause: " +
@@ -60,7 +60,7 @@ public abstract class AbstractPausableAtTime implements PausableAtTime {
 
         updateInternalValuesOnUnpause(timestamp);
 
-        _pausedTimestamp = null;
+        pausedTimestamp = null;
     }
 
     protected abstract void updateInternalValuesOnUnpause(long timestamp);

@@ -7,7 +7,7 @@ public abstract class AbstractFinitePausableAtTime
         implements PausableAtTime {
     // NB: This time is either the starting time, e.g. FiniteAnimationRenderable, or the ending
     //     time, e.g. OneTimeClockBasedTimer
-    protected long _anchorTime;
+    protected long anchorTime;
 
     // NB: This constructor is used for FiniteLinearMovingProvider, which doesn't care about anchor
     // times
@@ -18,11 +18,11 @@ public abstract class AbstractFinitePausableAtTime
     protected AbstractFinitePausableAtTime(long anchorTime, Long pausedTimestamp,
                                            Long mostRecentTimestamp) {
         super(pausedTimestamp, mostRecentTimestamp);
-        _anchorTime = anchorTime;
+        this.anchorTime = anchorTime;
     }
 
     @Override
     protected void updateInternalValuesOnUnpause(long timestamp) {
-        _anchorTime += timestamp - _pausedTimestamp;
+        anchorTime += timestamp - pausedTimestamp;
     }
 }

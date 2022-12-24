@@ -20,20 +20,20 @@ public abstract class AbstractLoopingPausableAtTime
                     "period duration (" + periodDuration + ")");
         }
         PERIOD_DURATION = periodDuration;
-        _periodModuloOffset = Check.throwOnLtValue(periodModuloOffset, 0, "periodModuloOffset");
+        this.periodModuloOffset = Check.throwOnLtValue(periodModuloOffset, 0, "periodModuloOffset");
     }
 
     @Override
     public int periodModuloOffset() {
-        return _periodModuloOffset;
+        return periodModuloOffset;
     }
 
     @Override
     protected void updateInternalValuesOnUnpause(long timestamp) {
-        _periodModuloOffset = (int) ((_periodModuloOffset - (timestamp - _pausedTimestamp)
+        periodModuloOffset = (int) ((periodModuloOffset - (timestamp - pausedTimestamp)
                 + PERIOD_DURATION) % PERIOD_DURATION);
-        while (_periodModuloOffset < 0) {
-            _periodModuloOffset += PERIOD_DURATION;
+        while (periodModuloOffset < 0) {
+            periodModuloOffset += PERIOD_DURATION;
         }
     }
 }

@@ -5,21 +5,22 @@ import inaugural.soliloquy.tools.timing.AbstractFinitePausableAtTime;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static inaugural.soliloquy.tools.random.Random.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class AbstractFinitePausableAtTimeTests {
-    private long PAUSED_TIMESTAMP = 123123L;
-    private long MOST_RECENT_TIMESTAMP = 456456L;
-    private long ANCHOR_TIME = 789789L;
+    private final long PAUSED_TIMESTAMP = randomLong();
+    private final long MOST_RECENT_TIMESTAMP = randomLongWithInclusiveFloor(PAUSED_TIMESTAMP + 1);
+    private final long ANCHOR_TIME = randomLongWithInclusiveFloor(MOST_RECENT_TIMESTAMP + 1);
 
-    private AbstractFinitePausableAtTime _finitePausableAtTime;
-    private AbstractFinitePausableAtTime _finitePausableAtTimeWithAnchor;
+    private AbstractFinitePausableAtTime finitePausableAtTime;
+    private AbstractFinitePausableAtTime finitePausableAtTimeWithAnchor;
 
     @BeforeEach
     void setUp() {
-        _finitePausableAtTime =
+        finitePausableAtTime =
                 new FinitePausableAtTimeImpl(PAUSED_TIMESTAMP, MOST_RECENT_TIMESTAMP);
-        _finitePausableAtTimeWithAnchor =
+        finitePausableAtTimeWithAnchor =
                 new FinitePausableAtTimeImpl(ANCHOR_TIME, PAUSED_TIMESTAMP, MOST_RECENT_TIMESTAMP);
     }
 
@@ -34,38 +35,38 @@ class AbstractFinitePausableAtTimeTests {
 
     @Test
     void testPausedTimestamp() {
-        assertEquals(PAUSED_TIMESTAMP, (long) _finitePausableAtTime.pausedTimestamp());
-        assertEquals(PAUSED_TIMESTAMP, (long) _finitePausableAtTimeWithAnchor.pausedTimestamp());
+        assertEquals(PAUSED_TIMESTAMP, (long) finitePausableAtTime.pausedTimestamp());
+        assertEquals(PAUSED_TIMESTAMP, (long) finitePausableAtTimeWithAnchor.pausedTimestamp());
     }
 
     @Test
     void testReportPauseAndUnpauseAndUpdateInternalValuesOnUnpause() {
-        long unpauseTimestamp = 567567L;
-        long secondPauseTimestamp = 678678L;
+        long unpauseTimestamp = randomLongInRange(MOST_RECENT_TIMESTAMP + 1, ANCHOR_TIME - 1);
+        long secondPauseTimestamp = randomLongInRange(unpauseTimestamp + 1, ANCHOR_TIME - 1);
 
-        assertThrows(IllegalArgumentException.class, () ->
-                _finitePausableAtTime.reportPause(unpauseTimestamp));
-        assertThrows(IllegalArgumentException.class, () ->
-                _finitePausableAtTimeWithAnchor.reportPause(unpauseTimestamp));
+        assertThrows(UnsupportedOperationException.class, () ->
+                finitePausableAtTime.reportPause(unpauseTimestamp));
+        assertThrows(UnsupportedOperationException.class, () ->
+                finitePausableAtTimeWithAnchor.reportPause(unpauseTimestamp));
 
-        _finitePausableAtTime.reportUnpause(unpauseTimestamp);
-        _finitePausableAtTimeWithAnchor.reportUnpause(unpauseTimestamp);
+        finitePausableAtTime.reportUnpause(unpauseTimestamp);
+        finitePausableAtTimeWithAnchor.reportUnpause(unpauseTimestamp);
 
-        assertNull(_finitePausableAtTime.pausedTimestamp());
-        assertNull(_finitePausableAtTimeWithAnchor.pausedTimestamp());
+        assertNull(finitePausableAtTime.pausedTimestamp());
+        assertNull(finitePausableAtTimeWithAnchor.pausedTimestamp());
         assertEquals(ANCHOR_TIME + (unpauseTimestamp - PAUSED_TIMESTAMP),
-                ((FinitePausableAtTimeImpl) _finitePausableAtTimeWithAnchor).getAnchorTime());
+                ((FinitePausableAtTimeImpl) finitePausableAtTimeWithAnchor).getAnchorTime());
 
-        assertThrows(IllegalArgumentException.class, () ->
-                _finitePausableAtTime.reportUnpause(secondPauseTimestamp));
-        assertThrows(IllegalArgumentException.class, () ->
-                _finitePausableAtTimeWithAnchor.reportUnpause(secondPauseTimestamp));
+        assertThrows(UnsupportedOperationException.class, () ->
+                finitePausableAtTime.reportUnpause(secondPauseTimestamp));
+        assertThrows(UnsupportedOperationException.class, () ->
+                finitePausableAtTimeWithAnchor.reportUnpause(secondPauseTimestamp));
 
-        _finitePausableAtTime.reportPause(secondPauseTimestamp);
-        _finitePausableAtTimeWithAnchor.reportPause(secondPauseTimestamp);
+        finitePausableAtTime.reportPause(secondPauseTimestamp);
+        finitePausableAtTimeWithAnchor.reportPause(secondPauseTimestamp);
 
-        assertEquals(secondPauseTimestamp, (long) _finitePausableAtTime.pausedTimestamp());
+        assertEquals(secondPauseTimestamp, (long) finitePausableAtTime.pausedTimestamp());
         assertEquals(secondPauseTimestamp,
-                (long) _finitePausableAtTimeWithAnchor.pausedTimestamp());
+                (long) finitePausableAtTimeWithAnchor.pausedTimestamp());
     }
 }
