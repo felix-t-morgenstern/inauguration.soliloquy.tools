@@ -1,56 +1,111 @@
 package inaugural.soliloquy.tools.tests.testing;
 
-import inaugural.soliloquy.tools.random.Random;
-import inaugural.soliloquy.tools.testing.Mock;
 import org.junit.jupiter.api.Test;
-import soliloquy.specs.common.persistence.PersistentValuesHandler;
-import soliloquy.specs.common.persistence.TypeHandler;
 import soliloquy.specs.common.valueobjects.Pair;
 import soliloquy.specs.gamestate.entities.Item;
+import soliloquy.specs.ruleset.entities.ItemType;
 
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.HashMap;
 
+import static inaugural.soliloquy.tools.random.Random.*;
 import static inaugural.soliloquy.tools.testing.Mock.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class MockTests {
     @Test
-    void testGenerateSimpleMockTypeHandler() {
-        Integer[] values =
-                new Integer[]{Random.randomInt(), Random.randomInt(), Random.randomInt()};
+    void testGenerateMockWithId() {
+        var id = "Id";
 
-        TypeHandler<Integer> mockIntegerHandler = generateSimpleMockTypeHandler(values);
+        var mockItem = generateMockWithId(ItemType.class, id);
+
+        assertNotNull(mockItem);
+        assertEquals(id, mockItem.id());
+    }
+
+    @Test
+    void testGenerateMockList() {
+        var mockList = generateMockList(1, 2, 3);
+
+        assertNotNull(mockList);
+        assertEquals(3, mockList.size());
+        var collector = new ArrayList<Integer>();
+        //noinspection UseBulkOperation
+        mockList.forEach(collector::add);
+        assertEquals(new ArrayList<>() {{
+            add(1);
+            add(2);
+            add(3);
+        }}, collector);
+    }
+
+    @Test
+    void testGenerateMockMap() {
+        var mockMap = generateMockMap(Pair.of(1, "A"), Pair.of(2, "B"), Pair.of(3, "C"));
+
+        assertNotNull(mockMap);
+        assertEquals(3, mockMap.size());
+        var collector = new HashMap<Integer, String>();
+        //noinspection UseBulkOperation
+        mockMap.forEach(collector::put);
+        assertEquals(new HashMap<>() {{
+            put(1, "A");
+            put(2, "B");
+            put(3, "C");
+        }}, collector);
+    }
+
+    @Test
+    void testGenerateSimpleMockTypeHandler() {
+        var values = new Integer[]{randomInt(), randomInt(), randomInt()};
+
+        var mockIntegerHandler = generateSimpleMockTypeHandler(values);
 
         assertNotNull(mockIntegerHandler);
-        for (Integer value : values) {
+        for (var value : values) {
             assertEquals(value, mockIntegerHandler.read(value.toString()));
             assertEquals(value.toString(), mockIntegerHandler.write(value));
         }
     }
 
     @Test
-    void testGenerateMockPersistentValuesHandlerWithSimpleHandlers() {
-        Integer[] ints =
-                new Integer[]{Random.randomInt(), Random.randomInt(), Random.randomInt()};
-        Double[] doubles =
-                new Double[]{Random.randomDouble(), Random.randomDouble(), Random.randomDouble()};
+    void testGenerateSimpleMockTypeHandlerWithWrittenValues() {
+        var values = new Integer[]{randomInt(), randomInt(), randomInt()};
+        var writtenValues = new String[]{randomString(), randomString(), randomString()};
 
-        //noinspection rawtypes
-        Pair<PersistentValuesHandler, Map<String, TypeHandler>> persistentValuesHandlerAndHandlers = generateMockPersistentValuesHandlerWithSimpleHandlers(ints, doubles);
+        //noinspection unchecked
+        var mockIntegerHandler = generateSimpleMockTypeHandler(Pair.of(writtenValues[0], values[0]),
+                Pair.of(writtenValues[1], values[1]), Pair.of(writtenValues[2], values[2]));
+
+        assertNotNull(mockIntegerHandler);
+        for (var i = 0; i < 3; i++) {
+            assertEquals(values[i], mockIntegerHandler.read(writtenValues[i]));
+            assertEquals(writtenValues[i], mockIntegerHandler.write(values[i]));
+        }
+    }
+
+    @Test
+    void testGenerateMockPersistentValuesHandlerWithSimpleHandlers() {
+        var ints = new Integer[]{randomInt(), randomInt(), randomInt()};
+        var doubles =
+                new Double[]{randomDouble(), randomDouble(), randomDouble()};
+
+        var persistentValuesHandlerAndHandlers =
+                generateMockPersistentValuesHandlerWithSimpleHandlers(ints, doubles);
 
         assertNotNull(persistentValuesHandlerAndHandlers);
         assertNotNull(persistentValuesHandlerAndHandlers.getItem1());
         assertNotNull(persistentValuesHandlerAndHandlers.getItem2());
-        //noinspection rawtypes
-        TypeHandler integerHandler = persistentValuesHandlerAndHandlers.getItem2().get(Integer.class.getCanonicalName());
-        for (Integer value : ints) {
+        var integerHandler =
+                persistentValuesHandlerAndHandlers.getItem2().get(Integer.class.getCanonicalName());
+        for (var value : ints) {
             assertEquals(value, integerHandler.read(value.toString()));
             //noinspection unchecked
             assertEquals(value.toString(), integerHandler.write(value));
         }
-        //noinspection rawtypes
-        TypeHandler doubleHandler = persistentValuesHandlerAndHandlers.getItem2().get(Double.class.getCanonicalName());
-        for (Double value : doubles) {
+        var doubleHandler =
+                persistentValuesHandlerAndHandlers.getItem2().get(Double.class.getCanonicalName());
+        for (var value : doubles) {
             assertEquals(value, doubleHandler.read(value.toString()));
             //noinspection unchecked
             assertEquals(value.toString(), doubleHandler.write(value));
@@ -60,18 +115,41 @@ class MockTests {
 
     @Test
     void testGenerateMockEntityAndHandler() {
-        String writtenValue = "writtenValue";
+        var writtenValue = "writtenValue";
 
-        Mock.TypeAndHandler<Item> mockEntityAndHandler =
-                generateMockEntityAndHandler(Item.class, writtenValue);
+        var handlerAndEntity = generateMockEntityAndHandler(Item.class, writtenValue);
 
-        assertNotNull(mockEntityAndHandler);
-        Item entity = mockEntityAndHandler.entity;
+        assertNotNull(handlerAndEntity);
+        var entity = handlerAndEntity.entity;
         assertNotNull(entity);
-        TypeHandler<Item> handler = mockEntityAndHandler.handler;
+        var handler = handlerAndEntity.handler;
         assertNotNull(handler);
         assertEquals(writtenValue, handler.write(null));
         assertSame(entity, handler.read(null));
         assertSame(entity, handler.read(""));
+    }
+
+    @Test
+    void testGenerateMockEntitiesAndHandler() {
+        var writtenValue1 = "writtenValue1";
+        var writtenValue2 = "writtenValue2";
+
+        var handlerAndEntities = generateMockHandlerAndEntities(Item.class,
+                new String[]{writtenValue1, writtenValue2});
+
+        assertNotNull(handlerAndEntities);
+        assertNotNull(handlerAndEntities.entities);
+        assertEquals(2, handlerAndEntities.entities.size());
+        assertTrue(handlerAndEntities.entities.containsKey(writtenValue1));
+        assertTrue(handlerAndEntities.entities.containsKey(writtenValue2));
+        assertNotNull(handlerAndEntities.handler);
+        assertEquals(writtenValue1,
+                handlerAndEntities.handler.write(handlerAndEntities.entities.get(writtenValue1)));
+        assertEquals(writtenValue2,
+                handlerAndEntities.handler.write(handlerAndEntities.entities.get(writtenValue2)));
+        assertSame(handlerAndEntities.entities.get(writtenValue1),
+                handlerAndEntities.handler.read(writtenValue1));
+        assertSame(handlerAndEntities.entities.get(writtenValue2),
+                handlerAndEntities.handler.read(writtenValue2));
     }
 }

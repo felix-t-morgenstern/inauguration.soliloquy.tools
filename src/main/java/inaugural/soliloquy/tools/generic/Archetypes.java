@@ -7,22 +7,54 @@ import soliloquy.specs.common.shared.SoliloquyClass;
 import static org.mockito.Mockito.*;
 
 public class Archetypes {
-    public static <T extends SoliloquyClass> T generateSimpleArchetype(Class<T> clazz) {
-        T archetype = mock(clazz);
-        when(archetype.getInterfaceName()).thenReturn(clazz.getCanonicalName());
+    private static final CanGetInterfaceName CAN_GET_INTERFACE_NAME = new CanGetInterfaceName();
 
-        // NB: Any parameterized Soliloquy types should NOT report the subtypes of their
-        // archetypes, so they are properly registered by PersistentValuesHandler#addHandler
-        if (archetype instanceof HasOneGenericParam) {
-            //noinspection rawtypes
-            when(((HasOneGenericParam) archetype).getArchetype()).thenReturn(new Object());
-        }
-        else if (archetype instanceof HasTwoGenericParams) {
-            //noinspection rawtypes
-            when(((HasTwoGenericParams) archetype).getFirstArchetype()).thenReturn(new Object());
-            //noinspection rawtypes
-            when(((HasTwoGenericParams) archetype).getSecondArchetype()).thenReturn(new Object());
-        }
+    public static <T extends SoliloquyClass> T generateSimpleArchetype(Class<T> clazz) {
+        return generateArchetypeWithInterfaceNameOverride(clazz, clazz.getCanonicalName());
+    }
+
+    public static <T extends SoliloquyClass> T generateArchetypeWithInterfaceNameOverride(
+            Class<T> clazz, String interfaceName) {
+        var archetype = mock(clazz);
+        when(archetype.getInterfaceName()).thenReturn(interfaceName);
+
+        return archetype;
+    }
+
+    public static <T extends HasOneGenericParam<TParam>, TParam> T generateArchetypeWithOneGenericParam(
+            Class<T> clazz, TParam innerArchetype) {
+        var interfaceName = clazz.getCanonicalName() + "<" +
+                CAN_GET_INTERFACE_NAME.getProperTypeName(innerArchetype) + ">";
+        return generateArchetypeWithOneGenericParam(clazz, innerArchetype, interfaceName);
+    }
+
+    public static <T extends HasOneGenericParam<TParam>, TParam> T generateArchetypeWithOneGenericParam(
+            Class<T> clazz, TParam innerArchetype, String interfaceNameOverride) {
+        var archetype = mock(clazz);
+
+        when(archetype.getInterfaceName()).thenReturn(interfaceNameOverride);
+        when(archetype.getArchetype()).thenReturn(innerArchetype);
+
+        return archetype;
+    }
+
+    public static <T extends HasTwoGenericParams<TParam1, TParam2>, TParam1, TParam2> T generateArchetypeWithTwoGenericParams(
+            Class<T> clazz, TParam1 innerArchetype1, TParam2 innerArchetype2) {
+        var interfaceName = clazz.getCanonicalName() + "<" +
+                CAN_GET_INTERFACE_NAME.getProperTypeName(innerArchetype1) + "," +
+                CAN_GET_INTERFACE_NAME.getProperTypeName(innerArchetype2) + ">";
+        return generateArchetypeWithTwoGenericParams(clazz, innerArchetype1, innerArchetype2,
+                interfaceName);
+    }
+
+    public static <T extends HasTwoGenericParams<TParam1, TParam2>, TParam1, TParam2> T generateArchetypeWithTwoGenericParams(
+            Class<T> clazz, TParam1 innerArchetype1, TParam2 innerArchetype2,
+            String interfaceNameOverride) {
+        var archetype = mock(clazz);
+
+        when(archetype.getInterfaceName()).thenReturn(interfaceNameOverride);
+        when(archetype.getFirstArchetype()).thenReturn(innerArchetype1);
+        when(archetype.getSecondArchetype()).thenReturn(innerArchetype2);
 
         return archetype;
     }

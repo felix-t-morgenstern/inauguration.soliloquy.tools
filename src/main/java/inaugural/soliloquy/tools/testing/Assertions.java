@@ -1,6 +1,7 @@
 package inaugural.soliloquy.tools.testing;
 
 import java.util.List;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -15,7 +16,8 @@ public class Assertions {
         if (item instanceof Integer ||
                 item instanceof Long ||
                 item instanceof Float ||
-                item instanceof Double) {
+                item instanceof Double ||
+                item instanceof UUID) {
             assertEquals(item, list.get(0));
         }
         else {
