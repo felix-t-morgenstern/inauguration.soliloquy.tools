@@ -1,5 +1,7 @@
 package inaugural.soliloquy.tools.testing;
 
+import inaugural.soliloquy.tools.Check;
+
 import java.util.List;
 import java.util.UUID;
 
@@ -22,6 +24,23 @@ public class Assertions {
         }
         else {
             assertSame(item, list.get(0));
+        }
+    }
+
+    public static <T extends Exception> void assertThrowsWithMessage(Runnable action,
+                                                                     Class<T> exceptionType,
+                                                                     String expectedMessage) {
+        Check.ifNull(action, "action");
+        Check.ifNull(exceptionType, "exceptionType");
+        Check.ifNullOrEmpty(expectedMessage, "expectedMessage");
+
+        try {
+            action.run();
+            fail();
+        }
+        catch (Exception e) {
+            assertSame(exceptionType, e.getClass());
+            assertEquals(expectedMessage, e.getMessage());
         }
     }
 }

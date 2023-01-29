@@ -5,53 +5,56 @@ import inaugural.soliloquy.tools.tests.fakes.FakeHasOneGenericParam;
 import inaugural.soliloquy.tools.tests.fakes.FakeHasTwoGenericParams;
 import org.junit.jupiter.api.Test;
 import soliloquy.specs.common.shared.HasOneGenericParam;
+import soliloquy.specs.gamestate.entities.Deletable;
 
 import java.util.HashMap;
 
+import static inaugural.soliloquy.tools.testing.Assertions.assertThrowsWithMessage;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class CheckTests {
     @Test
     void testIfNull() {
-        final String paramName = "paramName";
+        final var paramName = "paramName";
 
-        final Object input = new Object();
+        final var input = new Object();
         assertSame(input, Check.ifNull(input, paramName));
 
         assertThrows(IllegalArgumentException.class, () -> Check.ifNull(null, paramName));
-        try {
-            Check.ifNull(null, paramName);
-        }
-        catch (IllegalArgumentException e) {
-            assertEquals("inaugural.soliloquy.tools.tests.CheckTests.testIfNull: " +
-                            paramName + " cannot be null",
-                    e.getMessage());
-        }
+        assertThrowsWithMessage(() -> Check.ifNull(null, paramName), IllegalArgumentException.class,
+                "inaugural.soliloquy.tools.tests.CheckTests.lambda$testIfNull$1: " + paramName +
+                        " cannot be null");
     }
 
     @Test
     void testIfNullOrEmpty() {
-        final String paramName = "paramName";
+        final var paramName = "paramName";
 
-        final String input = "input";
+        final var input = "input";
         assertSame(input, Check.ifNullOrEmpty(input, paramName));
 
         assertThrows(IllegalArgumentException.class, () -> Check.ifNullOrEmpty("", paramName));
         try {
             Check.ifNullOrEmpty("", paramName);
+            fail();
         }
         catch (IllegalArgumentException e) {
             assertEquals("inaugural.soliloquy.tools.tests.CheckTests.testIfNullOrEmpty: " +
                             paramName + " cannot be empty",
                     e.getMessage());
         }
+        catch (Exception e) {
+            fail();
+        }
     }
 
     @Test
     void testIfNullOrEmptyIfString() {
-        final String paramName = "paramName";
+        final var paramName = "paramName";
 
-        final String input = "input";
+        final var input = "input";
         assertSame(input, Check.ifNullOrEmptyIfString(input, paramName));
 
         assertThrows(IllegalArgumentException.class,
@@ -63,33 +66,63 @@ class CheckTests {
 
         try {
             Check.ifNullOrEmptyIfString(null, paramName);
+            fail();
         }
         catch (IllegalArgumentException e) {
             assertEquals("inaugural.soliloquy.tools.tests.CheckTests.testIfNullOrEmptyIfString: " +
                             paramName + " cannot be null",
                     e.getMessage());
         }
+        catch (Exception e) {
+            fail();
+        }
+
         try {
             Check.ifNullOrEmptyIfString("", paramName);
+            fail();
         }
         catch (IllegalArgumentException e) {
             assertEquals("inaugural.soliloquy.tools.tests.CheckTests.testIfNullOrEmptyIfString: " +
                             paramName + " cannot be empty",
                     e.getMessage());
         }
+        catch (Exception e) {
+            fail();
+        }
+
         try {
             Check.ifNullOrEmptyIfString((Integer) null, paramName);
+            fail();
         }
         catch (IllegalArgumentException e) {
             assertEquals("inaugural.soliloquy.tools.tests.CheckTests.testIfNullOrEmptyIfString: " +
                             paramName + " cannot be null",
                     e.getMessage());
         }
+        catch (Exception e) {
+            fail();
+        }
+    }
+
+    @Test
+    void testIfDeleted() {
+        var mockDeleted = mock(Deletable.class);
+        when(mockDeleted.isDeleted()).thenReturn(false);
+        var paramName = "paramName";
+
+        assertSame(mockDeleted, Check.ifDeleted(mockDeleted, ""));
+
+        when(mockDeleted.isDeleted()).thenReturn(true);
+
+        assertThrowsWithMessage(() -> Check.ifDeleted(mockDeleted, paramName),
+                IllegalArgumentException.class,
+                "inaugural.soliloquy.tools.tests.CheckTests.lambda$testIfDeleted$6: " + paramName +
+                        " cannot be deleted");
     }
 
     @Test
     void testIfMapIsNonEmptyWithRealKeysAndValuesForValidMap() {
-        HashMap<String, String> map = new HashMap<>() {{
+        var map = new HashMap<>() {{
             put("k", "v");
         }};
 
@@ -101,7 +134,7 @@ class CheckTests {
         assertThrows(IllegalArgumentException.class, () ->
                 Check.ifMapIsNonEmptyWithRealKeysAndValues(null, "map"));
 
-        String paramName = "map";
+        var paramName = "map";
         try {
             Check.ifMapIsNonEmptyWithRealKeysAndValues(null, paramName);
         }
@@ -115,12 +148,12 @@ class CheckTests {
 
     @Test
     void testIfMapIsNonEmptyWithRealKeysAndValuesForEmptyMap() {
-        HashMap<String, String> map = new HashMap<>();
+        var map = new HashMap<String, String>();
 
         assertThrows(IllegalArgumentException.class, () ->
                 Check.ifMapIsNonEmptyWithRealKeysAndValues(map, "map"));
 
-        String paramName = "map";
+        var paramName = "map";
         try {
             Check.ifMapIsNonEmptyWithRealKeysAndValues(map, paramName);
         }
@@ -134,14 +167,14 @@ class CheckTests {
 
     @Test
     void testIfMapIsNonEmptyWithRealKeysAndValuesWithNullKey() {
-        HashMap<String, String> map = new HashMap<>() {{
+        var map = new HashMap<String, String>() {{
             put(null, "v");
         }};
 
         assertThrows(IllegalArgumentException.class, () ->
                 Check.ifMapIsNonEmptyWithRealKeysAndValues(map, "map"));
 
-        String paramName = "map";
+        var paramName = "map";
         try {
             Check.ifMapIsNonEmptyWithRealKeysAndValues(map, paramName);
         }
@@ -155,14 +188,14 @@ class CheckTests {
 
     @Test
     void testIfMapIsNonEmptyWithRealKeysAndValuesWithEmptyKey() {
-        HashMap<String, String> map = new HashMap<>() {{
+        var map = new HashMap<String, String>() {{
             put("", "v");
         }};
 
         assertThrows(IllegalArgumentException.class, () ->
                 Check.ifMapIsNonEmptyWithRealKeysAndValues(map, "map"));
 
-        String paramName = "map";
+        var paramName = "map";
         try {
             Check.ifMapIsNonEmptyWithRealKeysAndValues(map, paramName);
         }
@@ -176,14 +209,14 @@ class CheckTests {
 
     @Test
     void testIfMapIsNonEmptyWithRealKeysAndValuesWithNullValue() {
-        HashMap<String, String> map = new HashMap<>() {{
+        var map = new HashMap<String, String>() {{
             put("k", null);
         }};
 
         assertThrows(IllegalArgumentException.class, () ->
                 Check.ifMapIsNonEmptyWithRealKeysAndValues(map, "map"));
 
-        String paramName = "map";
+        var paramName = "map";
         try {
             Check.ifMapIsNonEmptyWithRealKeysAndValues(map, paramName);
         }
@@ -197,14 +230,14 @@ class CheckTests {
 
     @Test
     void testIfMapIsNonEmptyWithRealKeysAndValuesWithEmptyValue() {
-        HashMap<String, String> map = new HashMap<>() {{
+        var map = new HashMap<String, String>() {{
             put("k", "");
         }};
 
         assertThrows(IllegalArgumentException.class, () ->
                 Check.ifMapIsNonEmptyWithRealKeysAndValues(map, "map"));
 
-        String paramName = "map";
+        var paramName = "map";
         try {
             Check.ifMapIsNonEmptyWithRealKeysAndValues(map, paramName);
         }
@@ -218,8 +251,8 @@ class CheckTests {
 
     @Test
     void testIfMapIsNonEmptyWithRealKeysAndValuesWithItemCheck() {
-        HashMap<String, String> itemCheckInputs = new HashMap<>();
-        HashMap<String, String> map = new HashMap<>() {{
+        var itemCheckInputs = new HashMap<String, String>();
+        var map = new HashMap<String, String>() {{
             put("k", "v");
         }};
 
@@ -233,9 +266,9 @@ class CheckTests {
 
     @Test
     void testIfNonNegativeForShort() {
-        final String paramName = "paramName";
+        final var paramName = "paramName";
 
-        final short input = 123;
+        final var input = (short) 123;
         assertEquals(input, Check.ifNonNegative(input, paramName));
 
         assertThrows(IllegalArgumentException.class,
@@ -253,9 +286,9 @@ class CheckTests {
 
     @Test
     void testIfNonNegativeForInt() {
-        final String paramName = "paramName";
+        final var paramName = "paramName";
 
-        final int input = 123;
+        final var input = 123;
         assertEquals(input, Check.ifNonNegative(input, paramName));
 
         assertThrows(IllegalArgumentException.class, () -> Check.ifNonNegative(-input, paramName));
@@ -272,7 +305,7 @@ class CheckTests {
 
     @Test
     void testIfNonNegativeForIntClass() {
-        final String paramName = "paramName";
+        final var paramName = "paramName";
 
         final Integer input = 123;
         assertEquals(input, Check.ifNonNegative(input, paramName));
@@ -291,9 +324,9 @@ class CheckTests {
 
     @Test
     void testIfNonNegativeForLong() {
-        final String paramName = "paramName";
+        final var paramName = "paramName";
 
-        final long input = 123;
+        final var input = 123L;
         assertEquals(input, Check.ifNonNegative(input, paramName));
 
         assertThrows(IllegalArgumentException.class, () -> Check.ifNonNegative(-1L, paramName));
@@ -310,9 +343,9 @@ class CheckTests {
 
     @Test
     void testIfNonNegativeForFloat() {
-        final String paramName = "paramName";
+        final var paramName = "paramName";
 
-        final float input = 0.123f;
+        final var input = 0.123f;
         assertEquals(input, Check.ifNonNegative(input, paramName));
 
         assertThrows(IllegalArgumentException.class, () -> Check.ifNonNegative(-1f, paramName));
@@ -329,9 +362,9 @@ class CheckTests {
 
     @Test
     void testIfNonNegativeForDouble() {
-        final String paramName = "paramName";
+        final var paramName = "paramName";
 
-        final double input = 0.123d;
+        final var input = 0.123d;
         assertEquals(input, Check.ifNonNegative(input, paramName));
 
         assertThrows(IllegalArgumentException.class, () -> Check.ifNonNegative(-1d, paramName));
@@ -348,9 +381,9 @@ class CheckTests {
 
     @Test
     void testThrowOnLteZeroForShort() {
-        final String paramName = "paramName";
+        final var paramName = "paramName";
 
-        final short input = 123;
+        final var input = (short) 123;
         assertEquals(input, Check.throwOnLteZero(input, paramName));
 
         assertThrows(IllegalArgumentException.class,
@@ -368,9 +401,9 @@ class CheckTests {
 
     @Test
     void testThrowOnLteZeroForInt() {
-        final String paramName = "paramName";
+        final var paramName = "paramName";
 
-        final int input = 123;
+        final var input = 123;
         assertEquals(input, Check.throwOnLteZero(input, paramName));
 
         assertThrows(IllegalArgumentException.class, () -> Check.throwOnLteZero(0, paramName));
@@ -387,9 +420,9 @@ class CheckTests {
 
     @Test
     void testThrowOnLteZeroForLong() {
-        final String paramName = "paramName";
+        final var paramName = "paramName";
 
-        final long input = 123;
+        final var input = 123L;
         assertEquals(input, Check.throwOnLteZero(input, paramName));
 
         assertThrows(IllegalArgumentException.class, () -> Check.throwOnLteZero(0L, paramName));
@@ -406,9 +439,9 @@ class CheckTests {
 
     @Test
     void testThrowOnLteZeroForFloat() {
-        final String paramName = "paramName";
+        final var paramName = "paramName";
 
-        final float input = 0.123f;
+        final var input = 0.123f;
         assertEquals(input, Check.throwOnLteZero(input, paramName));
 
         assertThrows(IllegalArgumentException.class, () -> Check.throwOnLteZero(0f, paramName));
@@ -425,9 +458,9 @@ class CheckTests {
 
     @Test
     void testThrowOnLteZeroForDouble() {
-        final String paramName = "paramName";
+        final var paramName = "paramName";
 
-        final double input = 0.123d;
+        final var input = 0.123d;
         assertEquals(input, Check.throwOnLteZero(input, paramName));
 
         assertThrows(IllegalArgumentException.class, () -> Check.throwOnLteZero(0d, paramName));
@@ -444,9 +477,9 @@ class CheckTests {
 
     @Test
     void testThrowOnLtValueForShort() {
-        final String paramName = "paramName";
+        final var paramName = "paramName";
 
-        final short input = 123;
+        final var input = (short) 123;
         assertEquals(input, Check.throwOnLtValue(input, input, paramName));
 
         assertThrows(IllegalArgumentException.class,
@@ -464,9 +497,9 @@ class CheckTests {
 
     @Test
     void testThrowOnLtValueForInt() {
-        final String paramName = "paramName";
+        final var paramName = "paramName";
 
-        final int input = 123;
+        final var input = 123;
         assertEquals(input, Check.throwOnLtValue(input, input, paramName));
 
         assertThrows(IllegalArgumentException.class,
@@ -484,9 +517,9 @@ class CheckTests {
 
     @Test
     void testThrowOnLtValueForLong() {
-        final String paramName = "paramName";
+        final var paramName = "paramName";
 
-        final long input = 123L;
+        final var input = 123L;
         assertEquals(input, Check.throwOnLtValue(input, input, paramName));
 
         assertThrows(IllegalArgumentException.class,
@@ -504,10 +537,10 @@ class CheckTests {
 
     @Test
     void testThrowOnLtValueForFloat() {
-        final String paramName = "paramName";
+        final var paramName = "paramName";
 
-        final float input = 0.122f;
-        final float value = 0.123f;
+        final var input = 0.122f;
+        final var value = 0.123f;
         assertEquals(input, Check.throwOnLtValue(input, input, paramName));
 
         assertThrows(IllegalArgumentException.class,
@@ -525,10 +558,10 @@ class CheckTests {
 
     @Test
     void testThrowOnLtValueForDouble() {
-        final String paramName = "paramName";
+        final var paramName = "paramName";
 
-        final double input = 0.122d;
-        final double value = 0.123d;
+        final var input = 0.122d;
+        final var value = 0.123d;
         assertEquals(input, Check.throwOnLtValue(input, input, paramName));
 
         assertThrows(IllegalArgumentException.class,
@@ -546,9 +579,9 @@ class CheckTests {
 
     @Test
     void testThrowOnLteValueForShort() {
-        final String paramName = "paramName";
+        final var paramName = "paramName";
 
-        final short input = 123;
+        final var input = (short) 123;
         assertEquals(input, Check.throwOnLteValue(input, (short) (input - 1), paramName));
 
         assertThrows(IllegalArgumentException.class,
@@ -568,9 +601,9 @@ class CheckTests {
 
     @Test
     void testThrowOnLteValueForInt() {
-        final String paramName = "paramName";
+        final var paramName = "paramName";
 
-        final int input = 123;
+        final var input = 123;
         assertEquals(input, Check.throwOnLteValue(input, input - 1, paramName));
 
         assertThrows(IllegalArgumentException.class,
@@ -590,9 +623,9 @@ class CheckTests {
 
     @Test
     void testThrowOnLteValueForLong() {
-        final String paramName = "paramName";
+        final var paramName = "paramName";
 
-        final long input = 123L;
+        final var input = 123L;
         assertEquals(input, Check.throwOnLteValue(input, input - 1, paramName));
 
         assertThrows(IllegalArgumentException.class,
@@ -612,10 +645,10 @@ class CheckTests {
 
     @Test
     void testThrowOnLteValueForFloat() {
-        final String paramName = "paramName";
+        final var paramName = "paramName";
 
-        final float input = 0.122f;
-        final float value = 0.123f;
+        final var input = 0.122f;
+        final var value = 0.123f;
         assertEquals(input, Check.throwOnLteValue(input, input - 0.001f, paramName));
 
         assertThrows(IllegalArgumentException.class,
@@ -635,10 +668,10 @@ class CheckTests {
 
     @Test
     void testThrowOnLteValueForDouble() {
-        final String paramName = "paramName";
+        final var paramName = "paramName";
 
-        final double input = 0.122d;
-        final double value = 0.123d;
+        final var input = 0.122d;
+        final var value = 0.123d;
         assertEquals(input, Check.throwOnLteValue(input, input - 0.001d, paramName));
 
         assertThrows(IllegalArgumentException.class,
@@ -658,9 +691,9 @@ class CheckTests {
 
     @Test
     void testThrowOnGtValueForShort() {
-        final String paramName = "paramName";
+        final var paramName = "paramName";
 
-        final short input = 123;
+        final var input = (short) 123;
         assertEquals(input, Check.throwOnGtValue(input, input, paramName));
 
         assertThrows(IllegalArgumentException.class,
@@ -678,9 +711,9 @@ class CheckTests {
 
     @Test
     void testThrowOnGtValueForInt() {
-        final String paramName = "paramName";
+        final var paramName = "paramName";
 
-        final int input = 123;
+        final var input = 123;
         assertEquals(input, Check.throwOnGtValue(input, input, paramName));
 
         assertThrows(IllegalArgumentException.class,
@@ -698,9 +731,9 @@ class CheckTests {
 
     @Test
     void testThrowOnGtValueForLong() {
-        final String paramName = "paramName";
+        final var paramName = "paramName";
 
-        final long input = 123;
+        final var input = 123L;
         assertEquals(input, Check.throwOnGtValue(input, input, paramName));
 
         assertThrows(IllegalArgumentException.class,
@@ -718,10 +751,10 @@ class CheckTests {
 
     @Test
     void testThrowOnGtValueForFloat() {
-        final String paramName = "paramName";
+        final var paramName = "paramName";
 
-        final float input = 0.123f;
-        final float value = 0.122f;
+        final var input = 0.123f;
+        final var value = 0.122f;
         assertEquals(input, Check.throwOnGtValue(input, input, paramName));
 
         assertThrows(IllegalArgumentException.class,
@@ -739,10 +772,10 @@ class CheckTests {
 
     @Test
     void testThrowOnGtValueForDouble() {
-        final String paramName = "paramName";
+        final var paramName = "paramName";
 
-        final double input = 0.123f;
-        final double value = 0.122f;
+        final var input = 0.123d;
+        final var value = 0.122d;
         assertEquals(input, Check.throwOnGtValue(input, input, paramName));
 
         assertThrows(IllegalArgumentException.class,
@@ -760,9 +793,9 @@ class CheckTests {
 
     @Test
     void testThrowOnGteValueForShort() {
-        final String paramName = "paramName";
+        final var paramName = "paramName";
 
-        final short input = 123;
+        final var input = (short) 123;
         assertEquals(input, Check.throwOnGteValue(input, (short) (input + 1), paramName));
 
         assertThrows(IllegalArgumentException.class,
@@ -782,9 +815,9 @@ class CheckTests {
 
     @Test
     void testThrowOnGteValueForInt() {
-        final String paramName = "paramName";
+        final var paramName = "paramName";
 
-        final int input = 123;
+        final var input = 123;
         assertEquals(input, Check.throwOnGteValue(input, input + 1, paramName));
 
         assertThrows(IllegalArgumentException.class,
@@ -804,9 +837,9 @@ class CheckTests {
 
     @Test
     void testThrowOnGteValueForLong() {
-        final String paramName = "paramName";
+        final var paramName = "paramName";
 
-        final long input = 123;
+        final var input = 123L;
         assertEquals(input, Check.throwOnGteValue(input, input + 1, paramName));
 
         assertThrows(IllegalArgumentException.class,
@@ -826,9 +859,9 @@ class CheckTests {
 
     @Test
     void testThrowOnGteValueForFloat() {
-        final String paramName = "paramName";
+        final var paramName = "paramName";
 
-        final float input = 0.123f;
+        final var input = 0.123f;
         assertEquals(input, Check.throwOnGteValue(input, input + 1, paramName));
 
         assertThrows(IllegalArgumentException.class,
@@ -848,9 +881,9 @@ class CheckTests {
 
     @Test
     void testThrowOnGteValueForDouble() {
-        final String paramName = "paramName";
+        final var paramName = "paramName";
 
-        final double input = 0.123f;
+        final var input = 0.123d;
         assertEquals(input, Check.throwOnGteValue(input, input + 1, paramName));
 
         assertThrows(IllegalArgumentException.class,
@@ -870,9 +903,9 @@ class CheckTests {
 
     @Test
     void testThrowOnEqualsValueForShort() {
-        final String paramName = "paramName";
+        final var paramName = "paramName";
 
-        final short input = 123;
+        final var input = (short) 123;
         assertEquals(input, Check.throwOnEqualsValue(input, (short) (input + 1), paramName));
 
         assertThrows(IllegalArgumentException.class,
@@ -890,9 +923,9 @@ class CheckTests {
 
     @Test
     void testThrowOnEqualsValueForInt() {
-        final String paramName = "paramName";
+        final var paramName = "paramName";
 
-        final int input = 123;
+        final var input = 123;
         assertEquals(input, Check.throwOnEqualsValue(input, input + 1, paramName));
 
         assertThrows(IllegalArgumentException.class,
@@ -910,9 +943,9 @@ class CheckTests {
 
     @Test
     void testThrowOnEqualsValueForLong() {
-        final String paramName = "paramName";
+        final var paramName = "paramName";
 
-        final long input = 123L;
+        final var input = 123L;
         assertEquals(input, Check.throwOnEqualsValue(input, input + 1, paramName));
 
         assertThrows(IllegalArgumentException.class,
@@ -930,9 +963,9 @@ class CheckTests {
 
     @Test
     void testThrowOnEqualsValueForFloat() {
-        final String paramName = "paramName";
+        final var paramName = "paramName";
 
-        final float input = 0.123f;
+        final var input = 0.123f;
         assertEquals(input, Check.throwOnEqualsValue(input, input + 1, paramName));
 
         assertThrows(IllegalArgumentException.class,
@@ -950,9 +983,9 @@ class CheckTests {
 
     @Test
     void testThrowOnEqualsValueForDouble() {
-        final String paramName = "paramName";
+        final var paramName = "paramName";
 
-        final double input = 0.123d;
+        final var input = 0.123d;
         assertEquals(input, Check.throwOnEqualsValue(input, input + 1, paramName));
 
         assertThrows(IllegalArgumentException.class,
@@ -970,8 +1003,8 @@ class CheckTests {
 
     @Test
     void testThrowOnSecondLteForShorts() {
-        final short input1 = 123;
-        final short input2 = 123;
+        final var input1 = (short) 123;
+        final var input2 = (short) 123;
 
         assertThrows(IllegalArgumentException.class, () ->
                 Check.throwOnSecondLte(input1, input2, "input1", "input2"));
@@ -988,8 +1021,8 @@ class CheckTests {
 
     @Test
     void testThrowOnSecondLteForInts() {
-        final int input1 = 123;
-        final int input2 = 123;
+        final var input1 = 123;
+        final var input2 = 123;
 
         assertThrows(IllegalArgumentException.class, () ->
                 Check.throwOnSecondLte(input1, input2, "input1", "input2"));
@@ -1006,8 +1039,8 @@ class CheckTests {
 
     @Test
     void testThrowOnSecondLteForLongs() {
-        final long input1 = 123;
-        final long input2 = 123;
+        final var input1 = 123L;
+        final var input2 = 123L;
 
         assertThrows(IllegalArgumentException.class, () ->
                 Check.throwOnSecondLte(input1, input2, "input1", "input2"));
@@ -1024,8 +1057,8 @@ class CheckTests {
 
     @Test
     void testThrowOnSecondLteForFloats() {
-        final float input1 = 123;
-        final float input2 = 123;
+        final var input1 = 123f;
+        final var input2 = 123f;
 
         assertThrows(IllegalArgumentException.class, () ->
                 Check.throwOnSecondLte(input1, input2, "input1", "input2"));
@@ -1042,8 +1075,8 @@ class CheckTests {
 
     @Test
     void testThrowOnSecondLteForDoubles() {
-        final double input1 = 123;
-        final double input2 = 123;
+        final var input1 = 123d;
+        final var input2 = 123d;
 
         assertThrows(IllegalArgumentException.class, () ->
                 Check.throwOnSecondLte(input1, input2, "input1", "input2"));
@@ -1060,8 +1093,8 @@ class CheckTests {
 
     @Test
     void testThrowOnSecondGtForShorts() {
-        final short input1 = 123;
-        final short input2 = input1 + 1;
+        final var input1 = (short) 123;
+        final var input2 = input1 + 1;
 
         assertThrows(IllegalArgumentException.class, () ->
                 Check.throwOnSecondGt(input1, input2, "input1", "input2"));
@@ -1078,8 +1111,8 @@ class CheckTests {
 
     @Test
     void testThrowOnSecondGtForInts() {
-        final int input1 = 123;
-        final int input2 = input1 + 1;
+        final var input1 = 123;
+        final var input2 = input1 + 1;
 
         assertThrows(IllegalArgumentException.class, () ->
                 Check.throwOnSecondGt(input1, input2, "input1", "input2"));
@@ -1096,8 +1129,8 @@ class CheckTests {
 
     @Test
     void testThrowOnSecondGtForLongs() {
-        final long input1 = 123;
-        final long input2 = input1 + 1;
+        final var input1 = 123L;
+        final var input2 = input1 + 1;
 
         assertThrows(IllegalArgumentException.class, () ->
                 Check.throwOnSecondGt(input1, input2, "input1", "input2"));
@@ -1114,8 +1147,8 @@ class CheckTests {
 
     @Test
     void testThrowOnSecondGtForFloats() {
-        final float input1 = 123;
-        final float input2 = input1 + 1;
+        final var input1 = 123f;
+        final var input2 = input1 + 1;
 
         assertThrows(IllegalArgumentException.class, () ->
                 Check.throwOnSecondGt(input1, input2, "input1", "input2"));
@@ -1132,8 +1165,8 @@ class CheckTests {
 
     @Test
     void testThrowOnSecondGtForDoubles() {
-        final double input1 = 123;
-        final double input2 = input1 + 1;
+        final var input1 = 123d;
+        final var input2 = input1 + 1;
 
         assertThrows(IllegalArgumentException.class, () ->
                 Check.throwOnSecondGt(input1, input2, "input1", "input2"));
@@ -1150,8 +1183,8 @@ class CheckTests {
 
     @Test
     void testIsBetweenZeroAndOne() {
-        float input1 = -0.001f;
-        float input2 = 1.001f;
+        var input1 = -0.001f;
+        var input2 = 1.001f;
 
         try {
             Check.isBetweenZeroAndOne(input1, "input1");

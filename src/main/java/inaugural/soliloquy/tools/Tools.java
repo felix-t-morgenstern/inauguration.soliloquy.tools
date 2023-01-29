@@ -1,6 +1,11 @@
 package inaugural.soliloquy.tools;
 
-import java.util.HashMap;
+import soliloquy.specs.common.shared.HasPriority;
+
+import java.util.*;
+
+import static inaugural.soliloquy.tools.collections.Collections.listOf;
+import static inaugural.soliloquy.tools.collections.Collections.mapOf;
 
 public class Tools {
     private static HashMap<Integer, Float> EXPONENTS_OF_TEN = new HashMap<>();
@@ -36,5 +41,26 @@ public class Tools {
     public static String callingClassName(int stepsToMoveUp) {
         StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
         return stackTrace[stepsToMoveUp].getClassName();
+    }
+
+    public static <T extends HasPriority> List<T> orderByPriority(Iterable<T> items) {
+        Map<Integer, List<T>> groupedByPriority = mapOf();
+
+        items.forEach(item -> {
+            if (!groupedByPriority.containsKey(item.priority())) {
+                groupedByPriority.put(item.priority(), listOf(item));
+            }
+            else {
+                groupedByPriority.get(item.priority()).add(item);
+            }
+        });
+
+        List<T> orderedByPriority = listOf();
+
+        var priorities = new ArrayList<>(groupedByPriority.keySet());
+        priorities.sort(Collections.reverseOrder());
+        priorities.forEach(priority -> orderedByPriority.addAll(groupedByPriority.get(priority)));
+
+        return orderedByPriority;
     }
 }

@@ -3,15 +3,18 @@ package inaugural.soliloquy.tools.tests;
 import inaugural.soliloquy.tools.Tools;
 import inaugural.soliloquy.tools.tests.fakes.PassthroughRunnable;
 import org.junit.jupiter.api.Test;
+import soliloquy.specs.common.shared.HasPriority;
 
+import static inaugural.soliloquy.tools.collections.Collections.listOf;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 class ToolsTests {
-    private static String _callingClassName;
+    private static String callingClassName;
 
     @Test
     void testEmptyIfNull() {
-        String input = "input";
+        var input = "input";
 
         assertEquals(input, Tools.emptyIfNull(input));
 
@@ -20,7 +23,7 @@ class ToolsTests {
 
     @Test
     void testNullIfEmpty() {
-        String input = "input";
+        var input = "input";
 
         assertEquals(input, Tools.nullIfEmpty(input));
 
@@ -29,8 +32,8 @@ class ToolsTests {
 
     @Test
     void testRound() {
-        float value = 1.23456f;
-        int places = 3;
+        var value = 1.23456f;
+        var places = 3;
 
         assertEquals(1.235f, Tools.round(value, places));
         assertEquals(-1.235f, Tools.round(-value, places));
@@ -40,20 +43,44 @@ class ToolsTests {
 
     @Test
     void testCallingClassName() {
-        _callingClassName = Tools.callingClassName();
+        callingClassName = Tools.callingClassName();
 
-        assertEquals(this.getClass().getCanonicalName(), _callingClassName);
+        assertEquals(this.getClass().getCanonicalName(), callingClassName);
     }
 
     @Test
     void testCallingClassNameWithStepsToMoveUp() {
-        PassthroughRunnable setCallingClassName = new PassthroughRunnable(() ->
-                _callingClassName = Tools.callingClassName(6));
-        PassthroughRunnable level1 = new PassthroughRunnable(setCallingClassName::call);
-        PassthroughRunnable level2 = new PassthroughRunnable(level1::call);
+        var setCallingClassName = new PassthroughRunnable(() ->
+                callingClassName = Tools.callingClassName(6));
+        var level1 = new PassthroughRunnable(setCallingClassName::call);
+        var level2 = new PassthroughRunnable(level1::call);
 
         level2.call();
 
-        assertEquals(this.getClass().getCanonicalName(), _callingClassName);
+        assertEquals(this.getClass().getCanonicalName(), callingClassName);
+    }
+
+    @Test
+    void testOrderByPriority() {
+        var firstPriority = 1;
+        var secondPriority = 0;
+        var hasPriority1 = mock(HasPriority.class);
+        when(hasPriority1.priority()).thenReturn(firstPriority);
+        var hasPriority2 = mock(HasPriority.class);
+        when(hasPriority2.priority()).thenReturn(firstPriority);
+        var hasPriority3 = mock(HasPriority.class);
+        when(hasPriority3.priority()).thenReturn(secondPriority);
+
+        var orderedByPriority =
+                Tools.orderByPriority(listOf(hasPriority1, hasPriority2, hasPriority3));
+
+        assertNotNull(orderedByPriority);
+        verify(hasPriority1, atLeast(1)).priority();
+        verify(hasPriority2, atLeast(1)).priority();
+        verify(hasPriority3, atLeast(1)).priority();
+        assertEquals(3, orderedByPriority.size());
+        assertTrue(orderedByPriority.get(0) == hasPriority1 || orderedByPriority.get(0) == hasPriority2);
+        assertTrue(orderedByPriority.get(1) == hasPriority1 || orderedByPriority.get(1) == hasPriority2);
+        assertSame(hasPriority3, orderedByPriority.get(2));
     }
 }

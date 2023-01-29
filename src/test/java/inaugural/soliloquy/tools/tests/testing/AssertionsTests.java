@@ -5,8 +5,7 @@ import org.opentest4j.AssertionFailedError;
 
 import java.util.ArrayList;
 
-import static inaugural.soliloquy.tools.testing.Assertions.assertEqualsAndNotSame;
-import static inaugural.soliloquy.tools.testing.Assertions.assertOnlyContains;
+import static inaugural.soliloquy.tools.testing.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class AssertionsTests {
@@ -36,5 +35,32 @@ class AssertionsTests {
         assertThrows(AssertionFailedError.class, () -> assertOnlyContains(new ArrayList<>() {{
             add(new Object());
         }}, new Object()));
+    }
+
+    @Test
+    void testAssertThrowsWithMessage() {
+        var message = "message";
+        Runnable action = () -> { throw new IllegalArgumentException(message); };
+        var type = IllegalArgumentException.class;
+
+        assertThrowsWithMessage(action, type, message);
+        assertThrows(AssertionFailedError.class, () -> assertThrowsWithMessage(() -> {}, type, message));
+        assertThrows(AssertionFailedError.class, () -> assertThrowsWithMessage(() -> { throw new IllegalStateException(); }, type, message));
+        assertThrows(AssertionFailedError.class, () -> assertThrowsWithMessage(action, IllegalStateException.class, message));
+        assertThrows(AssertionFailedError.class, () -> assertThrowsWithMessage(action, type, "unexpectedMessage"));
+    }
+
+    @Test
+    void testAssertThrowsWithMessageWithInvalidParams() {
+        var message = "message";
+
+        assertThrows(IllegalArgumentException.class,
+                () -> assertThrowsWithMessage(null, IllegalArgumentException.class, message));
+        assertThrows(IllegalArgumentException.class,
+                () -> assertThrowsWithMessage(() -> {}, null, message));
+        assertThrows(IllegalArgumentException.class,
+                () -> assertThrowsWithMessage(() -> {}, IllegalArgumentException.class, null));
+        assertThrows(IllegalArgumentException.class,
+                () -> assertThrowsWithMessage(() -> {}, IllegalArgumentException.class, ""));
     }
 }

@@ -2,6 +2,7 @@ package inaugural.soliloquy.tools;
 
 import soliloquy.specs.common.shared.HasOneGenericParam;
 import soliloquy.specs.common.shared.HasTwoGenericParams;
+import soliloquy.specs.gamestate.entities.Deletable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +43,13 @@ public class Check {
         }
     }
 
-    @SuppressWarnings("ConstantConditions")
+    public static <T extends Deletable> T ifDeleted(T obj, String paramName) {
+        if (obj.isDeleted()) {
+            throwException(paramName, "deleted");
+        }
+        return obj;
+    }
+
     public static <K, V> Map<K, V> ifMapIsNonEmptyWithRealKeysAndValues(Map<K, V> map,
                                                                         String paramName) {
         return ifMapIsNonEmptyWithRealKeysAndValues(map, paramName, k -> v -> {});
