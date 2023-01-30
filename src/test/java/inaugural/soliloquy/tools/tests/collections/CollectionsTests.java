@@ -3,12 +3,21 @@ package inaugural.soliloquy.tools.tests.collections;
 import org.junit.jupiter.api.Test;
 import soliloquy.specs.common.valueobjects.Pair;
 
-import static inaugural.soliloquy.tools.collections.Collections.listOf;
-import static inaugural.soliloquy.tools.collections.Collections.mapOf;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static inaugural.soliloquy.tools.collections.Collections.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 class CollectionsTests {
+    @Test
+    void testArrayOf() {
+        var array = arrayOf(123, 456, 789);
+
+        assertNotNull(array);
+        assertEquals(3, array.length);
+        assertEquals(123, array[0]);
+        assertEquals(456, array[1]);
+        assertEquals(789, array[2]);
+    }
+
     @Test
     void testListOf() {
         var list = listOf(1, 2, 3);

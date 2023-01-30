@@ -6,6 +6,11 @@ import java.util.*;
 
 public class Collections {
     @SafeVarargs
+    public static <T> T[] arrayOf(T... items) {
+        return items;
+    }
+
+    @SafeVarargs
     public static <T> List<T> listOf(T... items) {
         return new ArrayList<>(Arrays.asList(items));
     }
