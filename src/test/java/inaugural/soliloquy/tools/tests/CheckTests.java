@@ -51,6 +51,16 @@ class CheckTests {
     }
 
     @Test
+    void testIfAnyNull() {
+        var paramName = "paramName";
+        var emptyArray = new Object[0];
+
+        assertNull(Check.ifAnyNull(null, paramName));
+        assertSame(emptyArray, Check.ifAnyNull(emptyArray, paramName));
+        assertThrowsWithMessage(() -> Check.ifAnyNull(new Object[] {null}, paramName), IllegalArgumentException.class, "inaugural.soliloquy.tools.tests.CheckTests.lambda$testIfAnyNull$3: item within " + paramName + " cannot be null");
+    }
+
+    @Test
     void testIfNullOrEmptyIfString() {
         final var paramName = "paramName";
 
@@ -116,7 +126,7 @@ class CheckTests {
 
         assertThrowsWithMessage(() -> Check.ifDeleted(mockDeleted, paramName),
                 IllegalArgumentException.class,
-                "inaugural.soliloquy.tools.tests.CheckTests.lambda$testIfDeleted$6: " + paramName +
+                "inaugural.soliloquy.tools.tests.CheckTests.lambda$testIfDeleted$7: " + paramName +
                         " cannot be deleted");
     }
 

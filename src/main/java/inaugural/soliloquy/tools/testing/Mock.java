@@ -54,6 +54,7 @@ public class Mock {
         return mockHandler;
     }
 
+    @SafeVarargs
     public static <T> TypeHandler<T> generateSimpleMockTypeHandler(Pair<String, T>... values) {
         //noinspection unchecked
         var mockHandler = (TypeHandler<T>) mock(TypeHandler.class);

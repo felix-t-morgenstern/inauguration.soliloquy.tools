@@ -33,6 +33,16 @@ public class Check {
         return str;
     }
 
+    public static <T> T[] ifAnyNull(T[] array, String paramName) {
+        if (array == null || array.length == 0) {
+            return array;
+        }
+        for (var item : array) {
+            Check.ifNull(item, "item within " + paramName);
+        }
+        return array;
+    }
+
     public static <T> T ifNullOrEmptyIfString(T obj, String paramName) {
         if (obj instanceof String) {
             //noinspection unchecked
