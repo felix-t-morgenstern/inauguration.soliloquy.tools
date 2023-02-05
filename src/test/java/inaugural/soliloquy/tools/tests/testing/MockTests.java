@@ -6,8 +6,8 @@ import soliloquy.specs.gamestate.entities.Item;
 import soliloquy.specs.ruleset.entities.ItemType;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
+import static inaugural.soliloquy.tools.collections.Collections.mapOf;
 import static inaugural.soliloquy.tools.random.Random.*;
 import static inaugural.soliloquy.tools.testing.Mock.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -30,6 +30,8 @@ class MockTests {
         assertNotNull(mockList);
         assertEquals(3, mockList.size());
         var collector = new ArrayList<Integer>();
+        // NB: Calling forEach twice here to ensure that multiple iteration is possible
+        mockList.forEach(i -> {});
         //noinspection UseBulkOperation
         mockList.forEach(collector::add);
         assertEquals(new ArrayList<>() {{
@@ -41,18 +43,31 @@ class MockTests {
 
     @Test
     void testGenerateMockMap() {
-        var mockMap = generateMockMap(Pair.of(1, "A"), Pair.of(2, "B"), Pair.of(3, "C"));
+        var mockMap = generateMockMap(Pair.of(3, "C"), Pair.of(2, "B"), Pair.of(1, "A"));
 
         assertNotNull(mockMap);
         assertEquals(3, mockMap.size());
-        var collector = new HashMap<Integer, String>();
-        //noinspection UseBulkOperation
-        mockMap.forEach(collector::put);
-        assertEquals(new HashMap<>() {{
-            put(1, "A");
-            put(2, "B");
-            put(3, "C");
-        }}, collector);
+        assertEquals("A", mockMap.get(1));
+        assertEquals("B", mockMap.get(2));
+        assertEquals("C", mockMap.get(3));
+        // NB: Calling forEach twice here to ensure that multiple iteration is possible
+        mockMap.forEach((k,v) -> {});
+        var keysInOrder = new ArrayList<Integer>();
+        var valuesInOrder = new ArrayList<String>();
+        mockMap.forEach((k, v) -> {
+            keysInOrder.add(k);
+            valuesInOrder.add(v);
+        });
+        assertEquals(new ArrayList<Integer>() {{
+            add(3);
+            add(2);
+            add(1);
+        }}, keysInOrder);
+        assertEquals(new ArrayList<String>() {{
+            add("C");
+            add("B");
+            add("A");
+        }}, valuesInOrder);
     }
 
     @Test
@@ -73,9 +88,10 @@ class MockTests {
         var values = new Integer[]{randomInt(), randomInt(), randomInt()};
         var writtenValues = new String[]{randomString(), randomString(), randomString()};
 
-        //noinspection unchecked
-        var mockIntegerHandler = generateSimpleMockTypeHandler(Pair.of(writtenValues[0], values[0]),
-                Pair.of(writtenValues[1], values[1]), Pair.of(writtenValues[2], values[2]));
+        var mockIntegerHandler = generateSimpleMockTypeHandler(
+                Pair.of(writtenValues[0], values[0]),
+                Pair.of(writtenValues[1], values[1]),
+                Pair.of(writtenValues[2], values[2]));
 
         assertNotNull(mockIntegerHandler);
         for (var i = 0; i < 3; i++) {

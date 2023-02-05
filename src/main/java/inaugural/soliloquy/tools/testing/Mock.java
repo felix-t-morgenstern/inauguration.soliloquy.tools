@@ -25,7 +25,7 @@ public class Mock {
         //noinspection unchecked
         var mockList = (List<T>) mock(List.class);
         when(mockList.size()).thenReturn(values.length);
-        when(mockList.iterator()).thenReturn(listOf(values).iterator());
+        when(mockList.iterator()).thenAnswer(invocationOnMock -> listOf(values).iterator());
         doCallRealMethod().when(mockList).forEach(any());
 
         return mockList;
@@ -33,13 +33,33 @@ public class Mock {
 
     @SafeVarargs
     public static <K, V> Map<K, V> generateMockMap(Pair<K, V>... keyValuePairs) {
+        var map = mapOf(keyValuePairs);
         //noinspection unchecked
         var mockMap = (Map<K, V>) mock(Map.class);
         when(mockMap.size()).thenReturn(keyValuePairs.length);
-        when(mockMap.entrySet()).thenReturn(mapOf(keyValuePairs).entrySet());
+        when(mockMap.entrySet())
+                .thenAnswer(invocationOnMock -> generateMockMapEntrySet(keyValuePairs));
         doCallRealMethod().when(mockMap).forEach(any());
-
+        //noinspection unchecked
+        when(mockMap.get((K) any())).thenAnswer(
+                invocationOnMock -> map.get((K) invocationOnMock.getArgument(0)));
         return mockMap;
+    }
+
+    @SafeVarargs
+    private static <K, V> Set<Map.Entry<K, V>> generateMockMapEntrySet(
+            Pair<K, V>... keyValuePairs) {
+        var entryList = new ArrayList<Map.Entry<K, V>>();
+        for (var keyValuePair : keyValuePairs) {
+            entryList.add(new AbstractMap.SimpleEntry<>(
+                    keyValuePair.getItem1(),
+                    keyValuePair.getItem2()));
+        }
+        //noinspection unchecked
+        var mockSet = (Set<Map.Entry<K, V>>) mock(Set.class);
+        when(mockSet.iterator()).thenReturn(entryList.iterator());
+        doCallRealMethod().when(mockSet).forEach(any());
+        return mockSet;
     }
 
     public static <T> TypeHandler<T> generateSimpleMockTypeHandler(T[] values) {
