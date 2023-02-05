@@ -15,6 +15,10 @@ public class Collections {
         return new ArrayList<>(Arrays.asList(items));
     }
 
+    public static <T> List<T> listOf(List<T> list) {
+        return new ArrayList<>(list);
+    }
+
     @SafeVarargs
     public static <K, V> Map<K, V> mapOf(Pair<K, V>... items) {
         var map = new HashMap<K, V>();
@@ -22,5 +26,9 @@ public class Collections {
             map.put(item.getItem1(), item.getItem2());
         }
         return map;
+    }
+
+    public static <K, V> Map<K, V> mapOf(Map<K, V> map) {
+        return new HashMap<>(map);
     }
 }
