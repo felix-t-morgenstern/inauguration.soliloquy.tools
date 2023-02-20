@@ -11,6 +11,7 @@ import static inaugural.soliloquy.tools.collections.Collections.mapOf;
 import static inaugural.soliloquy.tools.random.Random.*;
 import static inaugural.soliloquy.tools.testing.Mock.*;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.verify;
 
 class MockTests {
     @Test
@@ -29,6 +30,10 @@ class MockTests {
 
         assertNotNull(mockList);
         assertEquals(3, mockList.size());
+        assertTrue(mockList.contains(1));
+        assertTrue(mockList.contains(2));
+        assertTrue(mockList.contains(3));
+        assertFalse(mockList.contains(4));
         var collector = new ArrayList<Integer>();
         // NB: Calling forEach twice here to ensure that multiple iteration is possible
         mockList.forEach(i -> {});
@@ -68,6 +73,31 @@ class MockTests {
             add("B");
             add("A");
         }}, valuesInOrder);
+    }
+
+    @Test
+    void testGenerateMockLookupFunction() {
+        var id1 = "id1";
+        var id2 = "id2";
+        var id3 = "id3";
+        var invalidId = "invalidId";
+        var value1 = 1;
+        var value2 = 2;
+        var value3 = 3;
+
+        var lookupFunction = generateMockLookupFunction(
+                Pair.of(id1, value1),
+                Pair.of(id2, value2),
+                Pair.of(id3, value3));
+
+        assertNull(lookupFunction.apply(invalidId));
+        assertEquals(value1, lookupFunction.apply(id1));
+        assertEquals(value2, lookupFunction.apply(id2));
+        assertEquals(value3, lookupFunction.apply(id3));
+        verify(lookupFunction).apply(invalidId);
+        verify(lookupFunction).apply(id1);
+        verify(lookupFunction).apply(id2);
+        verify(lookupFunction).apply(id3);
     }
 
     @Test
