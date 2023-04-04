@@ -15,9 +15,9 @@
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.7.0</version>
+                <version>3.11.0</version>
                 <configuration>
-                    <release>18</release>
+                    <release>20</release>
                 </configuration>
             </plugin>
             <plugin>
@@ -36,8 +36,8 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>18</source>
-                    <target>18</target>
+                    <source>20</source>
+                    <target>20</target>
                 </configuration>
             </plugin>
         </plugins>
@@ -81,7 +81,7 @@
         <dependency>
             <groupId>disorg.soliloquy</groupId>
             <artifactId>soliloquy.specs</artifactId>
-            <version>0.0.462</version>
+            <version>0.0.494</version>
         </dependency>
         <!--  Gson: Java to Json conversion -->
         <dependency>
