@@ -5,6 +5,7 @@ import soliloquy.specs.common.valueobjects.Pair;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Stack;
 
 import static inaugural.soliloquy.tools.collections.Collections.*;
 import static inaugural.soliloquy.tools.testing.Assertions.assertEqualsAndNotSame;
@@ -31,6 +32,20 @@ class CollectionsTests {
         assertEquals(1, list.get(0));
         assertEquals(2, list.get(1));
         assertEquals(3, list.get(2));
+    }
+
+    @Test
+    void testListOfFromCollection() {
+        var originalCollection = new Stack<Integer>() {{
+            add(1);
+            add(2);
+            add(3);
+        }};
+
+        var list = listOf(originalCollection);
+
+        assertNotNull(list);
+        assertEqualsAndNotSame(originalCollection, list);
     }
 
     @Test

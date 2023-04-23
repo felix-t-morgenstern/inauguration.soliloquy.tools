@@ -15,6 +15,10 @@ public class Collections {
         return new ArrayList<>(Arrays.asList(items));
     }
 
+    public static <T> List<T> listOf(Collection<T> list) {
+        return new ArrayList<>(list);
+    }
+
     public static <T> List<T> listOf(List<T> list) {
         return new ArrayList<>(list);
     }
