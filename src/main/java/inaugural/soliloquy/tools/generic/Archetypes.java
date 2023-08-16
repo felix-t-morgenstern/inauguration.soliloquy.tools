@@ -16,7 +16,7 @@ public class Archetypes {
     public static <T extends SoliloquyClass> T generateArchetypeWithInterfaceNameOverride(
             Class<T> clazz, String interfaceName) {
         var archetype = mock(clazz);
-        when(archetype.getInterfaceName()).thenReturn(interfaceName);
+        lenient().when(archetype.getInterfaceName()).thenReturn(interfaceName);
 
         return archetype;
     }
@@ -32,8 +32,8 @@ public class Archetypes {
             Class<T> clazz, TParam innerArchetype, String interfaceNameOverride) {
         var archetype = mock(clazz);
 
-        when(archetype.getInterfaceName()).thenReturn(interfaceNameOverride);
-        when(archetype.getArchetype()).thenReturn(innerArchetype);
+        lenient().when(archetype.getInterfaceName()).thenReturn(interfaceNameOverride);
+        lenient().when(archetype.getArchetype()).thenReturn(innerArchetype);
 
         return archetype;
     }
@@ -52,9 +52,9 @@ public class Archetypes {
             String interfaceNameOverride) {
         var archetype = mock(clazz);
 
-        when(archetype.getInterfaceName()).thenReturn(interfaceNameOverride);
-        when(archetype.getFirstArchetype()).thenReturn(innerArchetype1);
-        when(archetype.getSecondArchetype()).thenReturn(innerArchetype2);
+        lenient().when(archetype.getInterfaceName()).thenReturn(interfaceNameOverride);
+        lenient().when(archetype.getFirstArchetype()).thenReturn(innerArchetype1);
+        lenient().when(archetype.getSecondArchetype()).thenReturn(innerArchetype2);
 
         return archetype;
     }
