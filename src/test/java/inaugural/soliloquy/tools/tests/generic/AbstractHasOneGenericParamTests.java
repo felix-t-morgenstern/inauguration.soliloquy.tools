@@ -37,8 +37,8 @@ public class AbstractHasOneGenericParamTests {
     }
 
     @Test
-    void testGetArchetype() {
-        assertSame(_level1Archetype, _hasOneGenericParam.getArchetype());
+    void testarchetype() {
+        assertSame(_level1Archetype, _hasOneGenericParam.archetype());
     }
 
     @Test

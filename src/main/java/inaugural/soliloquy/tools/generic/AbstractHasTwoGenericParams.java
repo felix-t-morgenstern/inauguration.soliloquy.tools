@@ -11,12 +11,12 @@ public abstract class AbstractHasTwoGenericParams<T1, T2> extends AbstractHasGen
     }
 
     @Override
-    public T1 getFirstArchetype() {
+    public T1 firstArchetype() {
         return ARCHETYPE_1;
     }
 
     @Override
-    public T2 getSecondArchetype() {
+    public T2 secondArchetype() {
         return ARCHETYPE_2;
     }
 

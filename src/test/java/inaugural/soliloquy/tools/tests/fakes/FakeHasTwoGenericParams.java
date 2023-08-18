@@ -12,12 +12,12 @@ public class FakeHasTwoGenericParams<P1, P2> implements HasTwoGenericParams<P1, 
     }
 
     @Override
-    public P1 getFirstArchetype() throws IllegalStateException {
+    public P1 firstArchetype() throws IllegalStateException {
         return _archetype1;
     }
 
     @Override
-    public P2 getSecondArchetype() throws IllegalStateException {
+    public P2 secondArchetype() throws IllegalStateException {
         return _archetype2;
     }
 

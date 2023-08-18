@@ -10,6 +10,7 @@ import java.util.function.Function;
 
 import static inaugural.soliloquy.tools.collections.Collections.listOf;
 import static inaugural.soliloquy.tools.collections.Collections.mapOf;
+import static inaugural.soliloquy.tools.valueobjects.Pair.pairOf;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
@@ -26,6 +27,8 @@ public class Mock {
         //noinspection unchecked
         var mockList = (List<T>) mock(List.class);
         lenient().when(mockList.size()).thenReturn(values.length);
+        lenient().when(mockList.get(anyInt()))
+                .thenAnswer(invocationOnMock -> values[(int) invocationOnMock.getArgument(0)]);
         //noinspection SuspiciousMethodCalls
         lenient().when(mockList.contains(any())).thenAnswer(
                 invocationOnMock -> Arrays.stream(values)
@@ -58,7 +61,7 @@ public class Mock {
         var lookupFunction = (Function<String, V>) mock(Function.class);
         lenient().when(lookupFunction.apply(anyString())).thenReturn(null);
         for (Pair<String, V> item : items) {
-            lenient().when(lookupFunction.apply(item.getItem1())).thenReturn(item.getItem2());
+            lenient().when(lookupFunction.apply(item.item1())).thenReturn(item.item2());
         }
         return lookupFunction;
     }
@@ -69,8 +72,8 @@ public class Mock {
         var entryList = new ArrayList<Map.Entry<K, V>>();
         for (var keyValuePair : keyValuePairs) {
             entryList.add(new AbstractMap.SimpleEntry<>(
-                    keyValuePair.getItem1(),
-                    keyValuePair.getItem2()));
+                    keyValuePair.item1(),
+                    keyValuePair.item2()));
         }
         //noinspection unchecked
         var mockSet = (Set<Map.Entry<K, V>>) mock(Set.class);
@@ -97,8 +100,8 @@ public class Mock {
         var mockHandler = (TypeHandler<T>) mock(TypeHandler.class);
 
         for (var value : values) {
-            lenient().when(mockHandler.read(value.getItem1())).thenReturn(value.getItem2());
-            lenient().when(mockHandler.write(value.getItem2())).thenReturn(value.getItem1());
+            lenient().when(mockHandler.read(value.item1())).thenReturn(value.item2());
+            lenient().when(mockHandler.write(value.item2())).thenReturn(value.item1());
         }
 
         return mockHandler;
@@ -120,7 +123,7 @@ public class Mock {
             handlers.put(type, typeHandler);
         }
 
-        return Pair.of(mockPersistentValuesHandler, handlers);
+        return pairOf(mockPersistentValuesHandler, handlers);
     }
 
     public static <T> HandlerAndEntity<T> generateMockEntityAndHandler(Class<T> clazz,
@@ -150,7 +153,7 @@ public class Mock {
                                                                            String[] writtenValues) {
         //noinspection unchecked
         var mockHandler = (TypeHandler<T>) mock(TypeHandler.class);
-        var mockEntities = new HashMap<String, T>();
+        Map<String, T> mockEntities = mapOf();
 
         for (var writtenValue : writtenValues) {
             var mockEntity = mock(clazz);

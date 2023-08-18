@@ -64,8 +64,8 @@ class AbstractTypeWithOneGenericParamHandlerTests {
     }
 
     @Test
-    void testGetArchetype() {
-        assertSame(ARCHETYPE, _typeWithOneGenericParameterHandler.getArchetype());
+    void testarchetype() {
+        assertSame(ARCHETYPE, _typeWithOneGenericParameterHandler.archetype());
     }
 
     @Test
@@ -81,7 +81,7 @@ class AbstractTypeWithOneGenericParamHandlerTests {
         assertNotNull(generatedArchetype);
         assertEquals(1, PERSISTENT_VALUES_HANDLER.Inputs.size());
         assertEquals(innerType, PERSISTENT_VALUES_HANDLER.Inputs.get(0));
-        assertEquals(generatedInnerArchetype, generatedArchetype.getArchetype());
+        assertEquals(generatedInnerArchetype, generatedArchetype.archetype());
     }
 
     @Test

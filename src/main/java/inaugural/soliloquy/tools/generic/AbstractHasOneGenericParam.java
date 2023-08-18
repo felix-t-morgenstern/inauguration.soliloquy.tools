@@ -9,7 +9,7 @@ public abstract class AbstractHasOneGenericParam<T> extends AbstractHasGenericPa
     }
 
     @Override
-    public T getArchetype() {
+    public T archetype() {
         return ARCHETYPE;
     }
 

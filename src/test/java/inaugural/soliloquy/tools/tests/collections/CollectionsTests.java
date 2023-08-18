@@ -9,6 +9,7 @@ import java.util.Stack;
 
 import static inaugural.soliloquy.tools.collections.Collections.*;
 import static inaugural.soliloquy.tools.testing.Assertions.assertEqualsAndNotSame;
+import static inaugural.soliloquy.tools.valueobjects.Pair.pairOf;
 import static org.junit.jupiter.api.Assertions.*;
 
 class CollectionsTests {
@@ -64,7 +65,7 @@ class CollectionsTests {
 
     @Test
     void testMapOfFromPairs() {
-        var map = mapOf(Pair.of("A", 1), Pair.of("B", 2), Pair.of("C", 3));
+        var map = mapOf(pairOf("A", 1), pairOf("B", 2), pairOf("C", 3));
 
         assertNotNull(map);
         assertEquals(3, map.size());

@@ -36,7 +36,7 @@ class ArchetypesTests {
                         generateSimpleArchetype(Item.class));
 
         assertNotNull(hasOneGenericParamArchetype);
-        assertNotNull(hasOneGenericParamArchetype.getArchetype());
+        assertNotNull(hasOneGenericParamArchetype.archetype());
         assertEquals(List.class.getCanonicalName() + "<" + Item.class.getCanonicalName() + ">",
                 hasOneGenericParamArchetype.getInterfaceName());
     }
@@ -51,7 +51,7 @@ class ArchetypesTests {
                         interfaceNameOverride);
 
         assertNotNull(hasOneGenericParamArchetype);
-        assertNotNull(hasOneGenericParamArchetype.getArchetype());
+        assertNotNull(hasOneGenericParamArchetype.archetype());
         assertEquals(interfaceNameOverride, hasOneGenericParamArchetype.getInterfaceName());
     }
 
@@ -63,8 +63,8 @@ class ArchetypesTests {
                         generateSimpleArchetype(Item.class), 0);
 
         assertNotNull(hasTwoGenericParamsArchetype);
-        assertNotNull(hasTwoGenericParamsArchetype.getFirstArchetype());
-        assertNotNull(hasTwoGenericParamsArchetype.getSecondArchetype());
+        assertNotNull(hasTwoGenericParamsArchetype.firstArchetype());
+        assertNotNull(hasTwoGenericParamsArchetype.secondArchetype());
         assertEquals(Map.class.getCanonicalName() + "<" + Item.class.getCanonicalName() + "," +
                         Integer.class.getCanonicalName() + ">",
                 hasTwoGenericParamsArchetype.getInterfaceName());
@@ -80,8 +80,8 @@ class ArchetypesTests {
                         generateSimpleArchetype(Item.class), 0, interfaceNameOverride);
 
         assertNotNull(hasTwoGenericParamsArchetype);
-        assertNotNull(hasTwoGenericParamsArchetype.getFirstArchetype());
-        assertNotNull(hasTwoGenericParamsArchetype.getSecondArchetype());
+        assertNotNull(hasTwoGenericParamsArchetype.firstArchetype());
+        assertNotNull(hasTwoGenericParamsArchetype.secondArchetype());
         assertEquals(interfaceNameOverride, hasTwoGenericParamsArchetype.getInterfaceName());
     }
 }

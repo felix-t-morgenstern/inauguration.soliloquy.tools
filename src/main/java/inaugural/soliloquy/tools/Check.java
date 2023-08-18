@@ -468,13 +468,13 @@ public class Check {
         }
         if (archetype instanceof HasOneGenericParam) {
             archetypeAndArchetypesOfArchetypeAreNotNull(paramName,
-                    ((HasOneGenericParam) archetype).getArchetype());
+                    ((HasOneGenericParam) archetype).archetype());
         }
         else if (archetype instanceof HasTwoGenericParams) {
             archetypeAndArchetypesOfArchetypeAreNotNull(paramName,
-                    ((HasTwoGenericParams) archetype).getFirstArchetype());
+                    ((HasTwoGenericParams) archetype).firstArchetype());
             archetypeAndArchetypesOfArchetypeAreNotNull(paramName,
-                    ((HasTwoGenericParams) archetype).getSecondArchetype());
+                    ((HasTwoGenericParams) archetype).secondArchetype());
         }
 
         return archetype;

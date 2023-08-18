@@ -46,8 +46,8 @@ class AbstractTypeHandlerTests {
     }
 
     @Test
-    void testGetArchetype() {
-        assertSame(_level1Archetype, _typeHandler.getArchetype());
+    void testarchetype() {
+        assertSame(_level1Archetype, _typeHandler.archetype());
     }
 
     @Test

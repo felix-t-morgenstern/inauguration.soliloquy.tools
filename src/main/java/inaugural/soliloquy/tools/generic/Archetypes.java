@@ -33,7 +33,7 @@ public class Archetypes {
         var archetype = mock(clazz);
 
         lenient().when(archetype.getInterfaceName()).thenReturn(interfaceNameOverride);
-        lenient().when(archetype.getArchetype()).thenReturn(innerArchetype);
+        lenient().when(archetype.archetype()).thenReturn(innerArchetype);
 
         return archetype;
     }
@@ -53,8 +53,8 @@ public class Archetypes {
         var archetype = mock(clazz);
 
         lenient().when(archetype.getInterfaceName()).thenReturn(interfaceNameOverride);
-        lenient().when(archetype.getFirstArchetype()).thenReturn(innerArchetype1);
-        lenient().when(archetype.getSecondArchetype()).thenReturn(innerArchetype2);
+        lenient().when(archetype.firstArchetype()).thenReturn(innerArchetype1);
+        lenient().when(archetype.secondArchetype()).thenReturn(innerArchetype2);
 
         return archetype;
     }

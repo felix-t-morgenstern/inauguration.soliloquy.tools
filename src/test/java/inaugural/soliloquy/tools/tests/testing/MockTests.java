@@ -1,16 +1,17 @@
 package inaugural.soliloquy.tools.tests.testing;
 
 import org.junit.jupiter.api.Test;
-import soliloquy.specs.common.valueobjects.Pair;
 import soliloquy.specs.gamestate.entities.Item;
 import soliloquy.specs.ruleset.entities.ItemType;
 
 import java.util.ArrayList;
 
-import static inaugural.soliloquy.tools.collections.Collections.mapOf;
 import static inaugural.soliloquy.tools.random.Random.*;
 import static inaugural.soliloquy.tools.testing.Mock.*;
+import static inaugural.soliloquy.tools.valueobjects.Pair.pairOf;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 class MockTests {
@@ -30,6 +31,10 @@ class MockTests {
 
         assertNotNull(mockList);
         assertEquals(3, mockList.size());
+        assertEquals(1, mockList.get(0));
+        assertEquals(2, mockList.get(1));
+        assertEquals(3, mockList.get(2));
+        verify(mockList, times(3)).get(anyInt());
         assertTrue(mockList.contains(1));
         assertTrue(mockList.contains(2));
         assertTrue(mockList.contains(3));
@@ -48,7 +53,7 @@ class MockTests {
 
     @Test
     void testGenerateMockMap() {
-        var mockMap = generateMockMap(Pair.of(3, "C"), Pair.of(2, "B"), Pair.of(1, "A"));
+        var mockMap = generateMockMap(pairOf(3, "C"), pairOf(2, "B"), pairOf(1, "A"));
 
         assertNotNull(mockMap);
         assertEquals(3, mockMap.size());
@@ -86,9 +91,9 @@ class MockTests {
         var value3 = 3;
 
         var lookupFunction = generateMockLookupFunction(
-                Pair.of(id1, value1),
-                Pair.of(id2, value2),
-                Pair.of(id3, value3));
+                pairOf(id1, value1),
+                pairOf(id2, value2),
+                pairOf(id3, value3));
 
         assertNull(lookupFunction.apply(invalidId));
         assertEquals(value1, lookupFunction.apply(id1));
@@ -119,9 +124,9 @@ class MockTests {
         var writtenValues = new String[]{randomString(), randomString(), randomString()};
 
         var mockIntegerHandler = generateSimpleMockTypeHandler(
-                Pair.of(writtenValues[0], values[0]),
-                Pair.of(writtenValues[1], values[1]),
-                Pair.of(writtenValues[2], values[2]));
+                pairOf(writtenValues[0], values[0]),
+                pairOf(writtenValues[1], values[1]),
+                pairOf(writtenValues[2], values[2]));
 
         assertNotNull(mockIntegerHandler);
         for (var i = 0; i < 3; i++) {
@@ -140,17 +145,17 @@ class MockTests {
                 generateMockPersistentValuesHandlerWithSimpleHandlers(ints, doubles);
 
         assertNotNull(persistentValuesHandlerAndHandlers);
-        assertNotNull(persistentValuesHandlerAndHandlers.getItem1());
-        assertNotNull(persistentValuesHandlerAndHandlers.getItem2());
+        assertNotNull(persistentValuesHandlerAndHandlers.item1());
+        assertNotNull(persistentValuesHandlerAndHandlers.item2());
         var integerHandler =
-                persistentValuesHandlerAndHandlers.getItem2().get(Integer.class.getCanonicalName());
+                persistentValuesHandlerAndHandlers.item2().get(Integer.class.getCanonicalName());
         for (var value : ints) {
             assertEquals(value, integerHandler.read(value.toString()));
             //noinspection unchecked
             assertEquals(value.toString(), integerHandler.write(value));
         }
         var doubleHandler =
-                persistentValuesHandlerAndHandlers.getItem2().get(Double.class.getCanonicalName());
+                persistentValuesHandlerAndHandlers.item2().get(Double.class.getCanonicalName());
         for (var value : doubles) {
             assertEquals(value, doubleHandler.read(value.toString()));
             //noinspection unchecked

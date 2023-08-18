@@ -12,7 +12,7 @@ public class FakeHasOneGenericParam<P> implements HasOneGenericParam<P> {
     }
 
     @Override
-    public P getArchetype() {
+    public P archetype() {
         return _archetype;
     }
 

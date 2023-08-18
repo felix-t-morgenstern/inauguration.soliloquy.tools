@@ -32,9 +32,9 @@ public class AbstractSoliloquyTypeHandlerTests {
     }
 
     @Test
-    void testGetArchetype() {
+    void testarchetype() {
         assertEquals(Item.class.getCanonicalName(),
-                soliloquyTypeHandler.getArchetype().getInterfaceName());
+                soliloquyTypeHandler.archetype().getInterfaceName());
     }
 
     @Test

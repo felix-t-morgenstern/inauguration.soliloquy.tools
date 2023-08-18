@@ -27,7 +27,7 @@ public class Collections {
     public static <K, V> Map<K, V> mapOf(Pair<K, V>... items) {
         var map = new HashMap<K, V>();
         for (var item : items) {
-            map.put(item.getItem1(), item.getItem2());
+            map.put(item.item1(), item.item2());
         }
         return map;
     }

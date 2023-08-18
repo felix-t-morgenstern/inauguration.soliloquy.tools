@@ -68,8 +68,8 @@ class AbstractHasTwoGenericParamsTests {
 
     @Test
     void testGetArchetypes() {
-        assertSame(_level1Archetype1, _hasTwoGenericParams.getFirstArchetype());
-        assertSame(_level1Archetype2, _hasTwoGenericParams.getSecondArchetype());
+        assertSame(_level1Archetype1, _hasTwoGenericParams.firstArchetype());
+        assertSame(_level1Archetype2, _hasTwoGenericParams.secondArchetype());
     }
 
     @Test

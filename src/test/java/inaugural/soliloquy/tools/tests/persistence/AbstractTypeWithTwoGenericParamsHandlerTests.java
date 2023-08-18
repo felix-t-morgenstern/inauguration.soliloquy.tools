@@ -70,8 +70,8 @@ class AbstractTypeWithTwoGenericParamsHandlerTests {
     }
 
     @Test
-    void testGetArchetype() {
-        assertSame(ARCHETYPE, _typeWithTwoGenericParamsHandler.getArchetype());
+    void testarchetype() {
+        assertSame(ARCHETYPE, _typeWithTwoGenericParamsHandler.archetype());
     }
 
     @Test
@@ -91,8 +91,8 @@ class AbstractTypeWithTwoGenericParamsHandlerTests {
         assertEquals(2, PERSISTENT_VALUES_HANDLER.Inputs.size());
         assertEquals(innerType1, PERSISTENT_VALUES_HANDLER.Inputs.get(0));
         assertEquals(innerType2, PERSISTENT_VALUES_HANDLER.Inputs.get(1));
-        assertEquals(generatedInnerArchetype1, generatedArchetype.getFirstArchetype());
-        assertEquals(generatedInnerArchetype2, generatedArchetype.getSecondArchetype());
+        assertEquals(generatedInnerArchetype1, generatedArchetype.firstArchetype());
+        assertEquals(generatedInnerArchetype2, generatedArchetype.secondArchetype());
     }
 
     @Test
