@@ -1,17 +1,17 @@
 package inaugural.soliloquy.tools.tests.random;
 
 import inaugural.soliloquy.tools.random.Random;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
-class RandomTests {
+public class RandomTests {
     @Test
-    void testRandomBoolean() {
-        for (int i = 0; i < 1000; i++) {
+    public void testRandomBoolean() {
+        for (var i = 0; i < 1000; i++) {
             if (Random.randomBoolean()) {
                 return;
             }
@@ -20,28 +20,28 @@ class RandomTests {
     }
 
     @Test
-    void testRandomInt() {
+    public void testRandomInt() {
         runRandomizationTest(Random::randomInt);
     }
 
     @Test
-    void testRandomIntWithInclusiveFloor() {
-        int floor = new java.util.Random().nextInt();
+    public void testRandomIntWithInclusiveFloor() {
+        var floor = new java.util.Random().nextInt();
         runRandomizationTest(() -> Random.randomIntWithInclusiveFloor(floor),
                 i -> assertTrue(i >= floor));
     }
 
     @Test
-    void testRandomIntWithInclusiveCeiling() {
-        int ceiling = new java.util.Random().nextInt();
+    public void testRandomIntWithInclusiveCeiling() {
+        var ceiling = new java.util.Random().nextInt();
         runRandomizationTest(() -> Random.randomIntWithInclusiveCeiling(ceiling),
                 i -> assertTrue(i <= ceiling));
     }
 
     @Test
-    void testRandomIntInRange() {
-        int min = -Math.abs(new java.util.Random().nextInt() / 2);
-        int max = -min;
+    public void testRandomIntInRange() {
+        var min = -Math.abs(new java.util.Random().nextInt() / 2);
+        var max = -min;
         runRandomizationTest(() -> Random.randomIntInRange(min, max), i -> {
             assertTrue(i >= min);
             assertTrue(i <= max);
@@ -49,28 +49,28 @@ class RandomTests {
     }
 
     @Test
-    void testRandomLong() {
+    public void testRandomLong() {
         runRandomizationTest(Random::randomLong);
     }
 
     @Test
-    void testRandomLongWithInclusiveFloor() {
-        long floor = new java.util.Random().nextLong() / 2;
+    public void testRandomLongWithInclusiveFloor() {
+        var floor = new java.util.Random().nextLong() / 2;
         runRandomizationTest(() -> Random.randomLongWithInclusiveFloor(floor),
                 l -> assertTrue(l >= floor));
     }
 
     @Test
-    void testRandomLongWithInclusiveCeiling() {
-        long ceiling = new java.util.Random().nextLong() / 2;
+    public void testRandomLongWithInclusiveCeiling() {
+        var ceiling = new java.util.Random().nextLong() / 2;
         runRandomizationTest(() -> Random.randomLongWithInclusiveCeiling(ceiling),
                 l -> assertTrue(l <= ceiling));
     }
 
     @Test
-    void testRandomLongInRange() {
-        long min = -Math.abs(new java.util.Random().nextLong() / 2L);
-        long max = -min;
+    public void testRandomLongInRange() {
+        var min = -Math.abs(new java.util.Random().nextLong() / 2L);
+        var max = -min;
         runRandomizationTest(() -> Random.randomLongInRange(min, max), l -> {
             assertTrue(l >= min);
             assertTrue(l <= max);
@@ -78,14 +78,14 @@ class RandomTests {
     }
 
     @Test
-    void testRandomFloat() {
+    public void testRandomFloat() {
         runRandomizationTest(Random::randomFloat);
     }
 
     @Test
-    void testRandomFloatInRange() {
-        float min = -999f;
-        float max = -min;
+    public void testRandomFloatInRange() {
+        var min = -999f;
+        var max = -min;
         runRandomizationTest(() -> Random.randomFloatInRange(min, max), f -> {
             assertTrue(f >= min);
             assertTrue(f <= max);
@@ -93,30 +93,30 @@ class RandomTests {
     }
 
     @Test
-    void testRandomFloatWithInclusiveFloor() {
-        float floor = new java.util.Random().nextFloat();
+    public void testRandomFloatWithInclusiveFloor() {
+        var floor = new java.util.Random().nextFloat();
 
         runRandomizationTest(() -> Random.randomFloatWithInclusiveFloor(floor),
                 f -> assertTrue(f >= floor));
     }
 
     @Test
-    void testRandomFloatWithInclusiveCeiling() {
-        float ceiling = new java.util.Random().nextFloat();
+    public void testRandomFloatWithInclusiveCeiling() {
+        var ceiling = new java.util.Random().nextFloat();
 
         runRandomizationTest(() -> Random.randomFloatWithInclusiveCeiling(ceiling),
                 f -> assertTrue(f <= ceiling));
     }
 
     @Test
-    void testRandomDouble() {
+    public void testRandomDouble() {
         runRandomizationTest(Random::randomDouble);
     }
 
     @Test
-    void testRandomDoubleInRange() {
-        double min = -999d;
-        double max = -min;
+    public void testRandomDoubleInRange() {
+        var min = -999d;
+        var max = -min;
         runRandomizationTest(() -> Random.randomDoubleInRange(min, max), d -> {
             assertTrue(d >= min);
             assertTrue(d <= max);
@@ -124,42 +124,47 @@ class RandomTests {
     }
 
     @Test
-    void testRandomDoubleWithInclusiveFloor() {
-        double floor = new java.util.Random().nextDouble();
+    public void testRandomDoubleWithInclusiveFloor() {
+        var floor = new java.util.Random().nextDouble();
 
         runRandomizationTest(() -> Random.randomDoubleWithInclusiveFloor(floor),
                 d -> assertTrue(d >= floor));
     }
 
     @Test
-    void testRandomDoubleWithInclusiveCeiling() {
-        double ceiling = new java.util.Random().nextDouble();
+    public void testRandomDoubleWithInclusiveCeiling() {
+        var ceiling = new java.util.Random().nextDouble();
 
         runRandomizationTest(() -> Random.randomDoubleWithInclusiveCeiling(ceiling),
                 d -> assertTrue(d <= ceiling));
     }
 
     @Test
-    void testRandomColor() {
+    public void testRandomColor() {
         runRandomizationTest(Random::randomColor);
     }
 
     @Test
-    void testRandomOpaqueColor() {
+    public void testRandomOpaqueColor() {
         runRandomizationTest(Random::randomOpaqueColor, c -> assertEquals(255, c.getAlpha()));
     }
 
     @Test
-    void testRandomString() {
+    public void testRandomString() {
         runRandomizationTest(Random::randomString, s -> assertEquals(20, s.length()));
     }
 
     @Test
-    void testRandomChar() {
+    public void testRandomChar() {
         runRandomizationTest(Random::randomChar, c -> {
             assertTrue((int) c >= (int) ' ');
             assertTrue((int) c <= (int) '~');
         }, false);
+    }
+
+    @Test
+    public void testRandomCoordinate2d() {
+        runRandomizationTest(Random::randomCoordinate2d);
     }
 
     // NB: This is technically indeterminate, but the odds of duplicate random results should be
@@ -167,9 +172,9 @@ class RandomTests {
     private <T> void runRandomizationTest(Supplier<T> randomMethod,
                                           Consumer<T> additionalAssertions,
                                           boolean failOnEquals) {
-        for (int i = 0; i < 1000; i++) {
-            T val1 = randomMethod.get();
-            T val2 = randomMethod.get();
+        for (var i = 0; i < 1000; i++) {
+            var val1 = randomMethod.get();
+            var val2 = randomMethod.get();
             if (failOnEquals) {
                 assertNotEquals(val1, val2);
             }

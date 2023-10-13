@@ -1,5 +1,7 @@
 package inaugural.soliloquy.tools.random;
 
+import soliloquy.specs.common.valueobjects.Coordinate2d;
+
 import java.awt.*;
 
 public class Random {
@@ -103,5 +105,9 @@ public class Random {
     // https://www.delftstack.com/howto/java/java-random-character/, accessed on 2022/07/26
     public static char randomChar() {
         return (char) (RANDOM.nextInt(95) + ' ');
+    }
+
+    public static Coordinate2d randomCoordinate2d() {
+        return Coordinate2d.of(randomInt(), randomInt());
     }
 }

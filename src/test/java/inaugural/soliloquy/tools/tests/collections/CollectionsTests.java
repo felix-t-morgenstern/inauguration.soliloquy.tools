@@ -1,42 +1,67 @@
 package inaugural.soliloquy.tools.tests.collections;
 
-import org.junit.jupiter.api.Test;
-import soliloquy.specs.common.valueobjects.Pair;
+import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Stack;
 
 import static inaugural.soliloquy.tools.collections.Collections.*;
 import static inaugural.soliloquy.tools.testing.Assertions.assertEqualsAndNotSame;
 import static inaugural.soliloquy.tools.valueobjects.Pair.pairOf;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
-class CollectionsTests {
+public class CollectionsTests {
     @Test
-    void testArrayOf() {
+    public void testArrayOf() {
         var array = arrayOf(123, 456, 789);
 
         assertNotNull(array);
         assertEquals(3, array.length);
-        assertEquals(123, array[0]);
-        assertEquals(456, array[1]);
-        assertEquals(789, array[2]);
+        assertEquals((Integer) 123, array[0]);
+        assertEquals((Integer) 456, array[1]);
+        assertEquals((Integer) 789, array[2]);
     }
 
     @Test
-    void testListOfFromArray() {
+    public void testSetOfFromArray() {
+        var set = setOf(1, 2, 3);
+
+        assertNotNull(set);
+        assertEquals(3, set.size());
+        assertTrue(set.contains(1));
+        assertTrue(set.contains(2));
+        assertTrue(set.contains(3));
+    }
+
+    @Test
+    public void testSetOfFromCollection() {
+        var originalCollection = new HashSet<>() {{
+            add(1);
+            add(2);
+            add(3);
+        }};
+
+        var set = setOf(originalCollection);
+
+        assertNotNull(set);
+        assertEqualsAndNotSame(originalCollection, set);
+    }
+
+    @Test
+    public void testListOfFromArray() {
         var list = listOf(1, 2, 3);
 
         assertNotNull(list);
         assertEquals(3, list.size());
-        assertEquals(1, list.get(0));
-        assertEquals(2, list.get(1));
-        assertEquals(3, list.get(2));
+        assertEquals((Integer) 1, list.get(0));
+        assertEquals((Integer) 2, list.get(1));
+        assertEquals((Integer) 3, list.get(2));
     }
 
     @Test
-    void testListOfFromCollection() {
+    public void testListOfFromCollection() {
         var originalCollection = new Stack<Integer>() {{
             add(1);
             add(2);
@@ -50,7 +75,7 @@ class CollectionsTests {
     }
 
     @Test
-    void testListOfFromList() {
+    public void testListOfFromList() {
         var originalList = new ArrayList<Integer>() {{
             add(1);
             add(2);
@@ -64,18 +89,18 @@ class CollectionsTests {
     }
 
     @Test
-    void testMapOfFromPairs() {
+    public void testMapOfFromPairs() {
         var map = mapOf(pairOf("A", 1), pairOf("B", 2), pairOf("C", 3));
 
         assertNotNull(map);
         assertEquals(3, map.size());
-        assertEquals(1, map.get("A"));
-        assertEquals(2, map.get("B"));
-        assertEquals(3, map.get("C"));
+        assertEquals((Integer) 1, map.get("A"));
+        assertEquals((Integer) 2, map.get("B"));
+        assertEquals((Integer) 3, map.get("C"));
     }
 
     @Test
-    void testMapOfFromMap() {
+    public void testMapOfFromMap() {
         var originalMap = new HashMap<String, Integer>() {{
             put("A", 1);
             put("B", 2);

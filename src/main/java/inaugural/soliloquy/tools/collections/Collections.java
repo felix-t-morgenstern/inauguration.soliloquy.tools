@@ -11,8 +11,17 @@ public class Collections {
     }
 
     @SafeVarargs
+    public static <T> Set<T> setOf(T... items) {
+        return new HashSet<>(Arrays.asList(items));
+    }
+
+    public static <T> Set<T> setOf(Collection<T> items) {
+        return new HashSet<>(items);
+    }
+
+    @SafeVarargs
     public static <T> List<T> listOf(T... items) {
-        return new ArrayList<>(Arrays.asList(items));
+        return new ArrayList<>(setOf(items));
     }
 
     public static <T> List<T> listOf(Collection<T> list) {
