@@ -167,6 +167,11 @@ public class RandomTests {
         runRandomizationTest(Random::randomCoordinate2d);
     }
 
+    @Test
+    public void testRandomCoordinate3d() {
+        runRandomizationTest(Random::randomCoordinate3d);
+    }
+
     // NB: This is technically indeterminate, but the odds of duplicate random results should be
     //     practically within the same realm of possibility as a duplicate UUID
     private <T> void runRandomizationTest(Supplier<T> randomMethod,

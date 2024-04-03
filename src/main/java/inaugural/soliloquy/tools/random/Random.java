@@ -1,6 +1,7 @@
 package inaugural.soliloquy.tools.random;
 
 import soliloquy.specs.common.valueobjects.Coordinate2d;
+import soliloquy.specs.common.valueobjects.Coordinate3d;
 
 import java.awt.*;
 
@@ -90,9 +91,9 @@ public class Random {
     // NB: Taken from Baeldung, at https://www.baeldung.com/java-random-string, accessed on
     // 2022/04/19
     public static String randomString() {
-        int leftLimit = 48; // numeral '0'
-        int rightLimit = 122; // letter 'z'
-        int targetStringLength = 20;
+        var leftLimit = 48; // numeral '0'
+        var rightLimit = 122; // letter 'z'
+        var targetStringLength = 20;
 
         return RANDOM.ints(leftLimit, rightLimit + 1)
                 .filter(i -> (i <= 57 || i >= 65) && (i <= 90 || i >= 97))
@@ -109,5 +110,9 @@ public class Random {
 
     public static Coordinate2d randomCoordinate2d() {
         return Coordinate2d.of(randomInt(), randomInt());
+    }
+
+    public static Coordinate3d randomCoordinate3d() {
+        return Coordinate3d.of(randomInt(), randomInt(), randomInt());
     }
 }
