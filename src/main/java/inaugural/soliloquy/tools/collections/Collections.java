@@ -1,8 +1,10 @@
 package inaugural.soliloquy.tools.collections;
 
 import soliloquy.specs.common.valueobjects.Pair;
+import soliloquy.specs.gamestate.entities.WallSegmentDirection;
 
 import java.util.*;
+import java.util.function.Supplier;
 
 public class Collections {
     @SafeVarargs
@@ -21,7 +23,7 @@ public class Collections {
 
     @SafeVarargs
     public static <T> List<T> listOf(T... items) {
-        return new ArrayList<>(setOf(items));
+        return new ArrayList<>(Arrays.asList(items));
     }
 
     public static <T> List<T> listOf(Collection<T> list) {
@@ -43,5 +45,31 @@ public class Collections {
 
     public static <K, V> Map<K, V> mapOf(Map<K, V> map) {
         return new HashMap<>(map);
+    }
+
+    // NB: This differs from Map.getOrDefault, since the default value is actually added to the map
+    // at the provided key
+    public static <K, V> V getOrDefaultAndAdd(Map<K, V> map, K key, Supplier<V> defaultSupplier) {
+        if (!map.containsKey(key)) {
+            var newValue = defaultSupplier.get();
+            map.put(key, newValue);
+            return newValue;
+        }
+        else {
+            return map.get(key);
+        }
+    }
+
+    public static <K1, K2, V2> boolean removeChildMapKeyAndChildIfEmpty(Map<K1, Map<K2, V2>> parent,
+                                                                     K1 parentKey, K2 childKey) {
+        var childMap = parent.get(parentKey);
+        if (childMap == null) {
+            return false;
+        }
+        var isRemoved = childMap.remove(childKey) != null;
+        if (childMap.isEmpty()) {
+            parent.remove(parentKey);
+        }
+        return isRemoved;
     }
 }

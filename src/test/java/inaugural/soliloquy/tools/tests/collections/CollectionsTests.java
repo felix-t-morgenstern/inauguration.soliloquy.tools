@@ -2,10 +2,7 @@ package inaugural.soliloquy.tools.tests.collections;
 
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Stack;
+import java.util.*;
 
 import static inaugural.soliloquy.tools.collections.Collections.*;
 import static inaugural.soliloquy.tools.testing.Assertions.assertEqualsAndNotSame;
@@ -111,5 +108,35 @@ public class CollectionsTests {
 
         assertNotNull(map);
         assertEqualsAndNotSame(originalMap, map);
+    }
+
+    @Test
+    public void testGetOrDefaultAndAdd() {
+        var map = new HashMap<String, Integer>();
+        var key = "key";
+        Integer defaultVal = 123;
+
+        var result = getOrDefaultAndAdd(map, key, () -> defaultVal);
+
+        assertEquals(defaultVal, result);
+        assertEquals(defaultVal, map.get(key));
+    }
+
+    @Test
+    public void testRemoveChildMapKeyAndChildIfEmpty() {
+        var parentKey = "parentKey";
+        var childKey = "childKey";
+        var map = new HashMap<String, Map<String, String>>() {{
+            put(parentKey, new HashMap<>() {{
+                put(childKey, "value");
+            }});
+        }};
+
+        var result1 = removeChildMapKeyAndChildIfEmpty(map, parentKey, childKey);
+        var result2 = removeChildMapKeyAndChildIfEmpty(map, parentKey, childKey);
+
+        assertNull(map.get(parentKey));
+        assertTrue(result1);
+        assertFalse(result2);
     }
 }
